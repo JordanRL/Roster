@@ -1,0 +1,42 @@
+{
+  "name": "samsara/roster",
+  "type": "library",
+  "description": "A PHP console tool to generate Markdown documentation from your docblocks and types hints using templates.",
+  "keywords": ["documentation", "markdown", "template", "console", "cli", "command line"],
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/JordanRL"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/JordanRL/Roster/issues",
+    "docs": "https://jordanrl.github.io/Roster/",
+    "source": "https://github.com/JordanRL/Roster"
+  },
+  "authors": [
+    {
+      "name": "Jordan LeDoux",
+      "homepage": "https://github.com/JordanRL",
+      "role": "Developer"
+    }
+  ],
+  "license": "GPL-3.0-only",
+  "require": {
+    "symfony/console": "^v5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.*"
+  },
+  "bin": ["bin/roster"],
+  "autoload": {
+    "psr-4": {
+      "Samsara\\Fermat\\": "src/Samsara/Roster/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Samsara\\Fermat\\": "tests/Samsara/Roster/"
+    }
+  }
+}

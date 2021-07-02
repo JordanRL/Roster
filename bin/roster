@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+$possiblePaths = [
+    __DIR__.'/vendor/autoload.php',
+    __DIR__.'/../vendor/autoload.php',
+    __DIR__.'/../../vendor/autoload.php',
+    __DIR__.'/../../../autoload.php'
+];
+foreach($possiblePaths as $autoloader) {
+    if( file_exists($autoloader) ) {
+        require $autoloader;
+        break;
+    }
+}
+
+use Samsara/Roster/Command;
+
+$command = new Command();
+$exitCode = $command->run();
+exit($exitCode);
