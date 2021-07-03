@@ -1,38 +1,64 @@
-### {$namespace} > {$className}
+# {$namespace} > {$className}
 
-{$hasExtends
-#### Extends
+{$classDesc}
+
+{$hasHierarchy}
+## Inheritance
+
+{$hasExtends}
+### Extends
 
 {$extendInfo}
 
-}{$hasTraits
-#### Has Traits
+{hasExtends$}{$hasTraits}
+### Has Traits
 
 {$traitInfo}
 
-}{$hasConstants
-#### Class Constants
+{hasTraits$}{hasHierarchy$}{$hasClassData}
+## Variables & Data
+
+{$hasConstants}
+### Class Constants
 
 {$constantsInfo}
 
-}{$hasProperties
-#### Properties
+{hasConstants$}{$hasProperties}
+### Properties
 
 {$propertiesInfo}
 
-}{$hasConstructor
-#### Constructor
+{hasProperties$}{$hasInheritedProperties}
+### Inherited Properties
+
+{$inheritedProperties}
+
+{hasInheritedProperties$}{hasClassData$}{$hasFunctions}
+## Methods
+
+{$hasConstructor}
+### Constructor
 
 {$constructorInfo}
 
-}{$hasStaticMethods
-#### Static Methods
+{hasConstructor$}{$hasStaticMethods}
+### Static Methods
 
 {$staticMethodsInfo}
 
-}{$hasMethods
-#### Methods
+{hasStaticMethods$}{$hasMethods}
+### Instanced Methods
 
 {$methodsInfo}
 
-}
+{hasMethods$}{$hasInheritedStaticMethods}
+### Inherited Static Methods
+
+{$inheritedStaticMethods}
+
+{hasInheritedStaticMethods$}{$hasInheritedMethods}
+### Inherited Methods
+
+{$inheritedMethods}
+
+{hasInheritedMethods$}{hasFunctions$}

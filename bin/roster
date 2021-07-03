@@ -2,20 +2,20 @@
 <?php
 
 $possiblePaths = [
-    __DIR__.'/vendor/autoload.php',
-    __DIR__.'/../vendor/autoload.php',
-    __DIR__.'/../../vendor/autoload.php',
-    __DIR__.'/../../../autoload.php'
+    __DIR__.'/vendor/autoload.php' => realpath(__DIR__),
+    __DIR__.'/../vendor/autoload.php' => realpath(__DIR__.'/../'),
+    __DIR__.'/../../vendor/autoload.php' => realpath(__DIR__.'/../../'),
+    __DIR__.'/../../../autoload.php' => realpath(__DIR__.'/../../../../')
 ];
-foreach($possiblePaths as $autoloader) {
+foreach($possiblePaths as $autoloader => $rootDir) {
     if( file_exists($autoloader) ) {
         require $autoloader;
         break;
     }
 }
 
-use Samsara/Roster/Command;
+use Samsara\Roster\App;
 
-$command = new Command();
+$command = new App($rootDir);
 $exitCode = $command->run();
 exit($exitCode);
