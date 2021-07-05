@@ -238,11 +238,11 @@ class Roster extends Command
 
             $firstLine = false;
 
-            if (preg_match('/^namespace (.*?);/i', $line, $namespace)) {
+            if (preg_match('/^namespace ([a-zA-Z0-9\\\\]*);/i', $line, $namespace)) {
                 if (isset($namespace[1]) && strlen($namespace[1])) {
                     $ns = $namespace[1];
                 }
-            } elseif (preg_match('/^interface (.*?)$/ism', $line, $interfaceName)) {
+            } elseif (preg_match('/^interface ([a-zA-Z0-9]*)/ism', $line, $interfaceName)) {
                 if (count($interfaceName) < 2) {
                     echo $line.PHP_EOL;
                     continue;
@@ -253,7 +253,7 @@ class Roster extends Command
                     $name = $interfaceName[1];
                 }
                 $this->classes[$ns]['interface'][] = $name;
-            } elseif (preg_match('/^(?:abstract|final|abstract final|final abstract)?[\s]?class (.*?)$/ism', $line, $className)) {
+            } elseif (preg_match('/^(?:abstract|final|abstract final|final abstract)?[\s]?class ([a-zA-Z0-9]*)/ism', $line, $className)) {
                 if (count($className) < 2) {
                     echo $line.PHP_EOL;
                     continue;
@@ -264,7 +264,7 @@ class Roster extends Command
                     $name = $className[1];
                 }
                 $this->classes[$ns]['class'][] = $name;
-            } elseif (preg_match('/^trait (.*?)$/ism', $line, $traitName)) {
+            } elseif (preg_match('/^trait ([a-zA-Z0-9]*)/ism', $line, $traitName)) {
                 if (count($traitName) < 2) {
                     echo $line.PHP_EOL;
                     continue;
