@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Samsara\Roster;
+namespace Samsara\Roster\Processors;
 
 
 class TemplateProcessor
@@ -53,7 +53,7 @@ class TemplateProcessor
         $this->hasKeys[$key] = $key;
     }
 
-    public function supplyReplacement(string $key, TemplateProcessor|string $replacement)
+    public function supplyReplacement(string $key, TemplateProcessor|string|array $replacement)
     {
         $this->replacesKeys[$key] = $replacement;
     }
@@ -80,6 +80,10 @@ class TemplateProcessor
                         $replacementContent .= $value;
                     }
                 }
+            }
+
+            if (is_string($replacement)) {
+                $replacementContent = $replacement;
             }
 
             $template = str_replace('{$'.$key.'}', $replacementContent, $template);

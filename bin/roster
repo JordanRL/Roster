@@ -15,7 +15,12 @@ foreach($possiblePaths as $autoloader => $rootDir) {
 }
 
 use Samsara\Roster\App;
+use Samsara\Roster\Roster;
 
-$command = new App($rootDir);
-$exitCode = $command->run();
+$app = new App();
+$command = new Roster($rootDir);
+
+$app->add($command);
+$app->setDefaultCommand($command->getName(), true);
+$exitCode = $app->run();
 exit($exitCode);

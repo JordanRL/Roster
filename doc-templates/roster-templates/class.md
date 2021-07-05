@@ -10,7 +10,12 @@
 
 {$extendInfo}
 
-{hasExtends$}{$hasTraits}
+{hasExtends$}{$hasInterfaces}
+### Implements
+
+{$interfaceInfo}
+
+{hasInterfaces$}{$hasTraits}
 ### Has Traits
 
 {$traitInfo}
@@ -31,7 +36,7 @@
 {hasProperties$}{$hasInheritedProperties}
 ### Inherited Properties
 
-{$inheritedProperties}
+{$inheritedPropertiesInfo}
 
 {hasInheritedProperties$}{hasClassData$}{$hasFunctions}
 ## Methods

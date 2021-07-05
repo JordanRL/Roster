@@ -3,7 +3,6 @@
   "type": "library",
   "description": "A PHP console tool to generate Markdown documentation from your docblocks and types hints using templates.",
   "keywords": ["documentation", "markdown", "template", "console", "cli", "command line"],
-  "version": "v0.1.0",
   "funding": [
     {
       "type": "github",
@@ -24,7 +23,8 @@
   ],
   "license": "GPL-3.0-only",
   "require": {
-    "symfony/console": "^v5.3"
+    "symfony/console": "^v5.3",
+    "samsara/mason": "dev-master"
   },
   "require-dev": {
   },

@@ -2,17 +2,15 @@
 
 namespace Samsara\Roster;
 
-use gossi\docblock\Docblock;
-use gossi\docblock\tags\AbstractVarTypeTag;
-use gossi\docblock\tags\ParamTag;
-use gossi\docblock\tags\ReturnTag;
-use Samsara\Roster\Attributes\Description;
+use ReflectionClass;
+use Samsara\Roster\Processors\ClassProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use TheSeer\Tokenizer\Exception;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Samsara\Mason\DocBlockProcessor;
 
 /**
  * Some test info
@@ -38,7 +36,7 @@ class Roster extends Command
 
     private array $options = [
         'templates' => [
-            'default' => 'docs/roster-templates',
+            'default' => 'doc-templates/roster-templates',
             'shortcut' => 't',
             'mode' => InputOption::VALUE_OPTIONAL,
             'description' => 'Where to look for the roster templates'
@@ -48,16 +46,39 @@ class Roster extends Command
             'shortcut' => null,
             'mode' => InputOption::VALUE_OPTIONAL,
             'description' => 'What visibility level to include in documentation. Higher levels of visibility include all lower levels also. Value inputs are \'all\', \'protected\', \'public\'.'
+        ],
+        'prefer-source' => [
+            'default' => false,
+            'shortcut' => null,
+            'mode' => InputOption::VALUE_NEGATABLE,
+            'description' => 'If used, the information from the source code will be preferred if it conflicts with the PHPDoc info. Default behavior is to prefer PHPDoc info.'
+        ],
+        'with-version' => [
+            'default' => null,
+            'shortcut' => null,
+            'mode' => InputOption::VALUE_OPTIONAL,
+            'description' => 'Specify a version directory to export the documentation under. By default uses the version value in your project\'s composer.json file.'
+        ],
+        'with-debug' => [
+            'default' => false,
+            'shortcut' => null,
+            'mode' => InputOption::VALUE_NEGATABLE,
+            'description' => 'Output debug information to the console.'
         ]
     ];
 
     private array $classes = [];
 
+    /** @var ReflectionClass[][] */
     private array $reflectors = [];
 
     private string $rootDir;
 
     private array $applicationComposerJSON;
+
+    private SymfonyStyle $io;
+
+    private bool $verbose = false;
 
     public function __construct($rootDir)
     {
@@ -97,10 +118,26 @@ class Roster extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+        $this->io = $io;
+        $this->io->title(App::NAME);
+
         $args = $input->getArguments();
         $opts = $input->getOptions();
 
         $compiledFiles = [];
+
+        $visibilityLevel =
+            ($opts['visibility'] == 'all' || $opts['visibility'] == 'private' ? 3 :
+                ($opts['visibility'] == 'protected' ? 2 : 1));
+
+        TemplateFactory::setVisibilityLevel($visibilityLevel);
+        TemplateFactory::setPreferSource($opts['prefer-source']);
+
+        $packageVersion = (array_key_exists('version', $this->applicationComposerJSON) ? $this->applicationComposerJSON['version'] : null);
+
+        $version = $opts['with-version'] ?? $packageVersion ?? 'latest';
+        $this->verbose = $opts['with-debug'];
 
         if (!is_dir($this->rootDir.'/docs')) {
             mkdir($this->rootDir.'/docs');
@@ -110,15 +147,17 @@ class Roster extends Command
             mkdir($this->rootDir.'/docs/roster-export');
         }
 
-        if (!is_dir($this->rootDir.'/docs/roster-export/'.$this->applicationComposerJSON['version'])) {
-            mkdir($this->rootDir.'/docs/roster-export/'.$this->applicationComposerJSON['version']);
+        if (!is_dir($this->rootDir.'/docs/roster-export/'.$version)) {
+            mkdir($this->rootDir.'/docs/roster-export/'.$version);
         }
 
         $baseExportPath = $this->rootDir.
             '/docs/roster-export/'.
-            $this->applicationComposerJSON['version'];
+            $version;
 
-        $output->writeln('Initialized');
+        if ($this->verbose) {
+            $io->section('Initialization');
+        }
 
         $fileList = $this->traverseDirectories($args['source']);
 
@@ -128,435 +167,38 @@ class Roster extends Command
 
         $this->createReflectors();
 
-        $output->writeln('Files Crawled: '.count($fileList));
-        $output->writeln('Namespaces Added: '.count($this->classes));
-        if (isset($this->reflectors['classes'])) {
-            $output->writeln('Classes Reflected: ' . count($this->reflectors['classes']));
-        }
-        if (isset($this->reflectors['interfaces'])) {
-            $output->writeln('Interfaces Reflected: ' . count($this->reflectors['interfaces']));
-        }
-        if (isset($this->reflectors['traits'])) {
-            $output->writeln('Traits Reflected: ' . count($this->reflectors['traits']));
-        }
-
         $this->processTemplates($opts['templates']);
 
-        if (!isset($this->templates['roster-templates']['class'])) {
-            $output->writeln('A class.md template must exist in the root templates directory.');
-            $output->writeln(var_export($this->templates, true));
+        if (!TemplateFactory::hasTemplate('class')) {
             return 255;
         }
 
-        foreach ($this->reflectors['classes'] as $reflector) {
-            $hasFunctions = false;
-            $hasData = false;
-            $hasInheritance = false;
+        $this->io->section('Processing Classes');
 
-            /** @var \ReflectionClass $reflector */
-            if ($reflector->getDocComment()) {
-                $docBlock = new DocBlockProcessor($reflector->getDocComment());
-            }
+        $this->io->progressStart(count($this->reflectors['classes']));
 
-            $description = $reflector->getAttributes(Description::class);
+        foreach ($this->reflectors['classes'] as  $reflector) {
+            $class = new ClassProcessor($reflector);
 
-            foreach ($description as $desc) {
-                /** @var \ReflectionAttribute $desc */
-                $output->writeln($desc->newInstance()->getValue());
-            }
-            $template = TemplateFactory::getTemplate('roster-templates', 'class');
+            TemplateFactory::queueCompile($reflector->getName(), $class);
 
-            $template->supplyReplacement('namespace', $reflector->getNamespaceName());
-            $template->supplyReplacement('className', $reflector->getShortName());
-
-            $methods = $reflector->getMethods();
-            $constants = $reflector->getConstants();
-            $properties = $reflector->getProperties();
-            /** @var \ReflectionMethod[] $staticMethods */
-            $staticMethods = [];
-            /** @var \ReflectionMethod[] $otherMethods */
-            $otherMethods = [];
-
-            foreach ($methods as $method) {
-                if ($method->isStatic()) {
-                    $staticMethods[] = $method;
-                } elseif ($method->isConstructor()) {
-                    $constructor = $method;
-                } else {
-                    $otherMethods[] = $method;
-                }
-            }
-
-            if (isset($constructor)) {
-                if ($opts['visibility'] == 'public' && !$constructor->isPublic()) {
-                    unset($constructor);
-                } elseif ($opts['visibility'] == 'protected' && !($constructor->isPublic() || $constructor->isProtected())) {
-                    unset($constructor);
-                }
-
-                if (isset($constructor)) {
-                    $hasFunctions = true;
-
-                    $constructorMethodTemplate = $constructor->isStatic() ? TemplateFactory::getTemplate('snippets', 'staticMethod') : TemplateFactory::getTemplate('snippets', 'method');
-
-                    $this->processMethodTemplate($constructorMethodTemplate, $constructor, $reflector->getShortName());
-
-                    $template->markHas('Constructor');
-                    $template->supplyReplacement('constructorInfo', $constructorMethodTemplate);
-                }
-            }
-
-            if (count($staticMethods)) {
-                $staticMethodsContent = '';
-                $staticInheritedMethodsContent = '';
-
-                foreach ($staticMethods as $staticMethod) {
-                    if ($opts['visibility'] == 'public' && !$staticMethod->isPublic()) {
-                        continue;
-                    }
-
-                    if ($opts['visibility'] == 'protected' && !($staticMethod->isPublic() || $staticMethod->isProtected())) {
-                        continue;
-                    }
-
-                    $hasFunctions = true;
-
-                    $staticMethodTemplate = TemplateFactory::getTemplate('snippets', 'staticMethod');
-
-                    $this->processMethodTemplate($staticMethodTemplate, $staticMethod, $reflector->getShortName());
-
-                    $declaringClass = $staticMethod->getDeclaringClass();
-
-                    if ($declaringClass->getName() != $reflector->getName()) {
-                        $staticInheritedMethodsContent[] = $staticMethodTemplate;
-                    } else {
-                        $staticMethodsContent[] = $staticMethodTemplate;
-                    }
-                }
-
-                if (!empty($staticInheritedMethodsContent)) {
-                    $template->markHas('InheritedStaticMethods');
-                    $template->supplyReplacement('inheritedStaticMethods', $staticInheritedMethodsContent);
-                }
-                if (!empty($staticMethodsContent)) {
-                    $template->markHas('StaticMethods');
-                    $template->supplyReplacement('staticMethodsInfo', $staticMethodsContent);
-                }
-            }
-
-            if (count($otherMethods)) {
-                $otherMethodsContent = '';
-                $otherInheritedMethodsContent = '';
-
-                foreach ($otherMethods as $method) {
-                    if ($opts['visibility'] == 'public' && !$method->isPublic()) {
-                        continue;
-                    }
-
-                    if ($opts['visibility'] == 'protected' && !($method->isPublic() || $method->isProtected())) {
-                        continue;
-                    }
-
-                    $hasFunctions = true;
-
-                    $methodTemplate = TemplateFactory::getTemplate('snippets', 'method');
-
-                    $this->processMethodTemplate($methodTemplate, $method, $reflector->getShortName());
-
-                    $declaringClass = $method->getDeclaringClass();
-
-                    if ($declaringClass->getName() != $reflector->getName()) {
-                        $otherInheritedMethodsContent[] = $methodTemplate;
-                    } else {
-                        $otherMethodsContent[] = $methodTemplate;
-                    }
-
-                }
-
-                if (!empty($otherInheritedMethodsContent)) {
-                    $template->markHas('InheritedMethods');
-                    $template->supplyReplacement('inheritedMethods', $otherInheritedMethodsContent);
-                }
-                if (!empty($otherMethodsContent)) {
-                    $template->markHas('Methods');
-                    $template->supplyReplacement('methodsInfo', $otherMethodsContent);
-                }
-            }
-
-            if (count($properties)) {
-                $propertyContent = '';
-                $propertyInheritedContent = '';
-
-                foreach ($properties as $property) {
-                    if ($opts['visibility'] == 'public' && !$property->isPublic()) {
-                        continue;
-                    }
-
-                    if ($opts['visibility'] == 'protected' && !($property->isPublic() || $property->isProtected())) {
-                        continue;
-                    }
-
-                    $hasData = true;
-
-                    $propertyTemplate = TemplateFactory::getTemplate('snippets', 'classProperty');
-
-                    if ($property->getDocComment()) {
-                        $propertyDoc = new DocBlockProcessor($property->getDocComment());
-                    } else {
-                        $propertyDoc = null;
-                    }
-
-                    $connector = $property->isStatic() ? '::' : '->';
-                    $className = $property->getDeclaringClass()->getShortName();
-                    $propertyName = $property->getName();
-
-                    $propertyType = $property->hasType() ? $property->getType() : $propertyDoc?->others['var']->type ?? '*mixed* (assumed)';
-
-                    $defaultValue = $property->hasDefaultValue() ? $property->getDefaultValue() : '*undefined*';
-
-                    if ($defaultValue !== "*undefined*") {
-                        if (is_object($defaultValue)) {
-                            $defaultValue = $defaultValue::class;
-                        } elseif (is_array($defaultValue)) {
-                            $tempVal = var_export($defaultValue, true);
-                            $tempVal = explode(PHP_EOL, $tempVal);
-                            foreach ($tempVal as &$value) {
-                                $value = trim(rtrim($value));
-                            }
-                            $tempVal = implode('', $tempVal);
-                            $defaultValue = str_replace(["\r", "\n"], '', $tempVal);
-                        } elseif (is_null($defaultValue)) {
-                            $defaultValue = 'null';
-                        } elseif (is_string($defaultValue)) {
-                            $defaultValue = "'".$defaultValue."'";
-                        } else {
-                            $defaultValue = (string)$defaultValue;
-                        }
-                    }
-
-                    $propertyVisibility = ($property->isPublic() ? 'public' : ($property->isProtected() ? 'protected' : 'private'));
-
-                    $propertyTemplate->supplyReplacement('visibility', $propertyVisibility);
-                    $propertyTemplate->supplyReplacement('className', $className);
-                    $propertyTemplate->supplyReplacement('connector', $connector);
-                    $propertyTemplate->supplyReplacement('propertyName', $propertyName);
-                    $propertyTemplate->supplyReplacement('propertyType', $propertyType);
-                    $propertyTemplate->supplyReplacement('defaultValue', $defaultValue);
-
-                    if ($property->getDeclaringClass()->getName() != $reflector->getName()) {
-                        $propertyInheritedContent[] = $propertyTemplate;
-                    } else {
-                        $propertyContent[] = $propertyTemplate;
-                    }
-                }
-
-                if (!empty($propertyInheritedContent)) {
-                    $template->markHas('InheritedProperties');
-                    $template->supplyReplacement('inheritedProperties', $propertyInheritedContent);
-                }
-                if (!empty($propertyContent)) {
-                    $template->markHas('Properties');
-                    $template->supplyReplacement('propertiesInfo', $propertyContent);
-                }
-
-
-
-            }
-
-            if (count($constants)) {
-                $constantContent = '';
-
-                foreach ($constants as $constantName => $constant) {
-                    $hasData = true;
-
-                    $constantTemplate = clone $this->templates['snippets']['classConstant'];
-
-                    $className = $reflector->getShortName();
-                    $propertyName = $constantName;
-                    $defaultValue = $constant;
-
-                    if ($defaultValue !== "*undefined*") {
-                        if (is_object($defaultValue)) {
-                            $defaultValue = $defaultValue::class;
-                        } elseif (is_array($defaultValue)) {
-                            $tempVal = var_export($defaultValue, true);
-                            $tempVal = explode(PHP_EOL, $tempVal);
-                            foreach ($tempVal as &$value) {
-                                $value = trim(rtrim($value));
-                            }
-                            $tempVal = implode('', $tempVal);
-                            $defaultValue = str_replace(["\r", "\n"], '', $tempVal);
-                        } elseif (is_null($defaultValue)) {
-                            $defaultValue = 'null';
-                        } elseif (is_string($defaultValue)) {
-                            $defaultValue = "'".$defaultValue."'";
-                        } else {
-                            $defaultValue = (string)$defaultValue;
-                        }
-                    }
-
-
-                    $constantTemplate->supplyReplacement('className', $className);
-                    $constantTemplate->supplyReplacement('constantName', $propertyName);
-                    $constantTemplate->supplyReplacement('defaultValue', $defaultValue);
-
-                    $constantContent[] = $constantTemplate->compile();
-                }
-
-                if (!empty($constantContent)) {
-                    $template->markHas('Constants');
-                    $template->supplyReplacement('constantsInfo', $constantContent);
-                }
-            }
-
-            $namespaceParts = explode('\\', $reflector->getNamespaceName());
-
-            $namespacePath = '';
-
-            foreach ($namespaceParts as $part) {
-                $namespacePath .= '/'.$part;
-                if (!is_dir($baseExportPath.$namespacePath)) {
-                    mkdir($baseExportPath.$namespacePath);
-                }
-            }
-
-            if ($hasData) {
-                $template->markHas('ClassData');
-            }
-
-            if ($hasFunctions) {
-                $template->markHas('Functions');
-            }
-
-            if ($hasInheritance) {
-                $template->markHas('Hierarchy');
-            }
-
-            TemplateFactory::queueCompile($reflector->getName(), $template);
-
+            $this->io->progressAdvance();
         }
 
+        $this->io->progressFinish();
+
+        TemplateFactory::compileAll();
         TemplateFactory::writeToDocs($baseExportPath);
 
         return 0;
     }
 
-    /**
-     * Ths is
-     * a multiline
-     * description.
-     *
-     *
-     * @param TemplateProcessor $template
-     * @param \ReflectionMethod $method
-     * @param string $class
-     */
-    protected function processMethodTemplate(TemplateProcessor $template, \ReflectionMethod $method, string $class)
-    {
-        $docBlock = new DocBlockProcessor($method->getDocComment());
-
-        if ($docBlock->return) {
-            $returnTag = $docBlock->return;
-        } else {
-            $returnTag = [];
-        }
-
-        if (count($docBlock->params)) {
-            $paramTags = $docBlock->params;
-        } else {
-            $paramTags = [];
-        }
-
-        $visibility = ($method->isPublic() ? 'public' : ($method->isProtected() ? 'protected' : ($method->isPrivate() ? 'private' : '')));
-        $template->supplyReplacement('visibility', $visibility);
-
-        $template->supplyReplacement('className', $method->getDeclaringClass()->getShortName());
-
-        $template->supplyReplacement('methodName', $method->getShortName());
-
-        $condensedArgs = '';
-        $expandedArgs = '';
-
-        foreach ($method->getParameters() as $parameter) {
-            $argDetail = TemplateFactory::getTemplate('snippets', 'methodArgDetail');
-            if ($parameter->hasType() || (isset($paramTags[$parameter->getName()]) && !empty($paramTags[$parameter->getName()]->type))) {
-                $typeInfo = $parameter->hasType() ? (string)$parameter->getType() : ($paramTags[$parameter->getName()]->type ?? '');
-                $argDetail->markHas('Type');
-                $argDetail->supplyReplacement('argType', $typeInfo);
-            }
-
-            $parameterDesc = $paramTags[$parameter->getName()]->description ?? '*No description available*';
-            $parameterDesc = empty($parameterDesc) ? '*No description available*' : $parameterDesc;
-
-            $argDetail->supplyReplacement('argName', $parameter->getName());
-            $argDetail->supplyReplacement('argDesc', $parameterDesc);
-
-            $argExpanded = $argDetail->compile();
-
-            if (!empty($expandedArgs)) {
-                $expandedArgs .= PHP_EOL;
-            } else {
-                $argExpanded = substr($argExpanded, 4);
-            }
-            $expandedArgs .= $argExpanded;
-
-            $argSignature = $parameter->getType().' $'.$parameter->getName();
-
-            try {
-                if ($parameter->getType() == "string") {
-                    $argSignature .= ' = \'' . $parameter->getDefaultValue() . '\'';
-                } else {
-                    $argSignature .= ' = ' . $parameter->getDefaultValue();
-                }
-            } catch (\ReflectionException) {
-                //
-            }
-
-            if (!empty($condensedArgs)) {
-                $condensedArgs .= ', ';
-            }
-
-            $condensedArgs .= $argSignature;
-        }
-
-        $template->supplyReplacement('methodArgs', $condensedArgs);
-        if (!empty($expandedArgs)) {
-            $template->markHas('Arguments');
-            $template->supplyReplacement('methodArgDetails', $expandedArgs);
-        }
-
-        $returnType = ($method->hasReturnType() ? $method->getReturnType() : ($returnTag->type ?? '*mixed* (assumed)'));
-        $returnType = empty($returnType) ? '*mixed* (assumed)' : $returnType;
-
-        if ($method->isConstructor()) {
-            $returnType = $class;
-        }
-
-        $returnDesc = $returnTag->description ?? '*No description available*';
-        $returnDesc = empty($returnDesc) ? '*No description available*' : $returnDesc;
-
-        $template->supplyReplacement('methodReturnType', $returnType);
-        $template->supplyReplacement('methodReturnDesc', $returnDesc);
-
-        if (!empty($docBlock->description)) {
-            $template->markHas('Desc');
-
-            $cleanedDesc = str_replace(["\n", "\r"], ' ', $docBlock->description);
-
-            $template->supplyReplacement(
-                'methodDescription',
-                $cleanedDesc
-            );
-        }
-
-        if (!empty($docBlock->example)) {
-            $template->markHas('Example');
-            $template->supplyReplacement('methodExample', '```php'.PHP_EOL.$docBlock->description.PHP_EOL.'```');
-        }
-    }
-
     protected function traverseDirectories(string $dir): array
     {
+
+        if ($this->verbose) {
+            $this->io->note('Traversing directories');
+        }
 
         $fileList = [];
 
@@ -663,18 +305,29 @@ class Roster extends Command
     protected function processTemplates(string $templatePath): void
     {
 
-        if (is_dir($templatePath)) {
-            $fileList = $this->traverseDirectories($templatePath);
-        } else {
-            $templatePath = $this->rootDir.'/'.$templatePath;
-            $fileList = $this->traverseDirectories($templatePath);
-        }
+        if (!is_dir($templatePath)) {
+            if (is_dir($this->rootDir.'/'.$templatePath)) {
+                $templatePath = $this->rootDir . '/' . $templatePath;
+            } elseif (is_dir($this->rootDir.'/vendor/samsara/roster/doc-templates/roster-templates')) {
+                $templatePath = $this->rootDir.'/vendor/samsara/roster/doc-templates/roster-templates';
+            } else {
+                $this->io->error('Cannot find Roster templates.');
+                $this->io->info('Please provide a path to the templates directory using the --templates option.');
 
+                return;
+            }
+        }
+        $fileList = $this->traverseDirectories($templatePath);
+
+        $this->io->block('Loading Templates');
+        $this->io->progressStart(count($fileList));
         foreach ($fileList as $file) {
 
             TemplateFactory::pushTemplate($file);
+            $this->io->progressAdvance();
 
         }
+        $this->io->progressFinish();
 
     }
 
