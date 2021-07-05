@@ -127,6 +127,32 @@ div.highlight pre span.lineno {
     color: #333333;
 }
 
+.rst-content .footer-link {
+    padding: 0;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    border: 0;
+    box-shadow: none;
+    background: inherit;
+}
+
+.rst-content .footer-link .admonition-title {
+    background: inherit;
+    font-family: 'sans-serif';
+    font-style: italic;
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 8px;
+    border-bottom: 0;
+    padding-bottom: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 6px;
+}
+
 .rst-content .signature {
     padding: 0;
     margin-bottom: 12px;

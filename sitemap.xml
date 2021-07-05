@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
+         <loc>https://jordanrl.github.io/Roster/</loc>
+         <lastmod>2021-07-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/getting-started/installation/</loc>
+         <lastmod>2021-07-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/getting-started/using-the-command/</loc>
+         <lastmod>2021-07-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://jordanrl.github.io/Roster/roster/latest/Samsara/Roster/App/</loc>
          <lastmod>2021-07-05</lastmod>
          <changefreq>daily</changefreq>
