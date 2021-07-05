@@ -61,37 +61,37 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Code Reference</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Roster</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Samsara</a>
     <ul class="current">
-                <li class="toctree-l2"><a class="reference internal" href="../TemplateFactory/">TemplateFactory</a>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Roster</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="../TemplateFactory/">TemplateFactory</a>
                 </li>
-                <li class="toctree-l2 current"><a class="reference internal current" href="./">Roster</a>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">Roster</a>
     <ul class="current">
     </ul>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../App/">App</a>
+                <li class="toctree-l3"><a class="reference internal" href="../App/">App</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="#">Processors</a>
+                <li class="toctree-l3"><a class="reference internal" href="#">Processors</a>
     <ul>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/InterfaceInlineProcessor/">InterfaceInlineProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/InterfaceInlineProcessor/">InterfaceInlineProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/TraitInlineProcessor/">TraitInlineProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/TraitInlineProcessor/">TraitInlineProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/MethodArgumentDetailProcessor/">MethodArgumentDetailProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/MethodArgumentDetailProcessor/">MethodArgumentDetailProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/ClassProcessor/">ClassProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/ClassProcessor/">ClassProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/TemplateProcessor/">TemplateProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/TemplateProcessor/">TemplateProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/PropertyProcessor/">PropertyProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/PropertyProcessor/">PropertyProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/MethodArgumentProcessor/">MethodArgumentProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/MethodArgumentProcessor/">MethodArgumentProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../Processors/MethodProcessor/">MethodProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="../Processors/MethodProcessor/">MethodProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="#">Base</a>
-    <ul>
-                <li class="toctree-l4"><a class="reference internal" href="../Processors/Base/BaseCodeProcessor/">BaseCodeProcessor</a>
+                <li class="toctree-l4"><a class="reference internal" href="#">Base</a>
                 </li>
     </ul>
                 </li>
@@ -122,6 +122,10 @@
       
         
           <li>Roster &raquo;</li>
+        
+      
+        
+          <li>Samsara &raquo;</li>
         
       
         
@@ -257,38 +261,31 @@
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
-<dd>string</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-</div>
-<div class="admonition signature">
-<p class="admonition-title">protected Roster-&gt;buildNavArrayRecursive(array $parts, int $depth)</p>
-<p><strong>$parts</strong></p>
-<dl>
-<dt>type</dt>
-<dd>array</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>$depth</strong></p>
-<dl>
-<dt>type</dt>
-<dd>int</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>return</strong></p>
-<dl>
-<dt>type</dt>
 <dd>array|string</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
 </div>
 <div class="admonition signature">
-<p class="admonition-title">protected Roster-&gt;buildNavRecursive(array $navArray, int $depth, string $builtString)</p>
-<p><strong>$navArray</strong></p>
+<p class="admonition-title">protected Roster-&gt;formatNavArrayRecursive(array $nav)</p>
+<p><strong>$nav</strong></p>
+<dl>
+<dt>type</dt>
+<dd>array</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+<p><strong>return</strong></p>
+<dl>
+<dt>type</dt>
+<dd>array</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+</div>
+<div class="admonition signature">
+<p class="admonition-title">protected Roster-&gt;buildNavArrayRecursive(array $parts, int $depth, string $builtString)</p>
+<p><strong>$parts</strong></p>
 <dl>
 <dt>type</dt>
 <dd>array</dd>
@@ -312,7 +309,7 @@
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
-<dd>string</dd>
+<dd>array|string</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
