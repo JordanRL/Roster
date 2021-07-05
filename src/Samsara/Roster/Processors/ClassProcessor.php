@@ -41,21 +41,26 @@ class ClassProcessor extends BaseCodeProcessor
      * ClassProcessor constructor
      * @param ReflectionClass $class This is the reflection class of the class that you want to build a doc from.
      */
-    public function __construct(ReflectionClass $class)
+    public function __construct(ReflectionClass $class, string $templateName = 'class')
     {
         $this->class = $class;
         $this->docBlock = new DocBlockProcessor($this->class->getDocComment(), false);
 
-        if (array_key_exists('roster-template', $this->docBlock->others)) {
-            $this->templateProcessor = TemplateFactory::getTemplate($this->docBlock->others['roster-template']->description);
-        } else {
-            $this->templateProcessor = TemplateFactory::getTemplate('class');
-        }
+        $this->templateLoader($templateName);
 
         $this->shortName = $class->getShortName();
         $this->declaringClass = $class->getName();
 
         $this->buildClassInfo();
+    }
+
+    protected function templateLoader(string $templateName)
+    {
+        if (array_key_exists('roster-template', $this->docBlock->others)) {
+            $this->templateProcessor = TemplateFactory::getTemplate($this->docBlock->others['roster-template']->description);
+        } else {
+            $this->templateProcessor = TemplateFactory::getTemplate($templateName);
+        }
     }
 
     protected function buildClassInfo()
@@ -388,8 +393,144 @@ class ClassProcessor extends BaseCodeProcessor
             $this->templateProcessor->markHas('Constructor');
             $this->templateProcessor->supplyReplacement('constructorInfo', $this->constructor->compile());
         }
+        $staticMethodsContent = '';
+        $methodsContent = '';
+        $inheritedStaticMethodsContent = '';
+        $inheritedMethodsContent = '';
 
-        if ($this->constructor) {
+        // Static Methods
+        if (array_key_exists('public', $this->staticMethods)) {
+            foreach ($this->staticMethods['public'] as $method) {
+                if ($method->getDeclaringClass() != $this->class->getName()) {
+                    if (!empty($inheritedStaticMethodsContent)) {
+                        $inheritedStaticMethodsContent .= PHP_EOL;
+                    }
+
+                    $inheritedStaticMethodsContent .= $method->compile();
+                } else {
+                    if (!empty($staticMethodsContent)) {
+                        $staticMethodsContent .= PHP_EOL;
+                    }
+
+                    $staticMethodsContent .= $method->compile();
+                }
+            }
+        }
+        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->staticMethods)) {
+            foreach ($this->staticMethods['protected'] as $method) {
+                if ($method->getDeclaringClass() != $this->class->getName()) {
+                    if (!empty($inheritedStaticMethodsContent)) {
+                        $inheritedStaticMethodsContent .= PHP_EOL;
+                    }
+
+                    $inheritedStaticMethodsContent .= $method->compile();
+                } else {
+                    if (!empty($staticMethodsContent)) {
+                        $staticMethodsContent .= PHP_EOL;
+                    }
+
+                    $staticMethodsContent .= $method->compile();
+                }
+            }
+        }
+        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->staticMethods)) {
+            foreach ($this->staticMethods['private'] as $method) {
+                if ($method->getDeclaringClass() != $this->class->getName()) {
+                    if (!empty($inheritedStaticMethodsContent)) {
+                        $inheritedStaticMethodsContent .= PHP_EOL;
+                    }
+
+                    $inheritedStaticMethodsContent .= $method->compile();
+                } else {
+                    if (!empty($staticMethodsContent)) {
+                        $staticMethodsContent .= PHP_EOL;
+                    }
+
+                    $staticMethodsContent .= $method->compile();
+                }
+            }
+        }
+
+        // Non-Static Methods
+        if (array_key_exists('public', $this->nonStaticMethods)) {
+            foreach ($this->nonStaticMethods['public'] as $method) {
+                if ($method->getDeclaringClass() != $this->class->getName()) {
+                    if (!empty($inheritedMethodsContent)) {
+                        $inheritedMethodsContent .= PHP_EOL;
+                    }
+
+                    $inheritedMethodsContent .= $method->compile();
+                } else {
+                    if (!empty($methodsContent)) {
+                        $methodsContent .= PHP_EOL;
+                    }
+
+                    $methodsContent .= $method->compile();
+                }
+            }
+        }
+        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->nonStaticMethods)) {
+            foreach ($this->nonStaticMethods['protected'] as $method) {
+                if ($method->getDeclaringClass() != $this->class->getName()) {
+                    if (!empty($inheritedMethodsContent)) {
+                        $inheritedMethodsContent .= PHP_EOL;
+                    }
+
+                    $inheritedMethodsContent .= $method->compile();
+                } else {
+                    if (!empty($methodsContent)) {
+                        $methodsContent .= PHP_EOL;
+                    }
+
+                    $methodsContent .= $method->compile();
+                }
+            }
+        }
+        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->nonStaticMethods)) {
+            foreach ($this->nonStaticMethods['private'] as $method) {
+                if ($method->getDeclaringClass() != $this->class->getName()) {
+                    if (!empty($inheritedMethodsContent)) {
+                        $inheritedMethodsContent .= PHP_EOL;
+                    }
+
+                    $inheritedMethodsContent .= $method->compile();
+                } else {
+                    if (!empty($methodsContent)) {
+                        $methodsContent .= PHP_EOL;
+                    }
+
+                    $methodsContent .= $method->compile();
+                }
+            }
+        }
+
+        if (!empty($staticMethodsContent)) {
+            $this->templateProcessor->markHas('StaticMethods');
+            $this->templateProcessor->supplyReplacement('staticMethodsInfo', $staticMethodsContent);
+        }
+
+        if (!empty($inheritedStaticMethodsContent)) {
+            $this->templateProcessor->markHas('InheritedStaticMethods');
+            $this->templateProcessor->supplyReplacement('inheritedStaticMethodsInfo', $inheritedStaticMethodsContent);
+        }
+
+        if (!empty($methodsContent)) {
+            $this->templateProcessor->markHas('Methods');
+            $this->templateProcessor->supplyReplacement('methodsInfo', $methodsContent);
+        }
+
+        if (!empty($inheritedMethodsContent)) {
+            $this->templateProcessor->markHas('InheritedMethods');
+            $this->templateProcessor->supplyReplacement('inheritedMethodsInfo', $inheritedMethodsContent);
+        }
+
+        if (
+            $this->constructor ||
+            !empty($staticMethodsContent) ||
+            !empty($inheritedStaticMethodsContent) ||
+            !empty($methodsContent) ||
+            !empty($inheritedMethodsContent)
+        ) {
             $this->templateProcessor->markHas('Functions');
         }
 

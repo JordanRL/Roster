@@ -9,13 +9,7 @@ use Samsara\Roster\TemplateFactory;
 
 abstract class BaseCodeProcessor
 {
-    protected string $shortName = '';
     protected string $declaringClass = '';
-
-    public function getShortName(): string
-    {
-        return $this->shortName;
-    }
 
     public function getDeclaringClass(): string
     {
@@ -57,6 +51,8 @@ abstract class BaseCodeProcessor
 
         return (empty($option1) ? (empty($option2) ? $option3 : $option2) : $option1);
     }
+
+    abstract protected function templateLoader(string $templateName);
 
     abstract public function compile();
 

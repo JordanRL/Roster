@@ -10,17 +10,7 @@
 
 {$extendInfo}
 
-{hasExtends$}{$hasInterfaces}
-### Implements
-
-{$interfaceInfo}
-
-{hasInterfaces$}{$hasTraits}
-### Has Traits
-
-{$traitInfo}
-
-{hasTraits$}{hasHierarchy$}{$hasClassData}
+{hasExtends$}{hasHierarchy$}{$hasClassData}
 ## Variables & Data
 
 {$hasConstants}
@@ -28,25 +18,10 @@
 
 {$constantsInfo}
 
-{hasConstants$}{$hasProperties}
-### Properties
-
-{$propertiesInfo}
-
-{hasProperties$}{$hasInheritedProperties}
-### Inherited Properties
-
-{$inheritedPropertiesInfo}
-
-{hasInheritedProperties$}{hasClassData$}{$hasFunctions}
+{hasConstants$}{hasClassData$}{$hasFunctions}
 ## Methods
 
-{$hasConstructor}
-### Constructor
-
-{$constructorInfo}
-
-{hasConstructor$}{$hasStaticMethods}
+{$hasStaticMethods}
 ### Static Methods
 
 {$staticMethodsInfo}

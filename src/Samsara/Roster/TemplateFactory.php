@@ -4,6 +4,7 @@ namespace Samsara\Roster;
 
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 use Samsara\Roster\Processors\TemplateProcessor;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TemplateFactory
 {
@@ -74,18 +75,22 @@ class TemplateFactory
         return isset(self::$templates[$name]);
     }
 
-    public static function compileAll()
+    public static function compileAll(SymfonyStyle $io)
     {
 
+        $io->progressStart(count(self::$compileQueue));
         foreach (self::$compileQueue as $path => $template) {
             self::$compileFinished[$path] = $template->compile();
+            $io->progressAdvance();
         }
+        $io->progressFinish();
 
     }
 
-    public static function writeToDocs(string $writePath)
+    public static function writeToDocs(string $writePath, SymfonyStyle $io)
     {
 
+        $io->progressStart(count(self::$compileFinished));
         foreach (self::$compileFinished as $path => $content) {
             $pathPart = explode('\\', $path);
             $pathSum = '';
@@ -98,7 +103,9 @@ class TemplateFactory
             }
 
             file_put_contents($writePath.$pathSum.'/'.$filename.'.md', $content);
+            $io->progressAdvance();
         }
+        $io->progressFinish();
 
     }
 

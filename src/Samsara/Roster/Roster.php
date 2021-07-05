@@ -176,19 +176,45 @@ class Roster extends Command
         $this->io->section('Processing Classes');
 
         $this->io->progressStart(count($this->reflectors['classes']));
+        foreach ($this->reflectors['classes'] as $reflector) {
+            $classProcessor = new ClassProcessor($reflector);
 
-        foreach ($this->reflectors['classes'] as  $reflector) {
-            $class = new ClassProcessor($reflector);
-
-            TemplateFactory::queueCompile($reflector->getName(), $class);
+            TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
 
             $this->io->progressAdvance();
         }
-
         $this->io->progressFinish();
 
-        TemplateFactory::compileAll();
-        TemplateFactory::writeToDocs($baseExportPath);
+        $this->io->section('Processing Interfaces');
+
+        $this->io->progressStart(count($this->reflectors['interfaces']));
+        foreach ($this->reflectors['interfaces'] as $reflector) {
+            $classProcessor = new ClassProcessor($reflector, 'interface');
+
+            TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
+
+            $this->io->progressAdvance();
+        }
+        $this->io->progressFinish();
+
+        $this->io->section('Processing Traits');
+
+        $this->io->progressStart(count($this->reflectors['traits']));
+        foreach ($this->reflectors['traits'] as $reflector) {
+            $classProcessor = new ClassProcessor($reflector, 'trait');
+
+            TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
+
+            $this->io->progressAdvance();
+        }
+        $this->io->progressFinish();
+
+        $this->io->section('Compiling');
+        TemplateFactory::compileAll($this->io);
+
+        $this->io->section('Writing Documentation to Output Directory');
+        $this->io->block('Current Output Directory: '.$baseExportPath);
+        TemplateFactory::writeToDocs($baseExportPath, $this->io);
 
         return 0;
     }
