@@ -1,2 +1,1 @@
-    {$originalMethod} as {$newMethod}
-    :   {$originalMethodDesc}
+| {$originalMethod} | {$newMethod} |

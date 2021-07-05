@@ -1,3 +1,3 @@
-!!! signature constant "{$className}::{$constantName}"
+##### {$className}::{$constantName}
     value
     :   {$value}

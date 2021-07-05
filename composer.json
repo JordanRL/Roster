@@ -24,7 +24,8 @@
   "license": "GPL-3.0-only",
   "require": {
     "symfony/console": "^v5.3",
-    "samsara/mason": "dev-master"
+    "samsara/mason": "^0.1",
+    "php": ">=8.0"
   },
   "require-dev": {
   },

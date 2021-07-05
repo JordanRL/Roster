@@ -11,15 +11,15 @@ class TemplateFactory
 
     /** @var TemplateProcessor[] */
     private static array $templates = [];
-
+    /** @var string[] */
+    private static array $compileExtensions = [];
     /** @var array<TemplateProcessor|BaseCodeProcessor> */
     private static array $compileQueue = [];
-
     /** @var string[] */
     private static array $compileFinished = [];
-
+    /** @var array<int, string> */
+    private static array $writtenFiles = [];
     private static bool $preferSource = true;
-
     private static int $visibilityLevel = 1;
 
     public static function setPreferSource(bool $preferSource)
@@ -45,10 +45,10 @@ class TemplateFactory
     /**
      * @param string $filePath
      */
-    public static function pushTemplate(string $filePath)
+    public static function pushTemplate(string $filePath, string $extension = 'md')
     {
 
-        $template = basename($filePath, '.md');
+        $template = basename($filePath, '.'.$extension);
 
         $contents = file_get_contents($filePath);
 
@@ -65,9 +65,10 @@ class TemplateFactory
         return (self::hasTemplate($name) ? clone self::$templates[$name] : false);
     }
 
-    public static function queueCompile(string $path, TemplateProcessor|BaseCodeProcessor $template)
+    public static function queueCompile(string $path, TemplateProcessor|BaseCodeProcessor $template, string $extension = 'md')
     {
         self::$compileQueue[$path] = $template;
+        self::$compileExtensions[$path] = $extension;
     }
 
     public static function hasTemplate(string $name): bool
@@ -83,8 +84,14 @@ class TemplateFactory
             self::$compileFinished[$path] = $template->compile();
             $io->progressAdvance();
         }
+        self::$compileQueue = [];
         $io->progressFinish();
 
+    }
+
+    public static function getWrittenFiles(): array
+    {
+        return self::$writtenFiles;
     }
 
     public static function writeToDocs(string $writePath, SymfonyStyle $io)
@@ -102,9 +109,17 @@ class TemplateFactory
                 }
             }
 
-            file_put_contents($writePath.$pathSum.'/'.$filename.'.md', $content);
+            $finalPath = $writePath.$pathSum.'/'.$filename.'.'.self::$compileExtensions[$path];
+            self::$writtenFiles[] = $finalPath;
+
+            if (self::$compileExtensions[$path] == 'md') {
+                $content .= PHP_EOL.PHP_EOL.'---'.PHP_EOL.'!!! footer-link "This documentation was generated with [Roster](https://jordanrl.github.io/Roster/)."';
+            }
+
+            file_put_contents($finalPath, $content);
             $io->progressAdvance();
         }
+        self::$compileFinished = [];
         $io->progressFinish();
 
     }

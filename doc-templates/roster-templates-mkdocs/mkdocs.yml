@@ -1,0 +1,25 @@
+site_name: {$siteName}
+extra_css:
+  - css/roster-style.css
+repo_url: {$repoUrl}
+site_url: {$siteUrl}
+nav:
+{$navigation}
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - php
+markdown_extensions:
+  - toc:
+      toc_depth: 2
+  - admonition
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
+      linenums_style: inline
+  - pymdownx.snippets:
+      base_path: ./docs/snippets
+      check_paths: true
+  - pymdownx.extra

@@ -1,2 +1,3 @@
-    ${$argName}{$hasType} | {$argType}{hasType$}
-    :   {$argDesc}
+**${$argName}**{$hasType}
+| type | {$argType} |{hasType$}
+| description | {$argDesc} |

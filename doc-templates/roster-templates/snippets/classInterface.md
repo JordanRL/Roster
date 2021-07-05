@@ -1,3 +1,3 @@
-!!! signature trait "{$interfaceName}"
-    {$interfaceNamespace}
-    :   {$interfaceDesc}
+##### {$interfaceName}
+| namespace | {$interfaceNamespace} |
+| description | {$interfaceDesc} |

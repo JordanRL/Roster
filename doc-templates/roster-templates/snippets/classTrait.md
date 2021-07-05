@@ -1,5 +1,7 @@
-!!! signature trait "{$traitName}"
-    {$traitNamespace}
-    :   {$traitDesc}{$hasAliases}
+##### {$traitName}
+| namespace | {$traitNamespace} |
+| description | {$traitDesc} |{$hasAliases}
 
-    {$traitAliases}{hasAliases$}
+**Aliases**
+| Original Method | New Method |
+{$traitAliases}{hasAliases$}

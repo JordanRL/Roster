@@ -1,0 +1,45 @@
+site_name: Roster - Docs From The Source
+extra_css:
+  - css/roster-style.css
+repo_url: https://github.com/JordanRL/Roster/
+site_url: https://jordanrl.github.io/Roster/
+nav:
+  - 'Home': 'index.md'
+  - 'About':
+      - 'Installation': 'getting-started/installation.md'
+      - 'Using the Command': 'getting-started/using-the-command.md'
+  - 'Code Reference':
+      - 'Roster':
+          - 'TemplateFactory': 'roster/latest/Samsara/Roster/TemplateFactory.md'
+          - 'Roster': 'roster/latest/Samsara/Roster/Roster.md'
+          - 'App': 'roster/latest/Samsara/Roster/App.md'
+          - 'Processors':
+              - 'InterfaceInlineProcessor': 'roster/latest/Samsara/Roster/Processors/InterfaceInlineProcessor.md'
+              - 'TraitInlineProcessor': 'roster/latest/Samsara/Roster/Processors/TraitInlineProcessor.md'
+              - 'MethodArgumentDetailProcessor': 'roster/latest/Samsara/Roster/Processors/MethodArgumentDetailProcessor.md'
+              - 'ClassProcessor': 'roster/latest/Samsara/Roster/Processors/ClassProcessor.md'
+              - 'TemplateProcessor': 'roster/latest/Samsara/Roster/Processors/TemplateProcessor.md'
+              - 'PropertyProcessor': 'roster/latest/Samsara/Roster/Processors/PropertyProcessor.md'
+              - 'MethodArgumentProcessor': 'roster/latest/Samsara/Roster/Processors/MethodArgumentProcessor.md'
+              - 'MethodProcessor': 'roster/latest/Samsara/Roster/Processors/MethodProcessor.md'
+              - 'Base':
+                  - 'BaseCodeProcessor': 'roster/latest/Samsara/Roster/Processors/Base/BaseCodeProcessor.md'
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - php
+markdown_extensions:
+  - toc:
+      toc_depth: 1
+  - admonition
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
+      linenums_style: inline
+  - pymdownx.snippets:
+      base_path: ./docs/snippets
+      check_paths: true
+  - pymdownx.extra

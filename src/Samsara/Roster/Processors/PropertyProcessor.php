@@ -60,7 +60,8 @@ class PropertyProcessor extends BaseCodeProcessor
 
         $this->templateProcessor->supplyReplacement('propertyType', $propType);
 
-        if ($this->property->hasDefaultValue()) {
+        // Need to exclude static properties, since Roster itself could affect the 'default value' of these.
+        if ($this->property->hasDefaultValue() && !$this->property->isStatic()) {
             $defaultValue = $this->fixDefaultValue($this->property->getDefaultValue());
         } else {
             $defaultValue = '*uninitialized*';

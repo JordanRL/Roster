@@ -10,62 +10,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Samsara\Mason\DocBlockProcessor;
 
-/**
- * Some test info
- *
- * Class Roster
- * @package Samsara\Roster
- * @throws klfjdslkf
- * @throws hfkdjshjdfsh
- * @param int $test
- * @param $test2 string other stuff goes here
- */
-#[Description('This is the description...')]
 class Roster extends Command
 {
-
-    private array $arguments = [
-        'source' => [
-            'mode' => InputArgument::OPTIONAL,
-            'description' => 'The source to generate documentation from. Either a directory or a file.',
-            'default' => 'src'
-        ]
-    ];
-
-    private array $options = [
-        'templates' => [
-            'default' => 'doc-templates/roster-templates',
-            'shortcut' => 't',
-            'mode' => InputOption::VALUE_OPTIONAL,
-            'description' => 'Where to look for the roster templates'
-        ],
-        'visibility' => [
-            'default' => 'all',
-            'shortcut' => null,
-            'mode' => InputOption::VALUE_OPTIONAL,
-            'description' => 'What visibility level to include in documentation. Higher levels of visibility include all lower levels also. Value inputs are \'all\', \'protected\', \'public\'.'
-        ],
-        'prefer-source' => [
-            'default' => false,
-            'shortcut' => null,
-            'mode' => InputOption::VALUE_NEGATABLE,
-            'description' => 'If used, the information from the source code will be preferred if it conflicts with the PHPDoc info. Default behavior is to prefer PHPDoc info.'
-        ],
-        'with-version' => [
-            'default' => null,
-            'shortcut' => null,
-            'mode' => InputOption::VALUE_OPTIONAL,
-            'description' => 'Specify a version directory to export the documentation under. By default uses the version value in your project\'s composer.json file.'
-        ],
-        'with-debug' => [
-            'default' => false,
-            'shortcut' => null,
-            'mode' => InputOption::VALUE_NEGATABLE,
-            'description' => 'Output debug information to the console.'
-        ]
-    ];
 
     private array $classes = [];
 
@@ -73,6 +20,7 @@ class Roster extends Command
     private array $reflectors = [];
 
     private string $rootDir;
+    private string $baseExportPath;
 
     private array $applicationComposerJSON;
 
@@ -96,7 +44,54 @@ class Roster extends Command
             ->setDescription('Compile doc files from your comments and attributes.')
             ->setProcessTitle('Compile Documentation');
 
-        foreach ($this->arguments as $key => $argument) {
+        $arguments = [
+            'source' => [
+                'mode' => InputArgument::OPTIONAL,
+                'description' => 'The source to generate documentation from. Either a directory or a file.',
+                'default' => 'src'
+            ]
+        ];
+
+        $options = [
+            'templates' => [
+                'default' => 'doc-templates/roster-templates',
+                'shortcut' => 't',
+                'mode' => InputOption::VALUE_OPTIONAL,
+                'description' => 'Where to look for the roster templates'
+            ],
+            'visibility' => [
+                'default' => 'all',
+                'shortcut' => null,
+                'mode' => InputOption::VALUE_OPTIONAL,
+                'description' => 'What visibility level to include in documentation. Higher levels of visibility include all lower levels also. Value inputs are \'all\', \'protected\', \'public\'.'
+            ],
+            'prefer-source' => [
+                'default' => false,
+                'shortcut' => null,
+                'mode' => InputOption::VALUE_NEGATABLE,
+                'description' => 'If used, the information from the source code will be preferred if it conflicts with the PHPDoc info. Default behavior is to prefer PHPDoc info.'
+            ],
+            'with-version' => [
+                'default' => null,
+                'shortcut' => null,
+                'mode' => InputOption::VALUE_OPTIONAL,
+                'description' => 'Specify a version directory to export the documentation under. By default uses the version value in your project\'s composer.json file.'
+            ],
+            'with-debug' => [
+                'default' => false,
+                'shortcut' => null,
+                'mode' => InputOption::VALUE_NEGATABLE,
+                'description' => 'Output debug information to the console.'
+            ],
+            'mkdocs' => [
+                'default' => false,
+                'shortcut' => null,
+                'mode' => InputOption::VALUE_NEGATABLE,
+                'description' => 'If this option is used, Roster will compile with extra CSS and built-in templates to create a pre-made mkdocs ready output.'
+            ]
+        ];
+
+        foreach ($arguments as $key => $argument) {
             $this->addArgument(
                 name: $key,
                 mode: $argument['mode'],
@@ -105,7 +100,7 @@ class Roster extends Command
             );
         }
 
-        foreach ($this->options as $name => $option) {
+        foreach ($options as $name => $option) {
             $this->addOption(
                 name: $name,
                 shortcut: $option['shortcut'],
@@ -118,14 +113,11 @@ class Roster extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $this->io = $io;
+        $this->io = new SymfonyStyle($input, $output);;
         $this->io->title(App::NAME);
 
         $args = $input->getArguments();
         $opts = $input->getOptions();
-
-        $compiledFiles = [];
 
         $visibilityLevel =
             ($opts['visibility'] == 'all' || $opts['visibility'] == 'private' ? 3 :
@@ -139,24 +131,58 @@ class Roster extends Command
         $version = $opts['with-version'] ?? $packageVersion ?? 'latest';
         $this->verbose = $opts['with-debug'];
 
-        if (!is_dir($this->rootDir.'/docs')) {
-            mkdir($this->rootDir.'/docs');
+        if ($opts['mkdocs']) {
+            $baseExportPath = $this->rootDir.
+                '/docs/roster/'.
+                $version;
+
+            $python = exec('which pip');
+            $python3 = exec('which pip3');
+
+            $pythonCommand = (empty($python3) ? 'pip' : 'pip3');
+
+            if (empty($python) && empty($python3)) {
+                $this->io->warning('You\'re using the --mkdocs option but python doesn\'t appear to be installed');
+            } else {
+
+                $modulesList = exec($pythonCommand.' freeze | grep pymdown-extension');
+
+                if (!str_contains($modulesList, 'pymdown-extension')) {
+                    $this->io->note('It appears that the pymdown-extensions module isn\'t available in python.');
+                    $this->io->block('The exported templates won\'t build correctly unless the module is installed.');
+                }
+            }
+
+            if ($opts['templates'] == 'doc-templates/roster-templates') {
+                $opts['templates'] = 'doc-templates/roster-templates-mkdocs';
+            }
+        } else {
+            $baseExportPath = $this->rootDir.
+                '/docs/roster-export/'.
+                $version;
         }
 
-        if (!is_dir($this->rootDir.'/docs/roster-export')) {
-            mkdir($this->rootDir.'/docs/roster-export');
+        $this->baseExportPath = $baseExportPath;
+
+        $baseExportPathParts = explode('/', $baseExportPath);
+        $pathSum = '';
+
+        foreach ($baseExportPathParts as $exportPathPart) {
+            $pathSum .= '/'.$exportPathPart;
+            if (!is_dir($pathSum)) {
+                $createDir = mkdir($pathSum);
+
+                if (!$createDir) {
+                    $this->io->error('Could not create export path');
+                    $this->io->block(['Check that you have permissions.', 'Export Path: '.$baseExportPath]);
+                    return self::FAILURE;
+                }
+            }
         }
 
-        if (!is_dir($this->rootDir.'/docs/roster-export/'.$version)) {
-            mkdir($this->rootDir.'/docs/roster-export/'.$version);
-        }
-
-        $baseExportPath = $this->rootDir.
-            '/docs/roster-export/'.
-            $version;
 
         if ($this->verbose) {
-            $io->section('Initialization');
+            $this->io->section('Initialization');
         }
 
         $fileList = $this->traverseDirectories($args['source']);
@@ -170,44 +196,52 @@ class Roster extends Command
         $this->processTemplates($opts['templates']);
 
         if (!TemplateFactory::hasTemplate('class')) {
-            return 255;
+            $this->io->error('Could not load templates');
+            $this->io->block(['Ensure that all the required templates are present at your template folder: ', $opts['templates']]);
+            return self::FAILURE;
         }
 
-        $this->io->section('Processing Classes');
+        if (array_key_exists('classes', $this->reflectors)) {
+            $this->io->section('Processing Classes');
 
-        $this->io->progressStart(count($this->reflectors['classes']));
-        foreach ($this->reflectors['classes'] as $reflector) {
-            $classProcessor = new ClassProcessor($reflector);
+            $this->io->progressStart(count($this->reflectors['classes']));
+            foreach ($this->reflectors['classes'] as $reflector) {
+                $classProcessor = new ClassProcessor($reflector);
 
-            TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
+                TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
 
-            $this->io->progressAdvance();
+                $this->io->progressAdvance();
+            }
+            $this->io->progressFinish();
         }
-        $this->io->progressFinish();
 
-        $this->io->section('Processing Interfaces');
+        if (array_key_exists('interfaces', $this->reflectors)) {
+            $this->io->section('Processing Interfaces');
 
-        $this->io->progressStart(count($this->reflectors['interfaces']));
-        foreach ($this->reflectors['interfaces'] as $reflector) {
-            $classProcessor = new ClassProcessor($reflector, 'interface');
+            $this->io->progressStart(count($this->reflectors['interfaces']));
+            foreach ($this->reflectors['interfaces'] as $reflector) {
+                $classProcessor = new ClassProcessor($reflector, 'interface');
 
-            TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
+                TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
 
-            $this->io->progressAdvance();
+                $this->io->progressAdvance();
+            }
+            $this->io->progressFinish();
         }
-        $this->io->progressFinish();
 
-        $this->io->section('Processing Traits');
+        if (array_key_exists('traits', $this->reflectors)) {
+            $this->io->section('Processing Traits');
 
-        $this->io->progressStart(count($this->reflectors['traits']));
-        foreach ($this->reflectors['traits'] as $reflector) {
-            $classProcessor = new ClassProcessor($reflector, 'trait');
+            $this->io->progressStart(count($this->reflectors['traits']));
+            foreach ($this->reflectors['traits'] as $reflector) {
+                $classProcessor = new ClassProcessor($reflector, 'trait');
 
-            TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
+                TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
 
-            $this->io->progressAdvance();
+                $this->io->progressAdvance();
+            }
+            $this->io->progressFinish();
         }
-        $this->io->progressFinish();
 
         $this->io->section('Compiling');
         TemplateFactory::compileAll($this->io);
@@ -216,7 +250,88 @@ class Roster extends Command
         $this->io->block('Current Output Directory: '.$baseExportPath);
         TemplateFactory::writeToDocs($baseExportPath, $this->io);
 
+        if ($opts['mkdocs']) {
+            $this->io->section('Gathering MkDocs Config Info');
+            $siteName = $this->io->ask('Documentation Site Name') ?? '';
+            $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
+            $repoUrl = $this->io->ask('Repository URL') ?? '';
+
+            $nav = $this->buildMkdocsNav($baseExportPath);
+
+            $mkdocsTemplate = TemplateFactory::getTemplate('mkdocs');
+            $mkdocsTemplate->supplyReplacement('siteName', $siteName);
+            $mkdocsTemplate->supplyReplacement('siteUrl', $siteUrl);
+            $mkdocsTemplate->supplyReplacement('repoUrl', $repoUrl);
+            $mkdocsTemplate->supplyReplacement('navigation', $nav);
+
+            if (!is_dir($this->rootDir.'/docs/css')) {
+                mkdir($this->rootDir . '/docs/css');
+            }
+
+            TemplateFactory::queueCompile('mkdocs', $mkdocsTemplate, 'yml');
+            TemplateFactory::queueCompile('docs/css/roster-style', TemplateFactory::getTemplate('roster-style'), 'css');
+            TemplateFactory::queueCompile('docs/requirements', TemplateFactory::getTemplate('requirements'), 'txt');
+
+            TemplateFactory::compileAll($this->io);
+
+            TemplateFactory::writeToDocs($this->rootDir, $this->io);
+        }
+
         return 0;
+    }
+
+    protected function buildMkdocsNav(string $baseExportPath): string
+    {
+        $list = TemplateFactory::getWrittenFiles();
+        $pathParts = [];
+
+        foreach ($list as $path) {
+            $path = str_replace($baseExportPath.'/', '', $path);
+            $pathParts[] = explode('/', $path);
+        }
+
+        $navArray = [];
+
+        foreach ($pathParts as $part) {
+            $navArray = array_merge_recursive($navArray, $this->buildNavArrayRecursive($part));
+        }
+
+        return $this->buildNavRecursive($navArray);
+    }
+
+    protected function buildNavArrayRecursive(array $parts, int $depth = 0): array|string
+    {
+        $navArray = [];
+
+        if (isset($parts[$depth+1])) {
+            $navArray[$parts[$depth]] = $this->buildNavArrayRecursive($parts, $depth+1);
+            return $navArray;
+        }
+
+        return [$parts[$depth]];
+    }
+
+    protected function buildNavRecursive(array $navArray, int $depth = 1, string $builtString = ''): string
+    {
+        $indent = '  ';
+
+        $lineBase = str_repeat($indent, $depth).'- ';
+        $navContent = '';
+
+        $diffedPath = str_replace($this->rootDir.'/docs/', '', $this->baseExportPath);
+
+        foreach ($navArray as $key => $value) {
+            if (is_array($value)) {
+                $navContent .= $lineBase.'\''.$key.'\':'.PHP_EOL;
+                $navContent .= $this->buildNavRecursive($value, $depth+1, $builtString.$key.'/');
+            } else {
+                $name = str_replace('.md', '', $value);
+                $navContent .= $lineBase.'\''.$name.'\': \''.$diffedPath.'/'.$builtString.$value.'\''.PHP_EOL;
+            }
+        }
+
+        return $navContent;
+
     }
 
     protected function traverseDirectories(string $dir): array
@@ -251,6 +366,12 @@ class Roster extends Command
 
     protected function extractFileData(string $realPath): void
     {
+
+        $pathInfo = pathinfo($realPath);
+
+        if ($pathInfo['extension'] == 'css' || $pathInfo == 'js' || $pathInfo == 'txt') {
+            return;
+        }
 
         $contents = file_get_contents($realPath);
         $lines = explode(PHP_EOL, $contents);
@@ -334,8 +455,8 @@ class Roster extends Command
         if (!is_dir($templatePath)) {
             if (is_dir($this->rootDir.'/'.$templatePath)) {
                 $templatePath = $this->rootDir . '/' . $templatePath;
-            } elseif (is_dir($this->rootDir.'/vendor/samsara/roster/doc-templates/roster-templates')) {
-                $templatePath = $this->rootDir.'/vendor/samsara/roster/doc-templates/roster-templates';
+            } elseif (is_dir($this->rootDir.'/vendor/samsara/roster/'.$templatePath)) {
+                $templatePath = $this->rootDir.'/vendor/samsara/roster/'.$templatePath;
             } else {
                 $this->io->error('Cannot find Roster templates.');
                 $this->io->info('Please provide a path to the templates directory using the --templates option.');
@@ -345,11 +466,12 @@ class Roster extends Command
         }
         $fileList = $this->traverseDirectories($templatePath);
 
-        $this->io->block('Loading Templates');
+        $this->io->section('Loading Templates');
         $this->io->progressStart(count($fileList));
         foreach ($fileList as $file) {
+            $pathInfo = pathinfo($file);
 
-            TemplateFactory::pushTemplate($file);
+            TemplateFactory::pushTemplate($file, $pathInfo['extension']);
             $this->io->progressAdvance();
 
         }

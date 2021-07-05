@@ -1,0 +1,2 @@
+    *{$originalMethod}* as *{$newMethod}*
+    :   {$originalMethodDesc}

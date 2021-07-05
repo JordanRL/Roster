@@ -1,6 +1,3 @@
-!!! signature property "{$visibility} {$className}{$connector}{$propertyName}"
-    type
-    :   {$propertyType}
-
-    value
-    :   {$defaultValue}
+##### {$visibility} {$className}{$connector}{$propertyName}
+| type | {$propertyType} |
+| value | {$defaultValue} |

@@ -1,9 +1,11 @@
-!!! signature "{$visibility} {$className}{$connector}{$methodName}({$methodArgs})"{$hasArguments}
+##### {$visibility} {$className}{$connector}{$methodName}({$methodArgs}){$hasArguments}
 {$methodArgDetails}{hasArguments$}
-    return | {$methodReturnType}
-    :   {$methodReturnDesc}{$hasDesc}
+
+**return**
+| type | {$methodReturnType} |
+| description | {$methodReturnDesc} |{$hasDesc}
 
 {$methodDescription}{hasDesc$}{$hasExample}
 
-!!! example "Example"
-    {$methodExample}{hasExample$}
+**Example**
+{$methodExample}{hasExample$}
