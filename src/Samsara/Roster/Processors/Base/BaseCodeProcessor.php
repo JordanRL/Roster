@@ -4,12 +4,15 @@
 namespace Samsara\Roster\Processors\Base;
 
 
-use Samsara\Mason\Tags\Base\DocBlockTag;
+use Samsara\Mason\DocBlockProcessor;
+use Samsara\Roster\Processors\TemplateProcessor;
 use Samsara\Roster\TemplateFactory;
 
 abstract class BaseCodeProcessor
 {
     protected string $declaringClass = '';
+    protected DocBlockProcessor $docBlock;
+    protected TemplateProcessor $templateProcessor;
 
     public function getDeclaringClass(): string
     {
@@ -52,7 +55,14 @@ abstract class BaseCodeProcessor
         return (empty($option1) ? (empty($option2) ? $option3 : $option2) : $option1);
     }
 
-    abstract protected function templateLoader(string $templateName);
+    protected function templateLoader(string $templateName)
+    {
+        if (isset($this->docBlock) && array_key_exists('roster-template', $this->docBlock->others)) {
+            $this->templateProcessor = TemplateFactory::getTemplate($this->docBlock->others['roster-template']->description);
+        } else {
+            $this->templateProcessor = TemplateFactory::getTemplate($templateName);
+        }
+    }
 
     abstract public function compile();
 

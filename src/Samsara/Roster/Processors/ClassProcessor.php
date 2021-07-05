@@ -33,8 +33,6 @@ class ClassProcessor extends BaseCodeProcessor
     /** @var TraitInlineProcessor[] */
     private array $traits = [];
     private array $interfaces = [];
-    private DocBlockProcessor $docBlock;
-    private TemplateProcessor $templateProcessor;
 
 
     /**
@@ -48,19 +46,9 @@ class ClassProcessor extends BaseCodeProcessor
 
         $this->templateLoader($templateName);
 
-        $this->shortName = $class->getShortName();
         $this->declaringClass = $class->getName();
 
         $this->buildClassInfo();
-    }
-
-    protected function templateLoader(string $templateName)
-    {
-        if (array_key_exists('roster-template', $this->docBlock->others)) {
-            $this->templateProcessor = TemplateFactory::getTemplate($this->docBlock->others['roster-template']->description);
-        } else {
-            $this->templateProcessor = TemplateFactory::getTemplate($templateName);
-        }
     }
 
     protected function buildClassInfo()

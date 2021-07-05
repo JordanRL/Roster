@@ -12,19 +12,14 @@ class MethodProcessor extends BaseCodeProcessor
 {
 
     private \ReflectionMethod $method;
-    private TemplateProcessor $templateProcessor;
-
     private MethodArgumentProcessor $argumentProcessor;
     private MethodArgumentDetailProcessor $argumentDetailProcessor;
 
-    private DocBlockProcessor $docBlock;
-
-    public function __construct(\ReflectionMethod $method, string $templateName)
+    public function __construct(\ReflectionMethod $method, string $templateName = 'method')
     {
         $this->method = $method;
-        $this->templateProcessor = TemplateFactory::getTemplate($templateName);
+        $this->templateLoader($templateName);
 
-        $this->shortName = $method->getShortName();
         $this->declaringClass = $method->getDeclaringClass()->getName();
 
         $this->buildMethodInfo();

@@ -12,13 +12,11 @@ class TraitInlineProcessor extends Base\BaseCodeProcessor
 
     private ReflectionClass $trait;
     private array $aliases;
-    private TemplateProcessor $templateProcessor;
-    private DocBlockProcessor $docBlock;
 
     public function __construct(ReflectionClass $trait, array $aliases = [])
     {
         $this->trait = $trait;
-        $this->templateProcessor = TemplateFactory::getTemplate('classTrait');
+        $this->templateLoader('classTrait');
         $this->docBlock = new DocBlockProcessor($trait->getDocComment(), false);
         $this->aliases = $aliases;
     }

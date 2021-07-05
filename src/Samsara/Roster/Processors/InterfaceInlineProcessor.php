@@ -7,20 +7,17 @@ namespace Samsara\Roster\Processors;
 use Samsara\Mason\DocBlockProcessor;
 use ReflectionClass;
 use Samsara\Roster\TemplateFactory;
+use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 
-class InterfaceInlineProcessor extends Base\BaseCodeProcessor
+class InterfaceInlineProcessor extends BaseCodeProcessor
 {
     private ReflectionClass $interface;
-    private TemplateProcessor $templateProcessor;
-    private DocBlockProcessor $docBlock;
 
     public function __construct(ReflectionClass $interface)
     {
         $this->interface = $interface;
-        $this->templateProcessor = TemplateFactory::getTemplate('classInterface');
+        $this->templateLoader('classInterface');
         $this->docBlock = new DocBlockProcessor($interface->getDocComment(), false);
-
-        $this->shortName = $interface->getShortName();
     }
 
     public function compile(): string

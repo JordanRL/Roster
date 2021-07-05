@@ -12,18 +12,15 @@ class PropertyProcessor extends BaseCodeProcessor
 {
 
     private ReflectionProperty $property;
-    private DocBlockProcessor $docBlock;
-    private TemplateProcessor $templateProcessor;
 
     public function __construct(ReflectionProperty $property, string $templateName)
     {
         $this->property = $property;
         $this->docBlock = new DocBlockProcessor($property->getDocComment(), false);
 
-        $this->templateProcessor = TemplateFactory::getTemplate($templateName);
+        $this->templateLoader($templateName);
 
         $this->declaringClass = $property->getDeclaringClass()->getName();
-        $this->shortName = $property->getName();
     }
 
     public function compile(): string
