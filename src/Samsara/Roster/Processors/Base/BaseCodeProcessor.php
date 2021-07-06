@@ -57,8 +57,8 @@ abstract class BaseCodeProcessor
 
     protected function templateLoader(string $templateName)
     {
-        if (isset($this->docBlock) && array_key_exists('roster-template', $this->docBlock->others)) {
-            $this->templateProcessor = TemplateFactory::getTemplate($this->docBlock->others['roster-template']->description);
+        if (isset($this->docBlock) && $this->docBlock->hasTag('roster-template')) {
+            $this->templateProcessor = TemplateFactory::getTemplate($this->docBlock->getLastTag('roster-template')->description);
         } else {
             $this->templateProcessor = TemplateFactory::getTemplate($templateName);
         }

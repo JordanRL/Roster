@@ -46,9 +46,14 @@ class MethodProcessor extends BaseCodeProcessor
             $this->templateProcessor->supplyReplacement('methodArgs', $args);
         }
 
-        if ($this->docBlock->example) {
-            $this->templateProcessor->markHas('Example');
-            $this->templateProcessor->supplyReplacement('methodExample', $this->docBlock->example);
+        if ($this->docBlock->hasTag('example')) {
+            if ($this->docBlock->getTagCount('example') == 1) {
+                $this->templateProcessor->markHas('Example');
+                $this->templateProcessor->supplyReplacement(
+                    'methodExample',
+                    $this->docBlock->getTagIndex('example')->getExampleCodeMDEscaped()
+                );
+            }
         }
 
         if (!empty($this->docBlock->description)) {
@@ -63,8 +68,8 @@ class MethodProcessor extends BaseCodeProcessor
         }
 
         $returnType = (string)$this->method->getReturnType();
-        $returnType = $this->fixOutput($returnType, $this->docBlock?->return?->type, '*mixed* (assumed)');
-        $returnDesc = (empty($this->docBlock?->return?->description) ? '*No description available*' : $this->docBlock?->return?->description);
+        $returnType = $this->fixOutput($returnType, $this->docBlock?->getLastTag('return')?->type, '*mixed* (assumed)');
+        $returnDesc = (empty($this->docBlock?->return?->description) ? '*No description available*' : $this->docBlock?->getLastTag('return')?->description);
 
         $this->templateProcessor->supplyReplacement('methodReturnType', $returnType);
         $this->templateProcessor->supplyReplacement('methodReturnDesc', $returnDesc);
