@@ -24,7 +24,7 @@
   "license": "GPL-3.0-only",
   "require": {
     "symfony/console": "^v5.3",
-    "samsara/mason": "^0.1",
+    "samsara/mason": "^0.2",
     "hassankhan/config": "^2.2",
     "symfony/yaml": "^5.3",
     "php": ">=8.0"

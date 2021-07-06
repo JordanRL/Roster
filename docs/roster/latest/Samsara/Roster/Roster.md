@@ -1,6 +1,10 @@
 # Samsara\Roster > Roster
 
-*No description available*
+Class Roster
+
+ This class performs all of the command logic to actually build the documentation with the right options and in the right order.
+
+ The execute() method is the only one directly invoked by the CLI application, and it dispatches all other function calls.
 
 
 ## Inheritance
@@ -75,16 +79,16 @@
     **return**
 
     type
-    :   *mixed* (assumed)
+    :   void
 
     description
     :   *No description available*
 
-!!! signature "protected Roster->execute(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
+!!! signature "protected Roster->execute(InputInterface $input, OutputInterface $output)"
     **$input**
 
     type
-    :   Symfony\Component\Console\Input\InputInterface
+    :   InputInterface
 
     description
     :   *No description available*
@@ -92,7 +96,7 @@
     **$output**
 
     type
-    :   Symfony\Component\Console\Output\OutputInterface
+    :   OutputInterface
 
     description
     :   *No description available*
@@ -105,6 +109,10 @@
     description
     :   *No description available*
 
+execute() method
+
+ This function performs all of the application logic. All actions performed by the script are at least started from this function.
+
 !!! signature "protected Roster->buildMkdocsNav(string $baseExportPath)"
     **$baseExportPath**
 
@@ -112,15 +120,38 @@
     :   string
 
     description
-    :   *No description available*
+    :   The realpath() of the location docs are exported to
 
     **return**
 
     type
-    :   array|string
+    :   array
 
     description
     :   *No description available*
+
+buildMkdocsNav
+
+ This function takes in the base export path and outputs the namespace information about all the compiled and written document files as an array structured as a tree.
+
+ This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.
+
+!!! example "Example"
+    ```php
+    $tree = $this->buildMkDocsNav('/path/to/project/docs')
+    echo var_export($tree, true);
+    // Possible Output:
+    // [
+    //   'Samsara' => [
+    //     'Roster' => [
+    //       'TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md',
+    //       'Roster' => 'roster/latest/Samsara/Roster/Roster.md',
+    //       'App' => 'roster/latest/Samsara/Roster/App.md'
+    //     ]
+    //   ]
+    // ]
+    
+    ```
 
 !!! signature "protected Roster->formatNavArrayRecursive(array $nav)"
     **$nav**
@@ -129,7 +160,7 @@
     :   array
 
     description
-    :   *No description available*
+    :   A
 
     **return**
 
@@ -138,6 +169,31 @@
 
     description
     :   *No description available*
+
+formatNavArrayRecursive() method
+
+ This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.
+
+!!! example "Example"
+    ```php
+    $nav = $this->formatNavArrayRecursive($tree)
+    echo var_export($nav, true);
+    // Possible Output:
+    // [
+    //   0 => [
+    //     'Samsara' => [
+    //       0 => [
+    //         'Roster' => [
+    //           0 => ['TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md'],
+    //           1 => ['Roster' => 'roster/latest/Samsara/Roster/Roster.md'],
+    //           2 => ['App' => 'roster/latest/Samsara/Roster/App.md']
+    //         ]
+    //       ]
+    //     ]
+    //   ]
+    // ]
+    
+    ```
 
 !!! signature "protected Roster->buildNavArrayRecursive(array $parts, int $depth, string $builtString)"
     **$parts**
@@ -167,10 +223,32 @@
     **return**
 
     type
-    :   array|string
+    :   array
 
     description
     :   *No description available*
+
+buildNavArrayRecursive() method
+
+ This function takes a flat array and reorganizes it into a tree structure.
+
+!!! example "Example"
+    ```php
+    $flat = ['Samsara', 'Roster', 'Processors', 'TemplateProcessor'];
+    $leaf = $this->buildNavArrayRecursive($flat);
+    echo var_export($leaf);
+    // Output:
+    // [
+    //   'Samsara' => [
+    //       'Roster' => [
+    //           'Processors' => [
+    //               'TemplateProcessor' => 'roster/latest/Samsara/Roster/Processors/TemplateProcessor.md'
+    //           ]
+    //       ]
+    //   ]
+    // ]
+    
+    ```
 
 !!! signature "protected Roster->traverseDirectories(string $dir)"
     **$dir**
@@ -243,7 +321,7 @@
     :   string|null
 
     description
-    :   The default command name or null when no default name is set
+    :   *No description available*
 
 !!! signature "public Command::getDefaultDescription()"
     **return**
@@ -252,7 +330,7 @@
     :   ?string
 
     description
-    :   The default command description or null when no default description is set
+    :   *No description available*
 
 
 
@@ -308,7 +386,7 @@
     :   HelperSet|null
 
     description
-    :   A HelperSet instance
+    :   *No description available*
 
 Gets the helper set.
 
@@ -319,7 +397,7 @@ Gets the helper set.
     :   Application|null
 
     description
-    :   An Application instance
+    :   *No description available*
 
 Gets the application instance for this command.
 
@@ -359,9 +437,7 @@ Checks whether the command is enabled or not in the current environment.
     :   int
 
     description
-    :   The command exit code
-
-
+    :   *No description available*
 
 Runs the command.
 
@@ -384,9 +460,7 @@ Runs the command.
     :   $this
 
     description
-    :   
-
-
+    :   *No description available*
 
 Sets the code to execute when running this command.
 
@@ -443,7 +517,7 @@ Sets an array of argument and option instances.
     :   InputDefinition
 
     description
-    :   An InputDefinition instance
+    :   *No description available*
 
 Gets the InputDefinition attached to this Command.
 
@@ -454,7 +528,7 @@ Gets the InputDefinition attached to this Command.
     :   InputDefinition
 
     description
-    :   An InputDefinition instance
+    :   *No description available*
 
 Gets the InputDefinition to be used to create representations of this Command.
 
@@ -575,9 +649,7 @@ Adds an option.
     :   $this
 
     description
-    :   
-
-
+    :   *No description available*
 
 Sets the name of the command.
 
@@ -634,9 +706,7 @@ Returns the command name.
     :   Command
 
     description
-    :   The current instance
-
-
+    :   *No description available*
 
 !!! signature "public Command->isHidden()"
     **return**
@@ -645,7 +715,7 @@ Returns the command name.
     :   bool
 
     description
-    :   whether the command should be publicly shown or not
+    :   *No description available*
 
 !!! signature "public Command->setDescription(string $description)"
     **$description**
@@ -673,7 +743,7 @@ Sets the description for the command.
     :   string
 
     description
-    :   The description for the command
+    :   *No description available*
 
 Returns the description for the command.
 
@@ -703,7 +773,7 @@ Sets the help for the command.
     :   string
 
     description
-    :   The help for the command
+    :   *No description available*
 
 Returns the help for the command.
 
@@ -714,7 +784,7 @@ Returns the help for the command.
     :   string
 
     description
-    :   The processed help for the command
+    :   *No description available*
 
 Returns the processed help for the command replacing the %command.name% and command.full_name% patterns with the real values dynamically.
 
@@ -735,9 +805,7 @@ Returns the processed help for the command replacing the %command.name% and comm
     :   $this
 
     description
-    :   
-
-
+    :   *No description available*
 
 Sets the aliases for the command.
 
@@ -748,7 +816,7 @@ Sets the aliases for the command.
     :   array
 
     description
-    :   An array of aliases for the command
+    :   *No description available*
 
 Returns the aliases for the command.
 
@@ -769,7 +837,7 @@ Returns the aliases for the command.
     :   string
 
     description
-    :   The synopsis
+    :   *No description available*
 
 Returns the synopsis for the command.
 
@@ -818,9 +886,7 @@ Returns alternative usages of the command.
     :   mixed
 
     description
-    :   The helper value
-
-
+    :   *No description available*
 
 Gets a helper instance by name.
 
