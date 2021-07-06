@@ -212,6 +212,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <h3 id="instanced-methods">Instanced Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;configure()</p>
@@ -223,6 +224,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;execute(InputInterface $input, OutputInterface $output)</p>
 <p><strong>$input</strong></p>
@@ -246,9 +248,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Roster-&gt;execute Description</strong></p>
 <p>execute() method</p>
+</div>
 <p>This function performs all of the application logic. All actions performed by the script are at least started from this function.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;buildMkdocsNav(string $baseExportPath)</p>
 <p><strong>$baseExportPath</strong></p>
@@ -265,26 +269,28 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Roster-&gt;buildMkdocsNav Description</strong></p>
 <p>buildMkdocsNav</p>
+</div>
 <p>This function takes in the base export path and outputs the namespace information about all the compiled and written document files as an array structured as a tree.</p>
 <p>This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="x">$tree = $this-&gt;buildMkDocsNav(&#39;/path/to/project/docs&#39;)</span>
-<span class="lineno"> 2 </span><span class="x">echo var_export($tree, true);</span>
-<span class="lineno"> 3 </span><span class="x">// Possible Output:</span>
-<span class="lineno"> 4 </span><span class="x">// [</span>
-<span class="lineno"> 5 </span><span class="x">//   &#39;Samsara&#39; =&gt; [</span>
-<span class="lineno"> 6 </span><span class="x">//     &#39;Roster&#39; =&gt; [</span>
-<span class="lineno"> 7 </span><span class="x">//       &#39;TemplateFactory&#39; =&gt; &#39;roster/latest/Samsara/Roster/TemplateFactory.md&#39;,</span>
-<span class="lineno"> 8 </span><span class="x">//       &#39;Roster&#39; =&gt; &#39;roster/latest/Samsara/Roster/Roster.md&#39;,</span>
-<span class="lineno"> 9 </span><span class="x">//       &#39;App&#39; =&gt; &#39;roster/latest/Samsara/Roster/App.md&#39;</span>
-<span class="lineno">10 </span><span class="x">//     ]</span>
-<span class="lineno">11 </span><span class="x">//   ]</span>
-<span class="lineno">12 </span><span class="x">// ]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="linenos"> 1</span><span class="x">$tree = $this-&gt;buildMkDocsNav(&#39;/path/to/project/docs&#39;)</span>
+<span class="linenos"> 2</span><span class="x">echo var_export($tree, true);</span>
+<span class="linenos"> 3</span><span class="x">// Possible Output:</span>
+<span class="linenos"> 4</span><span class="x">// [</span>
+<span class="linenos"> 5</span><span class="x">//   &#39;Samsara&#39; =&gt; [</span>
+<span class="linenos"> 6</span><span class="x">//     &#39;Roster&#39; =&gt; [</span>
+<span class="linenos"> 7</span><span class="x">//       &#39;TemplateFactory&#39; =&gt; &#39;roster/latest/Samsara/Roster/TemplateFactory.md&#39;,</span>
+<span class="linenos"> 8</span><span class="x">//       &#39;Roster&#39; =&gt; &#39;roster/latest/Samsara/Roster/Roster.md&#39;,</span>
+<span class="linenos"> 9</span><span class="x">//       &#39;App&#39; =&gt; &#39;roster/latest/Samsara/Roster/App.md&#39;</span>
+<span class="linenos">10</span><span class="x">//     ]</span>
+<span class="linenos">11</span><span class="x">//   ]</span>
+<span class="linenos">12</span><span class="x">// ]</span>
+</code></pre></div>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;formatNavArrayRecursive(array $nav)</p>
 <p><strong>$nav</strong></p>
@@ -301,29 +307,31 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Roster-&gt;formatNavArrayRecursive Description</strong></p>
 <p>formatNavArrayRecursive() method</p>
+</div>
 <p>This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="x">$nav = $this-&gt;formatNavArrayRecursive($tree)</span>
-<span class="lineno"> 2 </span><span class="x">echo var_export($nav, true);</span>
-<span class="lineno"> 3 </span><span class="x">// Possible Output:</span>
-<span class="lineno"> 4 </span><span class="x">// [</span>
-<span class="lineno"> 5 </span><span class="x">//   0 =&gt; [</span>
-<span class="lineno"> 6 </span><span class="x">//     &#39;Samsara&#39; =&gt; [</span>
-<span class="lineno"> 7 </span><span class="x">//       0 =&gt; [</span>
-<span class="lineno"> 8 </span><span class="x">//         &#39;Roster&#39; =&gt; [</span>
-<span class="lineno"> 9 </span><span class="x">//           0 =&gt; [&#39;TemplateFactory&#39; =&gt; &#39;roster/latest/Samsara/Roster/TemplateFactory.md&#39;],</span>
-<span class="lineno">10 </span><span class="x">//           1 =&gt; [&#39;Roster&#39; =&gt; &#39;roster/latest/Samsara/Roster/Roster.md&#39;],</span>
-<span class="lineno">11 </span><span class="x">//           2 =&gt; [&#39;App&#39; =&gt; &#39;roster/latest/Samsara/Roster/App.md&#39;]</span>
-<span class="lineno">12 </span><span class="x">//         ]</span>
-<span class="lineno">13 </span><span class="x">//       ]</span>
-<span class="lineno">14 </span><span class="x">//     ]</span>
-<span class="lineno">15 </span><span class="x">//   ]</span>
-<span class="lineno">16 </span><span class="x">// ]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="linenos"> 1</span><span class="x">$nav = $this-&gt;formatNavArrayRecursive($tree)</span>
+<span class="linenos"> 2</span><span class="x">echo var_export($nav, true);</span>
+<span class="linenos"> 3</span><span class="x">// Possible Output:</span>
+<span class="linenos"> 4</span><span class="x">// [</span>
+<span class="linenos"> 5</span><span class="x">//   0 =&gt; [</span>
+<span class="linenos"> 6</span><span class="x">//     &#39;Samsara&#39; =&gt; [</span>
+<span class="linenos"> 7</span><span class="x">//       0 =&gt; [</span>
+<span class="linenos"> 8</span><span class="x">//         &#39;Roster&#39; =&gt; [</span>
+<span class="linenos"> 9</span><span class="x">//           0 =&gt; [&#39;TemplateFactory&#39; =&gt; &#39;roster/latest/Samsara/Roster/TemplateFactory.md&#39;],</span>
+<span class="linenos">10</span><span class="x">//           1 =&gt; [&#39;Roster&#39; =&gt; &#39;roster/latest/Samsara/Roster/Roster.md&#39;],</span>
+<span class="linenos">11</span><span class="x">//           2 =&gt; [&#39;App&#39; =&gt; &#39;roster/latest/Samsara/Roster/App.md&#39;]</span>
+<span class="linenos">12</span><span class="x">//         ]</span>
+<span class="linenos">13</span><span class="x">//       ]</span>
+<span class="linenos">14</span><span class="x">//     ]</span>
+<span class="linenos">15</span><span class="x">//   ]</span>
+<span class="linenos">16</span><span class="x">// ]</span>
+</code></pre></div>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;buildNavArrayRecursive(array $parts, int $depth, string $builtString)</p>
 <p><strong>$parts</strong></p>
@@ -354,26 +362,28 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Roster-&gt;buildNavArrayRecursive Description</strong></p>
 <p>buildNavArrayRecursive() method</p>
+</div>
 <p>This function takes a flat array and reorganizes it into a tree structure.</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="x">$flat = [&#39;Samsara&#39;, &#39;Roster&#39;, &#39;Processors&#39;, &#39;TemplateProcessor&#39;];</span>
-<span class="lineno"> 2 </span><span class="x">$leaf = $this-&gt;buildNavArrayRecursive($flat);</span>
-<span class="lineno"> 3 </span><span class="x">echo var_export($leaf);</span>
-<span class="lineno"> 4 </span><span class="x">// Output:</span>
-<span class="lineno"> 5 </span><span class="x">// [</span>
-<span class="lineno"> 6 </span><span class="x">//   &#39;Samsara&#39; =&gt; [</span>
-<span class="lineno"> 7 </span><span class="x">//       &#39;Roster&#39; =&gt; [</span>
-<span class="lineno"> 8 </span><span class="x">//           &#39;Processors&#39; =&gt; [</span>
-<span class="lineno"> 9 </span><span class="x">//               &#39;TemplateProcessor&#39; =&gt; &#39;roster/latest/Samsara/Roster/Processors/TemplateProcessor.md&#39;</span>
-<span class="lineno">10 </span><span class="x">//           ]</span>
-<span class="lineno">11 </span><span class="x">//       ]</span>
-<span class="lineno">12 </span><span class="x">//   ]</span>
-<span class="lineno">13 </span><span class="x">// ]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="linenos"> 1</span><span class="x">$flat = [&#39;Samsara&#39;, &#39;Roster&#39;, &#39;Processors&#39;, &#39;TemplateProcessor&#39;];</span>
+<span class="linenos"> 2</span><span class="x">$leaf = $this-&gt;buildNavArrayRecursive($flat);</span>
+<span class="linenos"> 3</span><span class="x">echo var_export($leaf);</span>
+<span class="linenos"> 4</span><span class="x">// Output:</span>
+<span class="linenos"> 5</span><span class="x">// [</span>
+<span class="linenos"> 6</span><span class="x">//   &#39;Samsara&#39; =&gt; [</span>
+<span class="linenos"> 7</span><span class="x">//       &#39;Roster&#39; =&gt; [</span>
+<span class="linenos"> 8</span><span class="x">//           &#39;Processors&#39; =&gt; [</span>
+<span class="linenos"> 9</span><span class="x">//               &#39;TemplateProcessor&#39; =&gt; &#39;roster/latest/Samsara/Roster/Processors/TemplateProcessor.md&#39;</span>
+<span class="linenos">10</span><span class="x">//           ]</span>
+<span class="linenos">11</span><span class="x">//       ]</span>
+<span class="linenos">12</span><span class="x">//   ]</span>
+<span class="linenos">13</span><span class="x">// ]</span>
+</code></pre></div>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;traverseDirectories(string $dir)</p>
 <p><strong>$dir</strong></p>
@@ -391,6 +401,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;extractFileData(string $realPath)</p>
 <p><strong>$realPath</strong></p>
@@ -408,6 +419,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;createReflectors()</p>
 <p><strong>return</strong></p>
@@ -418,6 +430,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;processTemplates(string $templatePath)</p>
 <p><strong>$templatePath</strong></p>
@@ -435,6 +448,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <h3 id="inherited-static-methods">Inherited Static Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Command::getDefaultName()</p>
@@ -446,6 +460,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command::getDefaultDescription()</p>
 <p><strong>return</strong></p>
@@ -456,6 +471,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <h3 id="inherited-methods">Inherited Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;ignoreValidationErrors()</p>
@@ -467,6 +483,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setApplication(?Symfony\Component\Console\Application $application)</p>
 <p><strong>$application</strong></p>
@@ -484,6 +501,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setHelperSet(Symfony\Component\Console\Helper\HelperSet $helperSet)</p>
 <p><strong>$helperSet</strong></p>
@@ -501,6 +519,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getHelperSet()</p>
 <p><strong>return</strong></p>
@@ -510,8 +529,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getHelperSet Description</strong></p>
 <p>Gets the helper set.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getApplication()</p>
 <p><strong>return</strong></p>
@@ -521,8 +542,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getApplication Description</strong></p>
 <p>Gets the application instance for this command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;isEnabled()</p>
 <p><strong>return</strong></p>
@@ -532,9 +555,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;isEnabled Description</strong></p>
 <p>Checks whether the command is enabled or not in the current environment.</p>
+</div>
 <p>Override this to check for x or y and return false if the command can not run properly under the current conditions.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;run(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
 <p><strong>$input</strong></p>
@@ -558,9 +583,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;run Description</strong></p>
 <p>Runs the command.</p>
+</div>
 <p>The code to execute is either defined directly with the setCode() method or by overriding the execute() method in a sub-class.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setCode(callable $code)</p>
 <p><strong>$code</strong></p>
@@ -577,9 +604,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setCode Description</strong></p>
 <p>Sets the code to execute when running this command.</p>
+</div>
 <p>If this method is used, it overrides the code defined in the execute() method.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;mergeApplicationDefinition(bool $mergeArgs)</p>
 <p><strong>$mergeArgs</strong></p>
@@ -596,9 +625,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;mergeApplicationDefinition Description</strong></p>
 <p>Merges the application definition with the command definition.</p>
+</div>
 <p>This method is not part of public API and should not be used directly.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setDefinition(array|InputDefinition $definition)</p>
 <p><strong>$definition</strong></p>
@@ -615,8 +646,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setDefinition Description</strong></p>
 <p>Sets an array of argument and option instances.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getDefinition()</p>
 <p><strong>return</strong></p>
@@ -626,8 +659,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getDefinition Description</strong></p>
 <p>Gets the InputDefinition attached to this Command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getNativeDefinition()</p>
 <p><strong>return</strong></p>
@@ -637,10 +672,12 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getNativeDefinition Description</strong></p>
 <p>Gets the InputDefinition to be used to create representations of this Command.</p>
+</div>
 <p>Can be overridden to provide the original command representation when it would otherwise be changed by merging with the application InputDefinition.</p>
 <p>This method is not part of public API and should not be used directly.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;addArgument(string $name, int|null $mode, string $description, string|string[]|null $default)</p>
 <p><strong>$name</strong></p>
@@ -678,8 +715,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;addArgument Description</strong></p>
 <p>Adds an argument.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;addOption(string $name, string|array|null $shortcut, int|null $mode, string $description, string|string[]|bool|null $default)</p>
 <p><strong>$name</strong></p>
@@ -724,8 +763,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;addOption Description</strong></p>
 <p>Adds an option.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setName(string $name)</p>
 <p><strong>$name</strong></p>
@@ -742,10 +783,12 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setName Description</strong></p>
 <p>Sets the name of the command.</p>
+</div>
 <p>This method can set both the namespace and the name if you separate them by a colon (:)</p>
 <p>command-&gt;setName('foo:bar');</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setProcessTitle(string $title)</p>
 <p><strong>$title</strong></p>
@@ -762,9 +805,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setProcessTitle Description</strong></p>
 <p>Sets the process title of the command.</p>
+</div>
 <p>This feature should be used only when creating a long process command, like a daemon.</p>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getName()</p>
 <p><strong>return</strong></p>
@@ -774,8 +819,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getName Description</strong></p>
 <p>Returns the command name.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setHidden(bool $hidden)</p>
 <p><strong>$hidden</strong></p>
@@ -793,6 +840,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;isHidden()</p>
 <p><strong>return</strong></p>
@@ -803,6 +851,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setDescription(string $description)</p>
 <p><strong>$description</strong></p>
@@ -819,8 +868,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setDescription Description</strong></p>
 <p>Sets the description for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getDescription()</p>
 <p><strong>return</strong></p>
@@ -830,8 +881,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getDescription Description</strong></p>
 <p>Returns the description for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setHelp(string $help)</p>
 <p><strong>$help</strong></p>
@@ -848,8 +901,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setHelp Description</strong></p>
 <p>Sets the help for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getHelp()</p>
 <p><strong>return</strong></p>
@@ -859,8 +914,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getHelp Description</strong></p>
 <p>Returns the help for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getProcessedHelp()</p>
 <p><strong>return</strong></p>
@@ -870,8 +927,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getProcessedHelp Description</strong></p>
 <p>Returns the processed help for the command replacing the %command.name% and command.full_name% patterns with the real values dynamically.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setAliases(string[] $aliases)</p>
 <p><strong>$aliases</strong></p>
@@ -888,8 +947,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;setAliases Description</strong></p>
 <p>Sets the aliases for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getAliases()</p>
 <p><strong>return</strong></p>
@@ -899,8 +960,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getAliases Description</strong></p>
 <p>Returns the aliases for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getSynopsis(bool $short)</p>
 <p><strong>$short</strong></p>
@@ -917,8 +980,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getSynopsis Description</strong></p>
 <p>Returns the synopsis for the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;addUsage(string $usage)</p>
 <p><strong>$usage</strong></p>
@@ -935,8 +1000,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;addUsage Description</strong></p>
 <p>Add a command usage example, it'll be prefixed with the command name.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getUsages()</p>
 <p><strong>return</strong></p>
@@ -946,8 +1013,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getUsages Description</strong></p>
 <p>Returns alternative usages of the command.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getHelper(string $name)</p>
 <p><strong>$name</strong></p>
@@ -964,8 +1033,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;getHelper Description</strong></p>
 <p>Gets a helper instance by name.</p>
+</div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Command-&gt;interact(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
 <p><strong>$input</strong></p>
@@ -990,6 +1061,7 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Command-&gt;initialize(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
 <p><strong>$input</strong></p>
@@ -1013,9 +1085,11 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-</div>
+<p><strong>Command-&gt;initialize Description</strong></p>
 <p>Initializes the command after the input has been bound and before the input is validated.</p>
+</div>
 <p>This is mainly useful when a lot of commands extends one main command where some things need to be initialized based on the input arguments and options.</p>
+<hr />
 <hr />
 <div class="admonition footer-link">
 <p class="admonition-title">This documentation was generated with <a href="https://jordanrl.github.io/Roster/">Roster</a>.</p>
