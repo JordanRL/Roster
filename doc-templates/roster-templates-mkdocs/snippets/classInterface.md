@@ -1,4 +1,4 @@
-!!! signature trait "{$interfaceName}"
+!!! signature interface "{$interfaceName}"
     namespace
     :   {$interfaceNamespace}
 

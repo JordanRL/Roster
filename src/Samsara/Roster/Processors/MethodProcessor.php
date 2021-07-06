@@ -52,8 +52,14 @@ class MethodProcessor extends BaseCodeProcessor
         }
 
         if (!empty($this->docBlock->description)) {
+            if (TemplateFactory::getMkDocs()) {
+                $methodDesc = str_replace(PHP_EOL, PHP_EOL.'    ', $this->docBlock->description);
+            } else {
+                $methodDesc = $this->docBlock->description;
+            }
+
             $this->templateProcessor->markHas('Desc');
-            $this->templateProcessor->supplyReplacement('methodDescription', $this->docBlock->description);
+            $this->templateProcessor->supplyReplacement('methodDescription', $methodDesc);
         }
 
         $returnType = (string)$this->method->getReturnType();

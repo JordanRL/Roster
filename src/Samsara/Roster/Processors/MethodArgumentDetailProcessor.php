@@ -50,6 +50,10 @@ class MethodArgumentDetailProcessor extends BaseCodeProcessor
                 $desc = $this->tags[$tagAccessor]->description;
             }
 
+            if (TemplateFactory::getMkDocs()) {
+                $desc = str_replace(PHP_EOL, PHP_EOL.'    ', $desc);
+            }
+
             $template->supplyReplacement('argDesc', $desc);
 
             $argTypeDoc = '';

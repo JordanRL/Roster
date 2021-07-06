@@ -21,6 +21,8 @@ class TemplateFactory
     private static array $writtenFiles = [];
     private static bool $preferSource = true;
     private static int $visibilityLevel = 1;
+    private static bool $mkdocs = false;
+    private static string $theme = 'sphinx';
 
     public static function setPreferSource(bool $preferSource)
     {
@@ -30,6 +32,26 @@ class TemplateFactory
     public static function getPreferSource(): bool
     {
         return self::$preferSource;
+    }
+
+    public static function setMkDocs(bool $mkdocs)
+    {
+        self::$mkdocs = $mkdocs;
+    }
+
+    public static function getMkDocs(): bool
+    {
+        return self::$mkdocs;
+    }
+
+    public static function setTheme(bool $theme)
+    {
+        self::$theme = $theme;
+    }
+
+    public static function getTheme(): string
+    {
+        return self::$theme;
     }
 
     public static function setVisibilityLevel(int $visibilityLevel)

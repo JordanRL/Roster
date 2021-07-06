@@ -26,6 +26,10 @@ class TraitInlineProcessor extends Base\BaseCodeProcessor
 
         $description = (empty($this->docBlock->description) ? '*No description available*' : $this->docBlock->description);
 
+        if (TemplateFactory::getMkDocs()) {
+            $description = str_replace(PHP_EOL, PHP_EOL.'    ', $description);
+        }
+
         $this->templateProcessor->supplyReplacement('traitName', $this->trait->getShortName());
         $this->templateProcessor->supplyReplacement('traitNamespace', $this->trait->getNamespaceName());
         $this->templateProcessor->supplyReplacement('traitDesc', $description);
@@ -53,6 +57,10 @@ class TraitInlineProcessor extends Base\BaseCodeProcessor
             $method = $this->trait->getMethod($original);
             $methodDoc = new DocBlockProcessor($method->getDocComment());
             $originalMethodDesc = (empty($methodDoc->description) ? '*No description available*' : $methodDoc->description);
+
+            if (TemplateFactory::getMkDocs()) {
+                $originalMethodDesc = str_replace(PHP_EOL, PHP_EOL.'    ', $originalMethodDesc);
+            }
 
             $aliasTemplate->supplyReplacement('originalMethod', $original);
             $aliasTemplate->supplyReplacement('newMethod', $alias);

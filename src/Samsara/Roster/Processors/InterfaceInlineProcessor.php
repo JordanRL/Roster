@@ -25,6 +25,10 @@ class InterfaceInlineProcessor extends BaseCodeProcessor
 
         $description = (empty($this->docBlock->description) ? '*No description available*' : $this->docBlock->description);
 
+        if (TemplateFactory::getMkDocs()) {
+            $description = str_replace(PHP_EOL, PHP_EOL.'    ', $description);
+        }
+
         $this->templateProcessor->supplyReplacement('interfaceName', $this->interface->getShortName());
         $this->templateProcessor->supplyReplacement('interfaceNamespace', $this->interface->getNamespaceName());
         $this->templateProcessor->supplyReplacement('interfaceDesc', $description);
