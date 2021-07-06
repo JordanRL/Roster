@@ -193,24 +193,16 @@
 
 .rst-content .signature.constant > .admonition-title::before,
 .rst-content .signature.constant > summary::before {
-    -webkit-mask-image: var(--md-adminition-icon--signature-constant);
-    mask-image: var(--md-adminition-icon--signature-constant);
 }
 
 .rst-content .signature.property > .admonition-title::before,
 .rst-content .signature.property > summary::before {
-    -webkit-mask-image: var(--md-adminition-icon--signature-property);
-    mask-image: var(--md-adminition-icon--signature-property);
 }
 
 .rst-content .signature.interface > .admonition-title::before,
 .rst-content .signature.interface > summary::before {
-    -webkit-mask-image: var(--md-adminition-icon--signature-interface);
-    mask-image: var(--md-adminition-icon--signature-interface);
 }
 
 .rst-content .signature.trait > .admonition-title::before,
 .rst-content .signature.trait > summary::before {
-    -webkit-mask-image: var(--md-adminition-icon--signature-trait);
-    mask-image: var(--md-adminition-icon--signature-trait);
 }
