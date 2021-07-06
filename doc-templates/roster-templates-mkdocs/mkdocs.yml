@@ -1,10 +1,9 @@
-site_name: {$siteName}
+site_name: ''
 extra_css:
   - css/roster-style.css
-repo_url: {$repoUrl}
-site_url: {$siteUrl}
-nav:
-{$navigation}
+repo_url: ''
+site_url: ''
+nav: []
 theme:
   name: readthedocs
   highlightjs: true

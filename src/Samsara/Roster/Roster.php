@@ -2,6 +2,11 @@
 
 namespace Samsara\Roster;
 
+use Noodlehaus\Config;
+use Noodlehaus\Parser\Json;
+use Noodlehaus\Parser\Yaml as YamlReader;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Dumper as YamlDumper;
 use ReflectionClass;
 use Samsara\Roster\Processors\ClassProcessor;
 use Symfony\Component\Console\Command\Command;
@@ -22,7 +27,7 @@ class Roster extends Command
     private string $rootDir;
     private string $baseExportPath;
 
-    private array $applicationComposerJSON;
+    private Config $appComposerConfig;
 
     private SymfonyStyle $io;
 
@@ -32,7 +37,7 @@ class Roster extends Command
     {
         $this->rootDir = $rootDir;
 
-        $this->applicationComposerJSON = json_decode(file_get_contents(realpath($rootDir.'/composer.json')), true);
+        $this->appComposerConfig = Config::load($rootDir.'/composer.json', new Json());
 
         parent::__construct();
     }
@@ -126,9 +131,8 @@ class Roster extends Command
         TemplateFactory::setVisibilityLevel($visibilityLevel);
         TemplateFactory::setPreferSource($opts['prefer-source']);
 
-        $packageVersion = (array_key_exists('version', $this->applicationComposerJSON) ? $this->applicationComposerJSON['version'] : null);
+        $version = $opts['with-version'] ?? $this->appComposerConfig->get('version', 'latest');
 
-        $version = $opts['with-version'] ?? $packageVersion ?? 'latest';
         $this->verbose = $opts['with-debug'];
 
         if ($opts['mkdocs']) {
@@ -247,40 +251,167 @@ class Roster extends Command
         TemplateFactory::compileAll($this->io);
 
         $this->io->section('Writing Documentation to Output Directory');
-        $this->io->block('Current Output Directory: '.$baseExportPath);
         TemplateFactory::writeToDocs($baseExportPath, $this->io);
 
         if ($opts['mkdocs']) {
             $this->io->section('Gathering MkDocs Config Info');
-            $siteName = $this->io->ask('Documentation Site Name') ?? '';
-            $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
-            $repoUrl = $this->io->ask('Repository URL') ?? '';
+            $ymlChoice = false;
+            $choice = '';
+
+            if (is_file($this->rootDir.'/mkdocs.yml')) {
+                $ymlChoice = true;
+                $choice = $this->io->choice(
+                    'An existing \'mkdocs.yml\' file was detected. How would you like to proceed?',
+                    [
+                        'Attempt to merge the nav',
+                        'Save old as .old',
+                        'Overwrite'
+                    ],
+                    1
+                );
+            }
 
             $nav = $this->buildMkdocsNav($baseExportPath);
+            $formattedNav = $this->formatNavArrayRecursive($nav);
 
-            $mkdocsTemplate = TemplateFactory::getTemplate('mkdocs');
-            $mkdocsTemplate->supplyReplacement('siteName', $siteName);
-            $mkdocsTemplate->supplyReplacement('siteUrl', $siteUrl);
-            $mkdocsTemplate->supplyReplacement('repoUrl', $repoUrl);
-            $mkdocsTemplate->supplyReplacement('navigation', $nav);
+            if ($ymlChoice && $choice == 'Attempt to merge the nav') {
+                $appendOrMerge = $this->io->choice(
+                    'Would you like to merge with a root nav key, or append as a new root nav key',
+                    [
+                        'Merge',
+                        'Append'
+                    ],
+                    0
+                );
+
+                $oldConfig = Config::load(
+                    file_get_contents($this->rootDir . '/mkdocs.yml'),
+                    new YamlReader(),
+                    true
+                );
+
+                $reduceNamespace = $this->io->choice(
+                    'Do you want to reduce the nav namespace? This only affects the nav keys (i.e. the namespace Samsara\\Roster\\Processors becomes Roster\\Processors)',
+                    [
+                        'Yes',
+                        'No'
+                    ],
+                    1
+                );
+
+                if ($reduceNamespace == 'Yes') {
+                    $formattedNav = [];
+
+                    foreach ($nav as $value) {
+                        $formattedNav = array_merge($formattedNav, $this->formatNavArrayRecursive($value));
+                    }
+                }
+
+                if ($appendOrMerge == 'Merge') {
+                    $baseKey = $this->io->ask('What top level key do you want to merge the generated nav into');
+
+                    $oldNav = $oldConfig->get('nav');
+                    $keyFound = false;
+
+                    foreach ($oldNav as $index => $value) {
+                        $rootKey = array_key_first($value);
+                        if (strtolower($rootKey) == strtolower($baseKey)) {
+                            $oldNav[$index][$rootKey] = $formattedNav;
+                            $keyFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!$keyFound) {
+                        $this->io->error('Couldn\'t find the requested nav key to merge with');
+                        $this->io->block([
+                            'Check your current mkdocs.yml file to see what keys are available.',
+                            'Your built docs were saved, but MkDocs configuration is incomplete',
+                            'You\'ll need to rerun the program to be able to deploy using MkDocs.'
+                        ]);
+                        return self::FAILURE;
+                    }
+                } else {
+                    $oldNav = $oldConfig->get('nav');
+
+                    foreach ($formattedNav as $value) {
+                        $oldNav[] = $value;
+                    }
+                }
+
+                $oldConfig->set('nav', $oldNav);
+                $mkDocsConfig = (new YamlDumper(4))->dump($oldConfig->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
+            } else {
+                if ($ymlChoice && $choice == 'Save old as .old') {
+                    $oldMkdocs = file_get_contents($this->rootDir . '/mkdocs.yml');
+                    file_put_contents($this->rootDir . '/mkdocs.yml.old', $oldMkdocs);
+                }
+                $siteName = $this->io->ask('Documentation Site Name') ?? '';
+                $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
+                $repoUrl = $this->io->ask('Repository URL') ?? '';
+
+                $configBase = Config::load(
+                    TemplateFactory::getTemplate('mkdocs')->compile(),
+                    new YamlReader(),
+                    true
+                );
+
+                $configBase->set('siteName', $siteName);
+                $configBase->set('siteUrl', $siteUrl);
+                $configBase->set('repoUrl', $repoUrl);
+                $configBase->set('nav', $formattedNav);
+
+                $mkDocsConfig = (new YamlDumper(4))->dump($configBase->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
+            }
 
             if (!is_dir($this->rootDir.'/docs/css')) {
                 mkdir($this->rootDir . '/docs/css');
             }
 
-            TemplateFactory::queueCompile('mkdocs', $mkdocsTemplate, 'yml');
             TemplateFactory::queueCompile('docs/css/roster-style', TemplateFactory::getTemplate('roster-style'), 'css');
             TemplateFactory::queueCompile('docs/requirements', TemplateFactory::getTemplate('requirements'), 'txt');
 
+            $this->io->section('Exporting Additional Files');
             TemplateFactory::compileAll($this->io);
 
             TemplateFactory::writeToDocs($this->rootDir, $this->io);
+
+            $this->io->section('Writing MkDocs Config');
+            file_put_contents($this->rootDir.'/mkdocs.yml', $mkDocsConfig);
+        }
+
+        $summary = [];
+
+        $summary[] = 'Compiled Documentation Path: <fg=green>'.$baseExportPath.'</>';
+
+        if ($opts['templates']) {
+            $summary[] = 'Templates Used: <fg=green>'.$opts['templates'].'</>';
+        }
+
+        if ($opts['visibility']) {
+            $color = ($visibilityLevel == 3 ? 'red' : ($visibilityLevel == 2 ? 'yellow' : 'green'));
+            $summary[] = 'Maximum Visibility Documented: <fg='.$color.'>'.ucfirst($opts['visibility']).'</>';
+        }
+
+        if ($version) {
+            $summary[] = 'Exported As Version: <fg=green>'.$version.'</>';
+        }
+
+        if ($opts['mkdocs']) {
+            $summary[] = 'Documents MkDocs Ready: <fg=green>Yes</>';
+        } else {
+            $summary[] = 'Documents MkDocs Ready: <fg=yellow>No</>';
+        }
+
+        $this->io->success('Documentation Built');
+        foreach ($summary as $message) {
+            $this->io->writeln($message);
         }
 
         return 0;
     }
 
-    protected function buildMkdocsNav(string $baseExportPath): string
+    protected function buildMkdocsNav(string $baseExportPath): string|array
     {
         $list = TemplateFactory::getWrittenFiles();
         $pathParts = [];
@@ -296,42 +427,39 @@ class Roster extends Command
             $navArray = array_merge_recursive($navArray, $this->buildNavArrayRecursive($part));
         }
 
-        return $this->buildNavRecursive($navArray);
+        return $navArray;
     }
 
-    protected function buildNavArrayRecursive(array $parts, int $depth = 0): array|string
+    protected function formatNavArrayRecursive(array $nav): array
+    {
+        $formattedNav = [];
+
+        $i = 0;
+        foreach ($nav as $key => $value) {
+            if (is_string($value)) {
+                $formattedNav[$i] = [$key => $value];
+            } else {
+                $formattedNav[$i] = [$key => $this->formatNavArrayRecursive($value, $i)];
+            }
+            $i++;
+        }
+
+        return $formattedNav;
+    }
+
+    protected function buildNavArrayRecursive(array $parts, int $depth = 0, string $builtString = ''): array|string
     {
         $navArray = [];
+        $diffedPath = str_replace($this->rootDir.'/docs/', '', $this->baseExportPath);
 
         if (isset($parts[$depth+1])) {
-            $navArray[$parts[$depth]] = $this->buildNavArrayRecursive($parts, $depth+1);
+            $navArray[$parts[$depth]] = $this->buildNavArrayRecursive($parts, $depth+1, $builtString.$parts[$depth].'/');
             return $navArray;
         }
 
-        return [$parts[$depth]];
-    }
+        $name = str_replace('.md', '', $parts[$depth]);
 
-    protected function buildNavRecursive(array $navArray, int $depth = 1, string $builtString = ''): string
-    {
-        $indent = '  ';
-
-        $lineBase = str_repeat($indent, $depth).'- ';
-        $navContent = '';
-
-        $diffedPath = str_replace($this->rootDir.'/docs/', '', $this->baseExportPath);
-
-        foreach ($navArray as $key => $value) {
-            if (is_array($value)) {
-                $navContent .= $lineBase.'\''.$key.'\':'.PHP_EOL;
-                $navContent .= $this->buildNavRecursive($value, $depth+1, $builtString.$key.'/');
-            } else {
-                $name = str_replace('.md', '', $value);
-                $navContent .= $lineBase.'\''.$name.'\': \''.$diffedPath.'/'.$builtString.$value.'\''.PHP_EOL;
-            }
-        }
-
-        return $navContent;
-
+        return [$name => $diffedPath.'/'.$builtString.$parts[$depth]];
     }
 
     protected function traverseDirectories(string $dir): array

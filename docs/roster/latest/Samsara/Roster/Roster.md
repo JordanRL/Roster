@@ -117,13 +117,13 @@
     **return**
 
     type
-    :   string
+    :   array|string
 
     description
     :   *No description available*
 
-!!! signature "protected Roster->buildNavArrayRecursive(array $parts, int $depth)"
-    **$parts**
+!!! signature "protected Roster->formatNavArrayRecursive(array $nav)"
+    **$nav**
 
     type
     :   array
@@ -131,24 +131,16 @@
     description
     :   *No description available*
 
-    **$depth**
-
-    type
-    :   int
-
-    description
-    :   *No description available*
-
     **return**
 
     type
-    :   array|string
+    :   array
 
     description
     :   *No description available*
 
-!!! signature "protected Roster->buildNavRecursive(array $navArray, int $depth, string $builtString)"
-    **$navArray**
+!!! signature "protected Roster->buildNavArrayRecursive(array $parts, int $depth, string $builtString)"
+    **$parts**
 
     type
     :   array
@@ -175,7 +167,7 @@
     **return**
 
     type
-    :   string
+    :   array|string
 
     description
     :   *No description available*
