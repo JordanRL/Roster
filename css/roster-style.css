@@ -182,35 +182,33 @@
 
 .rst-content .signature > .admonition-title::before,
 .rst-content .signature > summary::before {
-    background-color: #00c853;
+    font-size: 24px;
+    line-height: 24px;
+    color: #00c853;
     -webkit-mask-image: var(--md-admonition-icon--signature);
     mask-image: var(--md-admonition-icon--signature);
 }
 
 .rst-content .signature.constant > .admonition-title::before,
 .rst-content .signature.constant > summary::before {
-    background-color: #00c853;
     -webkit-mask-image: var(--md-adminition-icon--signature-constant);
     mask-image: var(--md-adminition-icon--signature-constant);
 }
 
 .rst-content .signature.property > .admonition-title::before,
 .rst-content .signature.property > summary::before {
-    background-color: #00c853;
     -webkit-mask-image: var(--md-adminition-icon--signature-property);
     mask-image: var(--md-adminition-icon--signature-property);
 }
 
 .rst-content .signature.interface > .admonition-title::before,
 .rst-content .signature.interface > summary::before {
-    background-color: #00c853;
     -webkit-mask-image: var(--md-adminition-icon--signature-interface);
     mask-image: var(--md-adminition-icon--signature-interface);
 }
 
 .rst-content .signature.trait > .admonition-title::before,
 .rst-content .signature.trait > summary::before {
-    background-color: #00c853;
     -webkit-mask-image: var(--md-adminition-icon--signature-trait);
     mask-image: var(--md-adminition-icon--signature-trait);
 }
