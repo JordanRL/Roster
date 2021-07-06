@@ -145,7 +145,9 @@
             <div class="section">
               
                 <h1 id="samsararoster-roster">Samsara\Roster &gt; Roster</h1>
-<p><em>No description available</em></p>
+<p>Class Roster</p>
+<p>This class performs all of the command logic to actually build the documentation with the right options and in the right order.</p>
+<p>The execute() method is the only one directly invoked by the CLI application, and it dispatches all other function calls.</p>
 <h2 id="inheritance">Inheritance</h2>
 <h3 id="extends">Extends</h3>
 <ul>
@@ -216,24 +218,24 @@
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
-<dd><em>mixed</em> (assumed)</dd>
+<dd>void</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
 </div>
 <div class="admonition signature">
-<p class="admonition-title">protected Roster-&gt;execute(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<p class="admonition-title">protected Roster-&gt;execute(InputInterface $input, OutputInterface $output)</p>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
-<dd>Symfony\Component\Console\Input\InputInterface</dd>
+<dd>InputInterface</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
 <p><strong>$output</strong></p>
 <dl>
 <dt>type</dt>
-<dd>Symfony\Component\Console\Output\OutputInterface</dd>
+<dd>OutputInterface</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
@@ -245,6 +247,8 @@
 <dd><em>No description available</em></dd>
 </dl>
 </div>
+<p>execute() method</p>
+<p>This function performs all of the application logic. All actions performed by the script are at least started from this function.</p>
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;buildMkdocsNav(string $baseExportPath)</p>
 <p><strong>$baseExportPath</strong></p>
@@ -252,15 +256,34 @@
 <dt>type</dt>
 <dd>string</dd>
 <dt>description</dt>
-<dd><em>No description available</em></dd>
+<dd>The realpath() of the location docs are exported to</dd>
 </dl>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
-<dd>array|string</dd>
+<dd>array</dd>
 <dt>description</dt>
-<dd><em>No description available</em></dd>
+<dd>And array that is structured as a tree containing all documented namespaces and files</dd>
 </dl>
+</div>
+<p>buildMkdocsNav</p>
+<p>This function takes in the base export path and outputs the namespace information about all the compiled and written document files as an array structured as a tree.</p>
+<p>This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="x">$tree = $this-&gt;buildMkDocsNav(&#39;/path/to/project/docs&#39;)</span>
+<span class="lineno"> 2 </span><span class="x">echo var_export($tree, true);</span>
+<span class="lineno"> 3 </span><span class="x">// Possible Output:</span>
+<span class="lineno"> 4 </span><span class="x">// [</span>
+<span class="lineno"> 5 </span><span class="x">//   &#39;Samsara&#39; =&gt; [</span>
+<span class="lineno"> 6 </span><span class="x">//     &#39;Roster&#39; =&gt; [</span>
+<span class="lineno"> 7 </span><span class="x">//       &#39;TemplateFactory&#39; =&gt; &#39;roster/latest/Samsara/Roster/TemplateFactory.md&#39;,</span>
+<span class="lineno"> 8 </span><span class="x">//       &#39;Roster&#39; =&gt; &#39;roster/latest/Samsara/Roster/Roster.md&#39;,</span>
+<span class="lineno"> 9 </span><span class="x">//       &#39;App&#39; =&gt; &#39;roster/latest/Samsara/Roster/App.md&#39;</span>
+<span class="lineno">10 </span><span class="x">//     ]</span>
+<span class="lineno">11 </span><span class="x">//   ]</span>
+<span class="lineno">12 </span><span class="x">// ]</span>
+</pre></div>
 </div>
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;formatNavArrayRecursive(array $nav)</p>
@@ -269,7 +292,7 @@
 <dt>type</dt>
 <dd>array</dd>
 <dt>description</dt>
-<dd><em>No description available</em></dd>
+<dd>A</dd>
 </dl>
 <p><strong>return</strong></p>
 <dl>
@@ -278,6 +301,28 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
+</div>
+<p>formatNavArrayRecursive() method</p>
+<p>This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="x">$nav = $this-&gt;formatNavArrayRecursive($tree)</span>
+<span class="lineno"> 2 </span><span class="x">echo var_export($nav, true);</span>
+<span class="lineno"> 3 </span><span class="x">// Possible Output:</span>
+<span class="lineno"> 4 </span><span class="x">// [</span>
+<span class="lineno"> 5 </span><span class="x">//   0 =&gt; [</span>
+<span class="lineno"> 6 </span><span class="x">//     &#39;Samsara&#39; =&gt; [</span>
+<span class="lineno"> 7 </span><span class="x">//       0 =&gt; [</span>
+<span class="lineno"> 8 </span><span class="x">//         &#39;Roster&#39; =&gt; [</span>
+<span class="lineno"> 9 </span><span class="x">//           0 =&gt; [&#39;TemplateFactory&#39; =&gt; &#39;roster/latest/Samsara/Roster/TemplateFactory.md&#39;],</span>
+<span class="lineno">10 </span><span class="x">//           1 =&gt; [&#39;Roster&#39; =&gt; &#39;roster/latest/Samsara/Roster/Roster.md&#39;],</span>
+<span class="lineno">11 </span><span class="x">//           2 =&gt; [&#39;App&#39; =&gt; &#39;roster/latest/Samsara/Roster/App.md&#39;]</span>
+<span class="lineno">12 </span><span class="x">//         ]</span>
+<span class="lineno">13 </span><span class="x">//       ]</span>
+<span class="lineno">14 </span><span class="x">//     ]</span>
+<span class="lineno">15 </span><span class="x">//   ]</span>
+<span class="lineno">16 </span><span class="x">// ]</span>
+</pre></div>
 </div>
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;buildNavArrayRecursive(array $parts, int $depth, string $builtString)</p>
@@ -305,10 +350,29 @@
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
-<dd>array|string</dd>
+<dd>array</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
+</div>
+<p>buildNavArrayRecursive() method</p>
+<p>This function takes a flat array and reorganizes it into a tree structure.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="x">$flat = [&#39;Samsara&#39;, &#39;Roster&#39;, &#39;Processors&#39;, &#39;TemplateProcessor&#39;];</span>
+<span class="lineno"> 2 </span><span class="x">$leaf = $this-&gt;buildNavArrayRecursive($flat);</span>
+<span class="lineno"> 3 </span><span class="x">echo var_export($leaf);</span>
+<span class="lineno"> 4 </span><span class="x">// Output:</span>
+<span class="lineno"> 5 </span><span class="x">// [</span>
+<span class="lineno"> 6 </span><span class="x">//   &#39;Samsara&#39; =&gt; [</span>
+<span class="lineno"> 7 </span><span class="x">//       &#39;Roster&#39; =&gt; [</span>
+<span class="lineno"> 8 </span><span class="x">//           &#39;Processors&#39; =&gt; [</span>
+<span class="lineno"> 9 </span><span class="x">//               &#39;TemplateProcessor&#39; =&gt; &#39;roster/latest/Samsara/Roster/Processors/TemplateProcessor.md&#39;</span>
+<span class="lineno">10 </span><span class="x">//           ]</span>
+<span class="lineno">11 </span><span class="x">//       ]</span>
+<span class="lineno">12 </span><span class="x">//   ]</span>
+<span class="lineno">13 </span><span class="x">// ]</span>
+</pre></div>
 </div>
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;traverseDirectories(string $dir)</p>
