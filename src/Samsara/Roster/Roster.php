@@ -16,6 +16,17 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * Class Roster
+ *
+ * This class performs all of the command logic to actually build the documentation with the
+ * right options and in the right order.
+ *
+ * The execute() method is the only one directly invoked by the CLI application, and it dispatches
+ * all other function calls.
+ *
+ * @package Samsara\Roster
+ */
 class Roster extends Command
 {
 
@@ -42,7 +53,13 @@ class Roster extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    /**
+     * configure() method
+     *
+     * Creates all the settings for the console command, including setting up the arguments
+     * and the available options.
+     */
+    protected function configure(): void
     {
         $this
             ->setName('compile')
@@ -116,6 +133,16 @@ class Roster extends Command
         }
     }
 
+    /**
+     * execute() method
+     *
+     * This function performs all of the application logic. All actions performed by the script are
+     * at least started from this function.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);;
@@ -411,7 +438,33 @@ class Roster extends Command
         return 0;
     }
 
-    protected function buildMkdocsNav(string $baseExportPath): string|array
+    /**
+     * buildMkdocsNav
+     *
+     * This function takes in the base export path and outputs the namespace information
+     * about all the compiled and written document files as an array structured as a tree.
+     *
+     * This array structure is close, but not quite completely, the format that YAML requires
+     * to build the nav option within the mkdocs.yml file.
+     *
+     * Example:
+     * $tree = $this->buildMkDocsNav('/path/to/project/docs')
+     * echo var_export($tree, true);
+     * // Possible Output:
+     * // [
+     * //   'Samsara' => [
+     * //     'Roster' => [
+     * //       'TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md',
+     * //       'Roster' => 'roster/latest/Samsara/Roster/Roster.md',
+     * //       'App' => 'roster/latest/Samsara/Roster/App.md'
+     * //     ]
+     * //   ]
+     * // ]
+     *
+     * @param string $baseExportPath The realpath() of the location docs are exported to
+     * @return array And array that is structured as a tree containing all documented namespaces and files
+     */
+    protected function buildMkdocsNav(string $baseExportPath): array
     {
         $list = TemplateFactory::getWrittenFiles();
         $pathParts = [];
@@ -430,6 +483,33 @@ class Roster extends Command
         return $navArray;
     }
 
+    /**
+     * formatNavArrayRecursive() method
+     *
+     * This function takes a tree array from buildMkdocsNav() are returns an array that has
+     * been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.
+     *
+     * Example:
+     * $nav = $this->formatNavArrayRecursive($tree)
+     * echo var_export($nav, true);
+     * // Possible Output:
+     * // [
+     * //   0 => [
+     * //     'Samsara' => [
+     * //       0 => [
+     * //         'Roster' => [
+     * //           0 => ['TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md'],
+     * //           1 => ['Roster' => 'roster/latest/Samsara/Roster/Roster.md'],
+     * //           2 => ['App' => 'roster/latest/Samsara/Roster/App.md']
+     * //         ]
+     * //       ]
+     * //     ]
+     * //   ]
+     * // ]
+     *
+     * @param array $nav A
+     * @return array
+     */
     protected function formatNavArrayRecursive(array $nav): array
     {
         $formattedNav = [];
@@ -447,7 +527,32 @@ class Roster extends Command
         return $formattedNav;
     }
 
-    protected function buildNavArrayRecursive(array $parts, int $depth = 0, string $builtString = ''): array|string
+    /**
+     * buildNavArrayRecursive() method
+     *
+     * This function takes a flat array and reorganizes it into a tree structure.
+     *
+     * Example:
+     * $flat = ['Samsara', 'Roster', 'Processors', 'TemplateProcessor'];
+     * $leaf = $this->buildNavArrayRecursive($flat);
+     * echo var_export($leaf);
+     * // Output:
+     * // [
+     * //   'Samsara' => [
+     * //       'Roster' => [
+     * //           'Processors' => [
+     * //               'TemplateProcessor' => 'roster/latest/Samsara/Roster/Processors/TemplateProcessor.md'
+     * //           ]
+     * //       ]
+     * //   ]
+     * // ]
+     *
+     * @param array $parts
+     * @param int $depth
+     * @param string $builtString
+     * @return array
+     */
+    protected function buildNavArrayRecursive(array $parts, int $depth = 0, string $builtString = ''): array
     {
         $navArray = [];
         $diffedPath = str_replace($this->rootDir.'/docs/', '', $this->baseExportPath);

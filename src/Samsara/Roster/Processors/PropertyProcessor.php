@@ -44,8 +44,8 @@ class PropertyProcessor extends BaseCodeProcessor
         $propTypeDoc = '';
         $propTypeCode = '';
 
-        if (isset($this->docBlock->others['var'])) {
-            $propTypeDoc = $this->docBlock->others['var']->type;
+        if ($this->docBlock->hasTag('var')) {
+            $propTypeDoc = $this->docBlock->getLastTag('var')->type;
         }
 
         if ($this->property->hasType()) {

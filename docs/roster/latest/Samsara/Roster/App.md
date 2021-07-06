@@ -1,6 +1,8 @@
 # Samsara\Roster > App
 
-*No description available*
+Class App
+
+ This class configures and sets up the Symfony/Console application so that it is ready for the command to be executed.
 
 
 ## Inheritance
@@ -33,7 +35,7 @@
 
 !!! signature constant "App::VERSION"
     value
-    :   'v0.1.0-alpha'
+    :   'v0.1.0'
 
 
 
@@ -99,7 +101,7 @@
     :   string[][]
 
     description
-    :   An array of abbreviations
+    :   *No description available*
 
 Returns an array of possible abbreviations given a set of names.
 
@@ -190,7 +192,7 @@ Returns an array of possible abbreviations given a set of names.
     :   int
 
     description
-    :   0 if everything went fine, or an error code
+    :   *No description available*
 
 Runs the current application.
 
@@ -227,7 +229,7 @@ Runs the current application.
     :   HelperSet
 
     description
-    :   The HelperSet instance associated with this command
+    :   *No description available*
 
 Get the helper set associated with the command.
 
@@ -255,7 +257,7 @@ Get the helper set associated with the command.
     :   InputDefinition
 
     description
-    :   The InputDefinition instance
+    :   *No description available*
 
 Gets the InputDefinition related to this Application.
 
@@ -266,7 +268,7 @@ Gets the InputDefinition related to this Application.
     :   string
 
     description
-    :   A help message
+    :   *No description available*
 
 Gets the help message.
 
@@ -277,7 +279,7 @@ Gets the help message.
     :   bool
 
     description
-    :   Whether to catch exceptions or not during commands execution
+    :   *No description available*
 
 Gets whether to catch exceptions or not during commands execution.
 
@@ -305,7 +307,7 @@ Gets whether to catch exceptions or not during commands execution.
     :   bool
 
     description
-    :   Whether to automatically exit after a command execution or not
+    :   *No description available*
 
 Gets whether to automatically exit after a command execution or not.
 
@@ -333,7 +335,7 @@ Gets whether to automatically exit after a command execution or not.
     :   string
 
     description
-    :   The application name
+    :   *No description available*
 
 Gets the name of the application.
 
@@ -361,7 +363,7 @@ Gets the name of the application.
     :   string
 
     description
-    :   The application version
+    :   *No description available*
 
 Gets the application version.
 
@@ -389,7 +391,7 @@ Gets the application version.
     :   string
 
     description
-    :   The long application version
+    :   *No description available*
 
 Returns the long version of the application.
 
@@ -408,7 +410,7 @@ Returns the long version of the application.
     :   Command
 
     description
-    :   The newly created command
+    :   *No description available*
 
 Registers a new command.
 
@@ -448,7 +450,7 @@ Adds an array of command objects.
     :   Command|null
 
     description
-    :   The registered command if enabled or null
+    :   *No description available*
 
 Adds a command object.
 
@@ -469,9 +471,7 @@ Adds a command object.
     :   Command
 
     description
-    :   A Command object
-
-
+    :   *No description available*
 
 Returns a registered command by name or alias.
 
@@ -490,7 +490,7 @@ Returns a registered command by name or alias.
     :   bool
 
     description
-    :   true if the command exists, false otherwise
+    :   *No description available*
 
 Returns true if the command exists, false otherwise.
 
@@ -501,7 +501,7 @@ Returns true if the command exists, false otherwise.
     :   string[]
 
     description
-    :   An array of namespaces
+    :   *No description available*
 
 Returns an array of all unique namespaces used by currently registered commands.
 
@@ -522,9 +522,7 @@ Returns an array of all unique namespaces used by currently registered commands.
     :   string
 
     description
-    :   A registered namespace
-
-
+    :   *No description available*
 
 Finds a registered namespace by a name or an abbreviation.
 
@@ -543,9 +541,7 @@ Finds a registered namespace by a name or an abbreviation.
     :   Command
 
     description
-    :   A Command instance
-
-
+    :   *No description available*
 
 Finds a command by name or alias.
 
@@ -566,7 +562,7 @@ Finds a command by name or alias.
     :   Command[]
 
     description
-    :   An array of Command instances
+    :   *No description available*
 
 Gets the commands (registered in the given namespace if provided).
 
@@ -620,7 +616,7 @@ Gets the commands (registered in the given namespace if provided).
     :   string
 
     description
-    :   The namespace of the command
+    :   *No description available*
 
 Returns the namespace part of the command name.
 
@@ -743,7 +739,7 @@ Sets the default Command name.
     :   int
 
     description
-    :   0 if everything went fine, or an error code
+    :   *No description available*
 
 Runs the current command.
 
@@ -775,7 +771,7 @@ Gets the name of the command based on input.
     :   InputDefinition
 
     description
-    :   An InputDefinition instance
+    :   *No description available*
 
 Gets the default input definition.
 
@@ -786,7 +782,7 @@ Gets the default input definition.
     :   Command[]
 
     description
-    :   An array of default Command instances
+    :   *No description available*
 
 Gets the default commands that should always be available.
 
@@ -797,7 +793,7 @@ Gets the default commands that should always be available.
     :   HelperSet
 
     description
-    :   A HelperSet instance
+    :   *No description available*
 
 Gets the default helper set with the helpers that should always be available.
 

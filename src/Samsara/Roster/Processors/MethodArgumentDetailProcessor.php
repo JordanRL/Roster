@@ -23,8 +23,10 @@ class MethodArgumentDetailProcessor extends BaseCodeProcessor
 
         $this->parameters = $parameters;
 
-        foreach ($docBlockProcessor->params as $param) {
-            $this->tags[$param->name] = $param;
+        if ($docBlockProcessor->hasTag('param')) {
+            foreach ($docBlockProcessor->getTag('param') as $param) {
+                $this->tags[$param->name] = $param;
+            }
         }
 
     }
