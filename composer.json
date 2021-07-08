@@ -2,7 +2,7 @@
   "name": "samsara/roster",
   "type": "library",
   "description": "A PHP console tool to generate Markdown documentation from your docblocks and types hints using templates.",
-  "keywords": ["documentation", "markdown", "template", "console", "cli", "command line", "mkdocs", "rtd"],
+  "keywords": ["documentation", "markdown", "template", "console", "cli", "command line", "mkdocs", "rtd", "material design"],
   "funding": [
     {
       "type": "github",
