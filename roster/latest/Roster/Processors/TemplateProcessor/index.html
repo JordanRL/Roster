@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="canonical" href="https://jordanrl.github.io/Roster/roster/v0.2/Roster/Processors/MethodArgumentDetailProcessor/">
+  <link rel="canonical" href="https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/TemplateProcessor/">
   <link rel="shortcut icon" href="../../../../../img/favicon.ico">
-  <title>MethodArgumentDetailProcessor - Roster - Docs From The Source</title>
+  <title>TemplateProcessor - Roster - Docs From The Source</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../../../../css/theme.css" />
@@ -19,9 +19,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "MethodArgumentDetailProcessor";
-    var mkdocs_page_input_path = "roster/v0.2/Roster/Processors/MethodArgumentDetailProcessor.md";
-    var mkdocs_page_url = "/Roster/roster/v0.2/Roster/Processors/MethodArgumentDetailProcessor/";
+    var mkdocs_page_name = "TemplateProcessor";
+    var mkdocs_page_input_path = "roster/latest/Roster/Processors/TemplateProcessor.md";
+    var mkdocs_page_url = "/Roster/roster/latest/Roster/Processors/TemplateProcessor/";
   </script>
   
   <script src="../../../../../js/jquery-2.1.1.min.js" defer></script>
@@ -79,13 +79,13 @@
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../TraitInlineProcessor/">TraitInlineProcessor</a>
                 </li>
-                <li class="toctree-l3 current"><a class="reference internal current" href="./">MethodArgumentDetailProcessor</a>
-    <ul class="current">
-    </ul>
+                <li class="toctree-l3"><a class="reference internal" href="../MethodArgumentDetailProcessor/">MethodArgumentDetailProcessor</a>
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../ClassProcessor/">ClassProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../TemplateProcessor/">TemplateProcessor</a>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">TemplateProcessor</a>
+    <ul class="current">
+    </ul>
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../PropertyProcessor/">PropertyProcessor</a>
                 </li>
@@ -137,10 +137,10 @@
         
       
     
-    <li>MethodArgumentDetailProcessor</li>
+    <li>TemplateProcessor</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/JordanRL/Roster/edit/master/docs/roster/v0.2/Roster/Processors/MethodArgumentDetailProcessor.md"
+        <a href="https://github.com/JordanRL/Roster/edit/master/docs/roster/latest/Roster/Processors/TemplateProcessor.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -152,57 +152,16 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="samsararosterprocessors-methodargumentdetailprocessor">Samsara\Roster\Processors &gt; MethodArgumentDetailProcessor</h1>
+                <h1 id="samsararosterprocessors-templateprocessor">Samsara\Roster\Processors &gt; TemplateProcessor</h1>
 <p><em>No description available</em></p>
-<h2 id="inheritance">Inheritance</h2>
-<h3 id="extends">Extends</h3>
-<ul>
-<li>Samsara\Roster\Processors\Base\BaseCodeProcessor</li>
-</ul>
-<h2 id="variables-data">Variables &amp; Data</h2>
-<h3 id="inherited-properties">Inherited Properties</h3>
-<div class="admonition signature property">
-<p class="admonition-title">protected BaseCodeProcessor-&gt;declaringClass</p>
-<dl>
-<dt>type</dt>
-<dd>string</dd>
-<dt>value</dt>
-<dd>''</dd>
-</dl>
-</div>
-<div class="admonition signature property">
-<p class="admonition-title">protected BaseCodeProcessor-&gt;docBlock</p>
-<dl>
-<dt>type</dt>
-<dd>Samsara\Mason\DocBlockProcessor</dd>
-<dt>value</dt>
-<dd><em>uninitialized</em></dd>
-</dl>
-</div>
-<div class="admonition signature property">
-<p class="admonition-title">protected BaseCodeProcessor-&gt;templateProcessor</p>
-<dl>
-<dt>type</dt>
-<dd>Samsara\Roster\Processors\TemplateProcessor</dd>
-<dt>value</dt>
-<dd><em>uninitialized</em></dd>
-</dl>
-</div>
 <h2 id="methods">Methods</h2>
 <h3 id="constructor">Constructor</h3>
 <div class="admonition signature">
-<p class="admonition-title">public MethodArgumentDetailProcessor-&gt;__construct(array $parameters, Samsara\Mason\DocBlockProcessor $docBlockProcessor)</p>
-<p><strong>$parameters</strong></p>
+<p class="admonition-title">public TemplateProcessor-&gt;__construct(string $template)</p>
+<p><strong>$template</strong></p>
 <dl>
 <dt>type</dt>
-<dd>array</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>$docBlockProcessor</strong></p>
-<dl>
-<dt>type</dt>
-<dd>Samsara\Mason\DocBlockProcessor</dd>
+<dd>string</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
@@ -217,57 +176,8 @@
 <hr />
 <h3 id="instanced-methods">Instanced Methods</h3>
 <div class="admonition signature">
-<p class="admonition-title">public MethodArgumentDetailProcessor-&gt;compile()</p>
-<p><strong>return</strong></p>
-<dl>
-<dt>type</dt>
-<dd>string</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-</div>
-<hr />
-<h3 id="inherited-methods">Inherited Methods</h3>
-<div class="admonition signature">
-<p class="admonition-title">public BaseCodeProcessor-&gt;getDeclaringClass()</p>
-<p><strong>return</strong></p>
-<dl>
-<dt>type</dt>
-<dd>string</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-</div>
-<hr />
-<div class="admonition signature">
-<p class="admonition-title">protected BaseCodeProcessor-&gt;fixDefaultValue($defaultValue)</p>
-<p><strong>$defaultValue</strong></p>
-<dl>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>return</strong></p>
-<dl>
-<dt>type</dt>
-<dd>string</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-</div>
-<hr />
-<div class="admonition signature">
-<p class="admonition-title">protected BaseCodeProcessor-&gt;fixOutput($option1, $option2, $option3)</p>
-<p><strong>$option1</strong></p>
-<dl>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>$option2</strong></p>
-<dl>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>$option3</strong></p>
+<p class="admonition-title">public TemplateProcessor-&gt;has($key)</p>
+<p><strong>$key</strong></p>
 <dl>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
@@ -282,11 +192,66 @@
 </div>
 <hr />
 <div class="admonition signature">
-<p class="admonition-title">protected BaseCodeProcessor-&gt;templateLoader(string $templateName)</p>
-<p><strong>$templateName</strong></p>
+<p class="admonition-title">public TemplateProcessor-&gt;markHas($key)</p>
+<p><strong>$key</strong></p>
+<dl>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+<p><strong>return</strong></p>
+<dl>
+<dt>type</dt>
+<dd><em>mixed</em> (assumed)</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+</div>
+<hr />
+<div class="admonition signature">
+<p class="admonition-title">public TemplateProcessor-&gt;supplyReplacement(string $key, Samsara\Roster\Processors\TemplateProcessor|array|string $replacement)</p>
+<p><strong>$key</strong></p>
 <dl>
 <dt>type</dt>
 <dd>string</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+<p><strong>$replacement</strong></p>
+<dl>
+<dt>type</dt>
+<dd>Samsara\Roster\Processors\TemplateProcessor|array|string</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+<p><strong>return</strong></p>
+<dl>
+<dt>type</dt>
+<dd><em>mixed</em> (assumed)</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+</div>
+<hr />
+<div class="admonition signature">
+<p class="admonition-title">public TemplateProcessor-&gt;compile()</p>
+<p><strong>return</strong></p>
+<dl>
+<dt>type</dt>
+<dd>string</dd>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+</div>
+<hr />
+<div class="admonition signature">
+<p class="admonition-title">protected TemplateProcessor-&gt;buildHasBlocks($template, $depth)</p>
+<p><strong>$template</strong></p>
+<dl>
+<dt>description</dt>
+<dd><em>No description available</em></dd>
+</dl>
+<p><strong>$depth</strong></p>
+<dl>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
@@ -310,10 +275,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../ClassProcessor/" class="btn btn-neutral float-right" title="ClassProcessor">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../PropertyProcessor/" class="btn btn-neutral float-right" title="PropertyProcessor">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../TraitInlineProcessor/" class="btn btn-neutral" title="TraitInlineProcessor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../ClassProcessor/" class="btn btn-neutral" title="ClassProcessor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -343,10 +308,10 @@
         </span>
     
     
-      <span><a href="../TraitInlineProcessor/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../ClassProcessor/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../ClassProcessor/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../PropertyProcessor/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="canonical" href="https://jordanrl.github.io/Roster/roster/v0.2/Roster/Processors/ClassProcessor/">
+  <link rel="canonical" href="https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/MethodArgumentDetailProcessor/">
   <link rel="shortcut icon" href="../../../../../img/favicon.ico">
-  <title>ClassProcessor - Roster - Docs From The Source</title>
+  <title>MethodArgumentDetailProcessor - Roster - Docs From The Source</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../../../../css/theme.css" />
@@ -19,9 +19,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "ClassProcessor";
-    var mkdocs_page_input_path = "roster/v0.2/Roster/Processors/ClassProcessor.md";
-    var mkdocs_page_url = "/Roster/roster/v0.2/Roster/Processors/ClassProcessor/";
+    var mkdocs_page_name = "MethodArgumentDetailProcessor";
+    var mkdocs_page_input_path = "roster/latest/Roster/Processors/MethodArgumentDetailProcessor.md";
+    var mkdocs_page_url = "/Roster/roster/latest/Roster/Processors/MethodArgumentDetailProcessor/";
   </script>
   
   <script src="../../../../../js/jquery-2.1.1.min.js" defer></script>
@@ -79,11 +79,11 @@
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../TraitInlineProcessor/">TraitInlineProcessor</a>
                 </li>
-                <li class="toctree-l3"><a class="reference internal" href="../MethodArgumentDetailProcessor/">MethodArgumentDetailProcessor</a>
-                </li>
-                <li class="toctree-l3 current"><a class="reference internal current" href="./">ClassProcessor</a>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">MethodArgumentDetailProcessor</a>
     <ul class="current">
     </ul>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../ClassProcessor/">ClassProcessor</a>
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../TemplateProcessor/">TemplateProcessor</a>
                 </li>
@@ -137,10 +137,10 @@
         
       
     
-    <li>ClassProcessor</li>
+    <li>MethodArgumentDetailProcessor</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/JordanRL/Roster/edit/master/docs/roster/v0.2/Roster/Processors/ClassProcessor.md"
+        <a href="https://github.com/JordanRL/Roster/edit/master/docs/roster/latest/Roster/Processors/MethodArgumentDetailProcessor.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -152,8 +152,8 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="samsararosterprocessors-classprocessor">Samsara\Roster\Processors &gt; ClassProcessor</h1>
-<p>This class takes in a class reflector and builds out the entire doc for that class, including all subdocs.</p>
+                <h1 id="samsararosterprocessors-methodargumentdetailprocessor">Samsara\Roster\Processors &gt; MethodArgumentDetailProcessor</h1>
+<p><em>No description available</em></p>
 <h2 id="inheritance">Inheritance</h2>
 <h3 id="extends">Extends</h3>
 <ul>
@@ -191,18 +191,18 @@
 <h2 id="methods">Methods</h2>
 <h3 id="constructor">Constructor</h3>
 <div class="admonition signature">
-<p class="admonition-title">public ClassProcessor-&gt;__construct(ReflectionClass $class, string $templateName)</p>
-<p><strong>$class</strong></p>
+<p class="admonition-title">public MethodArgumentDetailProcessor-&gt;__construct(array $parameters, Samsara\Mason\DocBlockProcessor $docBlockProcessor)</p>
+<p><strong>$parameters</strong></p>
 <dl>
 <dt>type</dt>
-<dd>ReflectionClass</dd>
+<dd>array</dd>
 <dt>description</dt>
-<dd>This is the reflection class of the class that you want to build a doc from.</dd>
+<dd><em>No description available</em></dd>
 </dl>
-<p><strong>$templateName</strong></p>
+<p><strong>$docBlockProcessor</strong></p>
 <dl>
 <dt>type</dt>
-<dd>string</dd>
+<dd>Samsara\Mason\DocBlockProcessor</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
@@ -210,31 +210,18 @@
 <dl>
 <dt>type</dt>
 <dd><em>mixed</em> (assumed)</dd>
-<dt>description</dt>
-<dd><em>No description available</em></dd>
-</dl>
-<p><strong>ClassProcessor-&gt;__construct Description</strong></p>
-<p>ClassProcessor constructor</p>
-</div>
-<hr />
-<h3 id="instanced-methods">Instanced Methods</h3>
-<div class="admonition signature">
-<p class="admonition-title">public ClassProcessor-&gt;compile()</p>
-<p><strong>return</strong></p>
-<dl>
-<dt>type</dt>
-<dd>string</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
 </div>
 <hr />
+<h3 id="instanced-methods">Instanced Methods</h3>
 <div class="admonition signature">
-<p class="admonition-title">protected ClassProcessor-&gt;buildClassInfo()</p>
+<p class="admonition-title">public MethodArgumentDetailProcessor-&gt;compile()</p>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
-<dd><em>mixed</em> (assumed)</dd>
+<dd>string</dd>
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
@@ -323,10 +310,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../TemplateProcessor/" class="btn btn-neutral float-right" title="TemplateProcessor">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../ClassProcessor/" class="btn btn-neutral float-right" title="ClassProcessor">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../MethodArgumentDetailProcessor/" class="btn btn-neutral" title="MethodArgumentDetailProcessor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../TraitInlineProcessor/" class="btn btn-neutral" title="TraitInlineProcessor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -356,10 +343,10 @@
         </span>
     
     
-      <span><a href="../MethodArgumentDetailProcessor/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../TraitInlineProcessor/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../TemplateProcessor/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../ClassProcessor/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
