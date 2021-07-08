@@ -521,7 +521,10 @@ class Roster extends Command
             $formattedNav = $this->formatNavArrayRecursive($nav);
 
             if ($choice && isset($oldConfig)) {
-                $extraCss = array_unique(array_merge(['css/'.$cssFileName.'.css'], $oldConfig->get('extra_css')));
+                $extraCss = $oldConfig->get('extra_css');
+                if (!in_array('css/'.$cssFileName.'.css', $extraCss)) {
+                    $extraCss[] = 'css/'.$cssFileName.'.css';
+                }
                 $appendOrMerge = ConfigBag::getRosterConfig()->get('mkdocs.merge-nav-mode');
 
                 if ($appendOrMerge == 'replace-nav-key') {
@@ -574,7 +577,10 @@ class Roster extends Command
                     true
                 );
 
-                $extraCss = ['css/'.$cssFileName.'.css'];
+                $extraCss = $configBase->get('extra_css');
+                if (!in_array('css/'.$cssFileName.'.css', $extraCss)) {
+                    $extraCss[] = 'css/'.$cssFileName.'.css';
+                }
 
                 $configBase->set('siteName', ConfigBag::getRosterConfig()->get('mkdocs.site-name'));
                 $configBase->set('siteUrl', ConfigBag::getRosterConfig()->get('mkdocs.site-url'));

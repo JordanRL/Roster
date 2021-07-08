@@ -1,4 +1,5 @@
 !!! signature interface "{$interfaceName}"
+    ##### {$interfaceName}
     namespace
     :   {$interfaceNamespace}
 

@@ -1,4 +1,5 @@
-!!! signature "{$visibility} {$className}{$connector}{$methodName}({$methodArgs})"{$hasArguments}
+!!! signature "{$visibility} {$className}{$connector}{$methodName}({$methodArgs})"
+    ##### {$methodName}{$hasArguments}
 {$methodArgDetails}{hasArguments$}
     **return**
 

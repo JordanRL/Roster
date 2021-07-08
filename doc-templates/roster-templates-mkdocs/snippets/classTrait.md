@@ -1,4 +1,5 @@
 !!! signature trait "{$traitName}"
+    ##### {$traitName}
     namespace
     :   {$traitNamespace}
 
