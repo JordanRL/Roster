@@ -21,132 +21,197 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/App/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Collections/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/ConfigBag/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Numbers/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Roster/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/ArithmeticProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/TemplateFactory/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/ConstantProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/ClassProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/RandomProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/InterfaceInlineProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/RoundingProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/MethodArgumentDetailProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/SequenceProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/MethodArgumentProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/SeriesProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/MethodProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Provider/TrigonometryProvider/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/PropertyProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Renderer/KatexRenderer/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/TemplateProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Renderer/Components/Interfaces/ComponentInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/TraitInlineProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Renderer/Components/Operations/PowOperation/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/latest/Roster/Processors/Base/BaseCodeProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Renderer/Components/Symbols/ThetaSymbol/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/App/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Decimal/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/ConfigBag/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Fraction/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Roster/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/NumberCollection/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/TemplateFactory/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Tuple/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/ClassProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Number/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/InterfaceInlineProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Selectable/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/MethodArgumentDetailProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Interfaces/Characteristics/BaseConversionInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/MethodArgumentProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Interfaces/Groups/NumberCollectionInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/MethodProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Interfaces/Numbers/DecimalInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/PropertyProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Interfaces/Numbers/FractionInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/TemplateProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Interfaces/Numbers/NumberInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/TraitInlineProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Base/Interfaces/Numbers/SimpleNumberInterface/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Core/Processors/Base/BaseCodeProcessor/</loc>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/ArithmeticSimpleTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/ComparisonTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/IntegerMathTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Arithmetic/ArithmeticNativeTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Arithmetic/ArithmeticScaleTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Arithmetic/ArithmeticSelectionTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Decimal/InverseTrigonometryTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Decimal/LogTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Decimal/ScaleTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Types/Traits/Decimal/TrigonometryTrait/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Values/ImmutableDecimal/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Values/ImmutableFraction/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Values/MutableDecimal/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Fermat/Values/MutableFraction/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -212,6 +277,71 @@
     </url>
     <url>
          <loc>https://jordanrl.github.io/Roster/roster/v0.2/Roster/Processors/Base/BaseCodeProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/App/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/ConfigBag/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Roster/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/TemplateFactory/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/ClassProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/InterfaceInlineProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/MethodArgumentDetailProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/MethodArgumentProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/MethodProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/PropertyProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/TemplateProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/TraitInlineProcessor/</loc>
+         <lastmod>2021-07-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://jordanrl.github.io/Roster/roster/v0.2/Samsara/Roster/Processors/Base/BaseCodeProcessor/</loc>
          <lastmod>2021-07-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
