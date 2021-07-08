@@ -8,7 +8,7 @@
     description
     :   {$methodReturnDesc}{$hasDesc}
 
-    ###### {$methodName}
+    ###### {$methodName}() Description:
 
     {$methodDescription}{hasDesc$}{$hasExample}
 

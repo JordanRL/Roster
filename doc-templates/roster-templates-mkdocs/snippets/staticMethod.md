@@ -8,7 +8,7 @@
     description
     :   {$methodReturnDesc}{$hasDesc}
 
-    **{$className}{$connector}{$methodName} Description**
+    ###### {$methodName}() Description:
 
     {$methodDescription}{hasDesc$}{$hasExample}
 

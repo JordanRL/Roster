@@ -1,5 +1,6 @@
 site_name: ''
-extra_css: []
+extra_css:
+  -
 repo_url: ''
 site_url: ''
 nav: []
