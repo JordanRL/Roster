@@ -12,7 +12,7 @@
 
     {$methodDescription}{hasDesc$}{$hasExample}
 
-!!! example "Example"
-    {$methodExample}{hasExample$}
+    !!! example "Example"
+        {$methodExample}{hasExample$}
 
 ---

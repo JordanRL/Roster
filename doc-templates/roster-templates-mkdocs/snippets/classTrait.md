@@ -5,6 +5,6 @@
     description
     :   
 
-{$traitDesc}{$hasAliases}
+    {$traitDesc}{$hasAliases}
 
     {$traitAliases}{hasAliases$}
