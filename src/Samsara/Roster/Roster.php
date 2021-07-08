@@ -181,25 +181,25 @@ class Roster extends Command
         } else {
             ConfigBag::setRosterConfig(Config::load($configPathRoot, new Json()));
             $configPathResolved = $configPathRoot;
-        }
 
-        $validator = new Validator();
-        $validator->resolver()->registerFile(
-            'https://github.com/JordanRL/Roster/master/roster-config-schema.config.json',
-            $this->rootRosterDir.'/roster-config-schema.config.json'
-        );
+            $validator = new Validator();
+            $validator->resolver()->registerFile(
+                'https://github.com/JordanRL/Roster/master/roster-config-schema.config.json',
+                $this->rootRosterDir.'/roster-config-schema.config.json'
+            );
 
-        $rosterConfigRaw = json_decode(file_get_contents($configPathResolved));
+            $rosterConfigRaw = json_decode(file_get_contents($configPathResolved));
 
-        $validatorResult = $validator->validate(
-            $rosterConfigRaw,
-            'https://github.com/JordanRL/Roster/master/roster-config-schema.config.json'
-        );
+            $validatorResult = $validator->validate(
+                $rosterConfigRaw,
+                'https://github.com/JordanRL/Roster/master/roster-config-schema.config.json'
+            );
 
-        if (!$validatorResult->isValid()) {
-            $this->io->error('Roster config file failed validation');
-            $this->io->block((new ErrorFormatter())->format($validatorResult->error()));
-            return self::FAILURE;
+            if (!$validatorResult->isValid()) {
+                $this->io->error('Roster config file failed validation');
+                $this->io->block((new ErrorFormatter())->format($validatorResult->error()));
+                return self::FAILURE;
+            }
         }
 
         if ($args['source']) {
