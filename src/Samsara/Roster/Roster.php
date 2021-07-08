@@ -177,13 +177,7 @@ class Roster extends Command
         $configPathVendor = $this->rootRosterDir.'/'.$opts['config-file'];
 
         if (!is_file($configPathRoot)) {
-            if (!is_file($configPathVendor)) {
-                $this->io->error('Cannot find config file');
-                return self::FAILURE;
-            } else {
-                ConfigBag::setRosterConfig(Config::load($configPathVendor, new Json()));
-                $configPathResolved = $configPathVendor;
-            }
+            ConfigBag::setRosterConfig(new Config("{}", new Json()));
         } else {
             ConfigBag::setRosterConfig(Config::load($configPathRoot, new Json()));
             $configPathResolved = $configPathRoot;
