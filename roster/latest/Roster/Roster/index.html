@@ -69,6 +69,32 @@
                 </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">Roster</a>
     <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#inheritance">Inheritance</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#extends">Extends</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#variables-data">Variables &amp; Data</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#class-constants">Class Constants</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#inherited-properties">Inherited Properties</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#constructor">Constructor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#instanced-methods">Instanced Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#inherited-static-methods">Inherited Static Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#inherited-methods">Inherited Methods</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../ConfigBag/">ConfigBag</a>
@@ -161,6 +187,7 @@
 <h3 id="class-constants">Class Constants</h3>
 <div class="admonition signature constant">
 <p class="admonition-title">Roster::SUCCESS</p>
+<h5 id="success">SUCCESS</h5>
 <dl>
 <dt>value</dt>
 <dd>0</dd>
@@ -168,6 +195,7 @@
 </div>
 <div class="admonition signature constant">
 <p class="admonition-title">Roster::FAILURE</p>
+<h5 id="failure">FAILURE</h5>
 <dl>
 <dt>value</dt>
 <dd>1</dd>
@@ -175,6 +203,7 @@
 </div>
 <div class="admonition signature constant">
 <p class="admonition-title">Roster::INVALID</p>
+<h5 id="invalid">INVALID</h5>
 <dl>
 <dt>value</dt>
 <dd>2</dd>
@@ -183,6 +212,7 @@
 <h3 id="inherited-properties">Inherited Properties</h3>
 <div class="admonition signature property">
 <p class="admonition-title">protected Command::defaultName</p>
+<h5 id="defaultname">defaultName</h5>
 <dl>
 <dt>type</dt>
 <dd><em>mixed</em> (assumed)</dd>
@@ -192,6 +222,7 @@
 </div>
 <div class="admonition signature property">
 <p class="admonition-title">protected Command::defaultDescription</p>
+<h5 id="defaultdescription">defaultDescription</h5>
 <dl>
 <dt>type</dt>
 <dd><em>mixed</em> (assumed)</dd>
@@ -203,6 +234,7 @@
 <h3 id="constructor">Constructor</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Roster-&gt;__construct($rootDir)</p>
+<h5 id="__construct">__construct</h5>
 <p><strong>$rootDir</strong></p>
 <dl>
 <dt>description</dt>
@@ -220,6 +252,7 @@
 <h3 id="instanced-methods">Instanced Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;configure()</p>
+<h5 id="configure">configure</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -231,6 +264,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;execute(InputInterface $input, OutputInterface $output)</p>
+<h5 id="execute">execute</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -252,13 +286,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Roster-&gt;execute Description</strong></p>
+<h6 id="execute-description">execute() Description:</h6>
 <p>execute() method</p>
 <p>This function performs all of the application logic. All actions performed by the script are at least started from this function.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;buildMkdocsNav(string $baseExportPath)</p>
+<h5 id="buildmkdocsnav">buildMkdocsNav</h5>
 <p><strong>$baseExportPath</strong></p>
 <dl>
 <dt>type</dt>
@@ -273,11 +308,10 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Roster-&gt;buildMkdocsNav Description</strong></p>
+<h6 id="buildmkdocsnav-description">buildMkdocsNav() Description:</h6>
 <p>buildMkdocsNav</p>
 <p>This function takes in the base export path and outputs the namespace information about all the compiled and written document files as an array structured as a tree.</p>
 <p>This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.</p>
-</div>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <div class="highlight"><pre><span></span><code><span class="linenos"> 1</span><span class="x">$tree = $this-&gt;buildMkDocsNav(&#39;/path/to/project/docs&#39;)</span>
@@ -294,9 +328,11 @@
 <span class="linenos">12</span><span class="x">// ]</span>
 </code></pre></div>
 </div>
+</div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;formatNavArrayRecursive(array $nav)</p>
+<h5 id="formatnavarrayrecursive">formatNavArrayRecursive</h5>
 <p><strong>$nav</strong></p>
 <dl>
 <dt>type</dt>
@@ -311,10 +347,9 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Roster-&gt;formatNavArrayRecursive Description</strong></p>
+<h6 id="formatnavarrayrecursive-description">formatNavArrayRecursive() Description:</h6>
 <p>formatNavArrayRecursive() method</p>
 <p>This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.</p>
-</div>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <div class="highlight"><pre><span></span><code><span class="linenos"> 1</span><span class="x">$nav = $this-&gt;formatNavArrayRecursive($tree)</span>
@@ -335,9 +370,11 @@
 <span class="linenos">16</span><span class="x">// ]</span>
 </code></pre></div>
 </div>
+</div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;buildNavArrayRecursive(array $parts, int $depth, string $builtString)</p>
+<h5 id="buildnavarrayrecursive">buildNavArrayRecursive</h5>
 <p><strong>$parts</strong></p>
 <dl>
 <dt>type</dt>
@@ -366,10 +403,9 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Roster-&gt;buildNavArrayRecursive Description</strong></p>
+<h6 id="buildnavarrayrecursive-description">buildNavArrayRecursive() Description:</h6>
 <p>buildNavArrayRecursive() method</p>
 <p>This function takes a flat array and reorganizes it into a tree structure.</p>
-</div>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
 <div class="highlight"><pre><span></span><code><span class="linenos"> 1</span><span class="x">$flat = [&#39;Samsara&#39;, &#39;Roster&#39;, &#39;Processors&#39;, &#39;TemplateProcessor&#39;];</span>
@@ -387,9 +423,11 @@
 <span class="linenos">13</span><span class="x">// ]</span>
 </code></pre></div>
 </div>
+</div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;traverseDirectories(string $dir)</p>
+<h5 id="traversedirectories">traverseDirectories</h5>
 <p><strong>$dir</strong></p>
 <dl>
 <dt>type</dt>
@@ -408,6 +446,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;extractFileData(string $realPath)</p>
+<h5 id="extractfiledata">extractFileData</h5>
 <p><strong>$realPath</strong></p>
 <dl>
 <dt>type</dt>
@@ -426,6 +465,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;createReflectors()</p>
+<h5 id="createreflectors">createReflectors</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -437,6 +477,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Roster-&gt;processTemplates(string $templatePath)</p>
+<h5 id="processtemplates">processTemplates</h5>
 <p><strong>$templatePath</strong></p>
 <dl>
 <dt>type</dt>
@@ -456,6 +497,7 @@
 <h3 id="inherited-static-methods">Inherited Static Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Command::getDefaultName()</p>
+<h5 id="getdefaultname">getDefaultName</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -467,6 +509,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command::getDefaultDescription()</p>
+<h5 id="getdefaultdescription">getDefaultDescription</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -479,6 +522,7 @@
 <h3 id="inherited-methods">Inherited Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;ignoreValidationErrors()</p>
+<h5 id="ignorevalidationerrors">ignoreValidationErrors</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -490,6 +534,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setApplication(?Symfony\Component\Console\Application $application)</p>
+<h5 id="setapplication">setApplication</h5>
 <p><strong>$application</strong></p>
 <dl>
 <dt>type</dt>
@@ -508,6 +553,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setHelperSet(Symfony\Component\Console\Helper\HelperSet $helperSet)</p>
+<h5 id="sethelperset">setHelperSet</h5>
 <p><strong>$helperSet</strong></p>
 <dl>
 <dt>type</dt>
@@ -526,6 +572,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getHelperSet()</p>
+<h5 id="gethelperset">getHelperSet</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -533,12 +580,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getHelperSet Description</strong></p>
+<h6 id="gethelperset-description">getHelperSet() Description:</h6>
 <p>Gets the helper set.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getApplication()</p>
+<h5 id="getapplication">getApplication</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -546,12 +594,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getApplication Description</strong></p>
+<h6 id="getapplication-description">getApplication() Description:</h6>
 <p>Gets the application instance for this command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;isEnabled()</p>
+<h5 id="isenabled">isEnabled</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -559,13 +608,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;isEnabled Description</strong></p>
+<h6 id="isenabled-description">isEnabled() Description:</h6>
 <p>Checks whether the command is enabled or not in the current environment.</p>
 <p>Override this to check for x or y and return false if the command can not run properly under the current conditions.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;run(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="run">run</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -587,13 +637,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;run Description</strong></p>
+<h6 id="run-description">run() Description:</h6>
 <p>Runs the command.</p>
 <p>The code to execute is either defined directly with the setCode() method or by overriding the execute() method in a sub-class.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setCode(callable $code)</p>
+<h5 id="setcode">setCode</h5>
 <p><strong>$code</strong></p>
 <dl>
 <dt>type</dt>
@@ -608,13 +659,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setCode Description</strong></p>
+<h6 id="setcode-description">setCode() Description:</h6>
 <p>Sets the code to execute when running this command.</p>
 <p>If this method is used, it overrides the code defined in the execute() method.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;mergeApplicationDefinition(bool $mergeArgs)</p>
+<h5 id="mergeapplicationdefinition">mergeApplicationDefinition</h5>
 <p><strong>$mergeArgs</strong></p>
 <dl>
 <dt>type</dt>
@@ -629,13 +681,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;mergeApplicationDefinition Description</strong></p>
+<h6 id="mergeapplicationdefinition-description">mergeApplicationDefinition() Description:</h6>
 <p>Merges the application definition with the command definition.</p>
 <p>This method is not part of public API and should not be used directly.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setDefinition(array|InputDefinition $definition)</p>
+<h5 id="setdefinition">setDefinition</h5>
 <p><strong>$definition</strong></p>
 <dl>
 <dt>type</dt>
@@ -650,12 +703,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setDefinition Description</strong></p>
+<h6 id="setdefinition-description">setDefinition() Description:</h6>
 <p>Sets an array of argument and option instances.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getDefinition()</p>
+<h5 id="getdefinition">getDefinition</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -663,12 +717,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getDefinition Description</strong></p>
+<h6 id="getdefinition-description">getDefinition() Description:</h6>
 <p>Gets the InputDefinition attached to this Command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getNativeDefinition()</p>
+<h5 id="getnativedefinition">getNativeDefinition</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -676,7 +731,7 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getNativeDefinition Description</strong></p>
+<h6 id="getnativedefinition-description">getNativeDefinition() Description:</h6>
 <p>Gets the InputDefinition to be used to create representations of this Command.</p>
 <p>Can be overridden to provide the original command representation when it would otherwise be changed by merging with the application InputDefinition.</p>
 <p>This method is not part of public API and should not be used directly.</p>
@@ -684,6 +739,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;addArgument(string $name, int|null $mode, string $description, string|string[]|null $default)</p>
+<h5 id="addargument">addArgument</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -719,12 +775,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;addArgument Description</strong></p>
+<h6 id="addargument-description">addArgument() Description:</h6>
 <p>Adds an argument.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;addOption(string $name, string|array|null $shortcut, int|null $mode, string $description, string|string[]|bool|null $default)</p>
+<h5 id="addoption">addOption</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -767,12 +824,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;addOption Description</strong></p>
+<h6 id="addoption-description">addOption() Description:</h6>
 <p>Adds an option.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setName(string $name)</p>
+<h5 id="setname">setName</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -787,7 +845,7 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setName Description</strong></p>
+<h6 id="setname-description">setName() Description:</h6>
 <p>Sets the name of the command.</p>
 <p>This method can set both the namespace and the name if you separate them by a colon (:)</p>
 <p>command-&gt;setName('foo:bar');</p>
@@ -795,6 +853,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setProcessTitle(string $title)</p>
+<h5 id="setprocesstitle">setProcessTitle</h5>
 <p><strong>$title</strong></p>
 <dl>
 <dt>type</dt>
@@ -809,13 +868,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setProcessTitle Description</strong></p>
+<h6 id="setprocesstitle-description">setProcessTitle() Description:</h6>
 <p>Sets the process title of the command.</p>
 <p>This feature should be used only when creating a long process command, like a daemon.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getName()</p>
+<h5 id="getname">getName</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -823,12 +883,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getName Description</strong></p>
+<h6 id="getname-description">getName() Description:</h6>
 <p>Returns the command name.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setHidden(bool $hidden)</p>
+<h5 id="sethidden">setHidden</h5>
 <p><strong>$hidden</strong></p>
 <dl>
 <dt>type</dt>
@@ -847,6 +908,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;isHidden()</p>
+<h5 id="ishidden">isHidden</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -858,6 +920,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setDescription(string $description)</p>
+<h5 id="setdescription">setDescription</h5>
 <p><strong>$description</strong></p>
 <dl>
 <dt>type</dt>
@@ -872,12 +935,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setDescription Description</strong></p>
+<h6 id="setdescription-description">setDescription() Description:</h6>
 <p>Sets the description for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getDescription()</p>
+<h5 id="getdescription">getDescription</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -885,12 +949,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getDescription Description</strong></p>
+<h6 id="getdescription-description">getDescription() Description:</h6>
 <p>Returns the description for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setHelp(string $help)</p>
+<h5 id="sethelp">setHelp</h5>
 <p><strong>$help</strong></p>
 <dl>
 <dt>type</dt>
@@ -905,12 +970,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setHelp Description</strong></p>
+<h6 id="sethelp-description">setHelp() Description:</h6>
 <p>Sets the help for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getHelp()</p>
+<h5 id="gethelp">getHelp</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -918,12 +984,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getHelp Description</strong></p>
+<h6 id="gethelp-description">getHelp() Description:</h6>
 <p>Returns the help for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getProcessedHelp()</p>
+<h5 id="getprocessedhelp">getProcessedHelp</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -931,12 +998,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getProcessedHelp Description</strong></p>
+<h6 id="getprocessedhelp-description">getProcessedHelp() Description:</h6>
 <p>Returns the processed help for the command replacing the %command.name% and command.full_name% patterns with the real values dynamically.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;setAliases(string[] $aliases)</p>
+<h5 id="setaliases">setAliases</h5>
 <p><strong>$aliases</strong></p>
 <dl>
 <dt>type</dt>
@@ -951,12 +1019,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;setAliases Description</strong></p>
+<h6 id="setaliases-description">setAliases() Description:</h6>
 <p>Sets the aliases for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getAliases()</p>
+<h5 id="getaliases">getAliases</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -964,12 +1033,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getAliases Description</strong></p>
+<h6 id="getaliases-description">getAliases() Description:</h6>
 <p>Returns the aliases for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getSynopsis(bool $short)</p>
+<h5 id="getsynopsis">getSynopsis</h5>
 <p><strong>$short</strong></p>
 <dl>
 <dt>type</dt>
@@ -984,12 +1054,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getSynopsis Description</strong></p>
+<h6 id="getsynopsis-description">getSynopsis() Description:</h6>
 <p>Returns the synopsis for the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;addUsage(string $usage)</p>
+<h5 id="addusage">addUsage</h5>
 <p><strong>$usage</strong></p>
 <dl>
 <dt>type</dt>
@@ -1004,12 +1075,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;addUsage Description</strong></p>
+<h6 id="addusage-description">addUsage() Description:</h6>
 <p>Add a command usage example, it'll be prefixed with the command name.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getUsages()</p>
+<h5 id="getusages">getUsages</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -1017,12 +1089,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getUsages Description</strong></p>
+<h6 id="getusages-description">getUsages() Description:</h6>
 <p>Returns alternative usages of the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Command-&gt;getHelper(string $name)</p>
+<h5 id="gethelper">getHelper</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -1037,12 +1110,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;getHelper Description</strong></p>
+<h6 id="gethelper-description">getHelper() Description:</h6>
 <p>Gets a helper instance by name.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Command-&gt;interact(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="interact">interact</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -1068,6 +1142,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Command-&gt;initialize(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="initialize">initialize</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -1089,7 +1164,7 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Command-&gt;initialize Description</strong></p>
+<h6 id="initialize-description">initialize() Description:</h6>
 <p>Initializes the command after the input has been bound and before the input is validated.</p>
 <p>This is mainly useful when a lot of commands extends one main command where some things need to be initialized based on the input arguments and options.</p>
 </div>

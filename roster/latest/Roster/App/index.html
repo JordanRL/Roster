@@ -73,6 +73,32 @@
                 </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">App</a>
     <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#inheritance">Inheritance</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#extends">Extends</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#implements">Implements</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#variables-data">Variables &amp; Data</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#class-constants">Class Constants</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#constructor">Constructor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#instanced-methods">Instanced Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#inherited-static-methods">Inherited Static Methods</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#inherited-methods">Inherited Methods</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="#">Processors</a>
@@ -159,17 +185,20 @@
 <h3 id="implements">Implements</h3>
 <div class="admonition signature interface">
 <p class="admonition-title">ResetInterface</p>
+<h5 id="resetinterface">ResetInterface</h5>
 <dl>
 <dt>namespace</dt>
 <dd>Symfony\Contracts\Service</dd>
 <dt>description</dt>
-<dd><em>No description available</em></dd>
+<dd></dd>
 </dl>
+<p><em>No description available</em></p>
 </div>
 <h2 id="variables-data">Variables &amp; Data</h2>
 <h3 id="class-constants">Class Constants</h3>
 <div class="admonition signature constant">
 <p class="admonition-title">App::NAME</p>
+<h5 id="name">NAME</h5>
 <dl>
 <dt>value</dt>
 <dd>'Roster Markdown Documentation Generator'</dd>
@@ -177,6 +206,7 @@
 </div>
 <div class="admonition signature constant">
 <p class="admonition-title">App::VERSION</p>
+<h5 id="version">VERSION</h5>
 <dl>
 <dt>value</dt>
 <dd>'v0.1.0'</dd>
@@ -186,6 +216,7 @@
 <h3 id="constructor">Constructor</h3>
 <div class="admonition signature">
 <p class="admonition-title">public App-&gt;__construct()</p>
+<h5 id="__construct">__construct</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -198,6 +229,7 @@
 <h3 id="instanced-methods">Instanced Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public App-&gt;run(?Symfony\Component\Console\Input\InputInterface $input, ?Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="run">run</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -224,6 +256,7 @@
 <h3 id="inherited-static-methods">Inherited Static Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Application::getAbbreviations(array $names)</p>
+<h5 id="getabbreviations">getAbbreviations</h5>
 <p><strong>$names</strong></p>
 <dl>
 <dt>type</dt>
@@ -238,13 +271,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application::getAbbreviations Description</strong></p>
+<h6 id="getabbreviations-description">getAbbreviations() Description:</h6>
 <p>Returns an array of possible abbreviations given a set of names.</p>
 </div>
 <hr />
 <h3 id="inherited-methods">Inherited Methods</h3>
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setDispatcher(Symfony\Contracts\EventDispatcher\EventDispatcherInterface $dispatcher)</p>
+<h5 id="setdispatcher">setDispatcher</h5>
 <p><strong>$dispatcher</strong></p>
 <dl>
 <dt>type</dt>
@@ -263,6 +297,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setCommandLoader(Symfony\Component\Console\CommandLoader\CommandLoaderInterface $commandLoader)</p>
+<h5 id="setcommandloader">setCommandLoader</h5>
 <p><strong>$commandLoader</strong></p>
 <dl>
 <dt>type</dt>
@@ -281,6 +316,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getSignalRegistry()</p>
+<h5 id="getsignalregistry">getSignalRegistry</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -292,6 +328,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setSignalsToDispatchEvent(int $signalsToDispatchEvent)</p>
+<h5 id="setsignalstodispatchevent">setSignalsToDispatchEvent</h5>
 <p><strong>$signalsToDispatchEvent</strong></p>
 <dl>
 <dt>type</dt>
@@ -310,6 +347,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;doRun(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="dorun">doRun</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -331,12 +369,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;doRun Description</strong></p>
+<h6 id="dorun-description">doRun() Description:</h6>
 <p>Runs the current application.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;reset()</p>
+<h5 id="reset">reset</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -348,6 +387,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setHelperSet(Symfony\Component\Console\Helper\HelperSet $helperSet)</p>
+<h5 id="sethelperset">setHelperSet</h5>
 <p><strong>$helperSet</strong></p>
 <dl>
 <dt>type</dt>
@@ -366,6 +406,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getHelperSet()</p>
+<h5 id="gethelperset">getHelperSet</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -373,12 +414,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getHelperSet Description</strong></p>
+<h6 id="gethelperset-description">getHelperSet() Description:</h6>
 <p>Get the helper set associated with the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setDefinition(Symfony\Component\Console\Input\InputDefinition $definition)</p>
+<h5 id="setdefinition">setDefinition</h5>
 <p><strong>$definition</strong></p>
 <dl>
 <dt>type</dt>
@@ -397,6 +439,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getDefinition()</p>
+<h5 id="getdefinition">getDefinition</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -404,12 +447,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getDefinition Description</strong></p>
+<h6 id="getdefinition-description">getDefinition() Description:</h6>
 <p>Gets the InputDefinition related to this Application.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getHelp()</p>
+<h5 id="gethelp">getHelp</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -417,12 +461,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getHelp Description</strong></p>
+<h6 id="gethelp-description">getHelp() Description:</h6>
 <p>Gets the help message.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;areExceptionsCaught()</p>
+<h5 id="areexceptionscaught">areExceptionsCaught</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -430,12 +475,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;areExceptionsCaught Description</strong></p>
+<h6 id="areexceptionscaught-description">areExceptionsCaught() Description:</h6>
 <p>Gets whether to catch exceptions or not during commands execution.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setCatchExceptions(bool $boolean)</p>
+<h5 id="setcatchexceptions">setCatchExceptions</h5>
 <p><strong>$boolean</strong></p>
 <dl>
 <dt>type</dt>
@@ -454,6 +500,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;isAutoExitEnabled()</p>
+<h5 id="isautoexitenabled">isAutoExitEnabled</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -461,12 +508,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;isAutoExitEnabled Description</strong></p>
+<h6 id="isautoexitenabled-description">isAutoExitEnabled() Description:</h6>
 <p>Gets whether to automatically exit after a command execution or not.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setAutoExit(bool $boolean)</p>
+<h5 id="setautoexit">setAutoExit</h5>
 <p><strong>$boolean</strong></p>
 <dl>
 <dt>type</dt>
@@ -485,6 +533,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getName()</p>
+<h5 id="getname">getName</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -492,12 +541,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getName Description</strong></p>
+<h6 id="getname-description">getName() Description:</h6>
 <p>Gets the name of the application.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setName(string $name)</p>
+<h5 id="setname">setName</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -516,6 +566,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getVersion()</p>
+<h5 id="getversion">getVersion</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -523,12 +574,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getVersion Description</strong></p>
+<h6 id="getversion-description">getVersion() Description:</h6>
 <p>Gets the application version.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setVersion(string $version)</p>
+<h5 id="setversion">setVersion</h5>
 <p><strong>$version</strong></p>
 <dl>
 <dt>type</dt>
@@ -547,6 +599,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getLongVersion()</p>
+<h5 id="getlongversion">getLongVersion</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -554,12 +607,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getLongVersion Description</strong></p>
+<h6 id="getlongversion-description">getLongVersion() Description:</h6>
 <p>Returns the long version of the application.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;register(string $name)</p>
+<h5 id="register">register</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -574,12 +628,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;register Description</strong></p>
+<h6 id="register-description">register() Description:</h6>
 <p>Registers a new command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;addCommands(Command[] $commands)</p>
+<h5 id="addcommands">addCommands</h5>
 <p><strong>$commands</strong></p>
 <dl>
 <dt>type</dt>
@@ -594,13 +649,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;addCommands Description</strong></p>
+<h6 id="addcommands-description">addCommands() Description:</h6>
 <p>Adds an array of command objects.</p>
 <p>If a Command is not enabled it will not be added.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;add(Symfony\Component\Console\Command\Command $command)</p>
+<h5 id="add">add</h5>
 <p><strong>$command</strong></p>
 <dl>
 <dt>type</dt>
@@ -615,13 +671,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;add Description</strong></p>
+<h6 id="add-description">add() Description:</h6>
 <p>Adds a command object.</p>
 <p>If a command with the same name already exists, it will be overridden. If the command is not enabled it will not be added.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;get(string $name)</p>
+<h5 id="get">get</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -636,12 +693,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;get Description</strong></p>
+<h6 id="get-description">get() Description:</h6>
 <p>Returns a registered command by name or alias.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;has(string $name)</p>
+<h5 id="has">has</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -656,12 +714,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;has Description</strong></p>
+<h6 id="has-description">has() Description:</h6>
 <p>Returns true if the command exists, false otherwise.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;getNamespaces()</p>
+<h5 id="getnamespaces">getNamespaces</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -669,13 +728,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getNamespaces Description</strong></p>
+<h6 id="getnamespaces-description">getNamespaces() Description:</h6>
 <p>Returns an array of all unique namespaces used by currently registered commands.</p>
 <p>It does not return the global namespace which always exists.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;findNamespace(string $namespace)</p>
+<h5 id="findnamespace">findNamespace</h5>
 <p><strong>$namespace</strong></p>
 <dl>
 <dt>type</dt>
@@ -690,12 +750,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;findNamespace Description</strong></p>
+<h6 id="findnamespace-description">findNamespace() Description:</h6>
 <p>Finds a registered namespace by a name or an abbreviation.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;find(string $name)</p>
+<h5 id="find">find</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -710,13 +771,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;find Description</strong></p>
+<h6 id="find-description">find() Description:</h6>
 <p>Finds a command by name or alias.</p>
 <p>Contrary to get, this command tries to find the best match if you give it an abbreviation of a name or alias.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;all(?string $namespace)</p>
+<h5 id="all">all</h5>
 <p><strong>$namespace</strong></p>
 <dl>
 <dt>type</dt>
@@ -731,13 +793,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;all Description</strong></p>
+<h6 id="all-description">all() Description:</h6>
 <p>Gets the commands (registered in the given namespace if provided).</p>
 <p>The array keys are the full names and the values the command instances.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;renderThrowable(Throwable $e, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="renderthrowable">renderThrowable</h5>
 <p><strong>$e</strong></p>
 <dl>
 <dt>type</dt>
@@ -763,6 +826,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;extractNamespace(string $name, ?int $limit)</p>
+<h5 id="extractnamespace">extractNamespace</h5>
 <p><strong>$name</strong></p>
 <dl>
 <dt>type</dt>
@@ -784,13 +848,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;extractNamespace Description</strong></p>
+<h6 id="extractnamespace-description">extractNamespace() Description:</h6>
 <p>Returns the namespace part of the command name.</p>
 <p>This method is not part of public API and should not be used directly.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;setDefaultCommand(string $commandName, bool $isSingleCommand)</p>
+<h5 id="setdefaultcommand">setDefaultCommand</h5>
 <p><strong>$commandName</strong></p>
 <dl>
 <dt>type</dt>
@@ -812,12 +877,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;setDefaultCommand Description</strong></p>
+<h6 id="setdefaultcommand-description">setDefaultCommand() Description:</h6>
 <p>Sets the default Command name.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">public Application-&gt;isSingleCommand()</p>
+<h5 id="issinglecommand">isSingleCommand</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -829,6 +895,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;doRenderThrowable(Throwable $e, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="dorenderthrowable">doRenderThrowable</h5>
 <p><strong>$e</strong></p>
 <dl>
 <dt>type</dt>
@@ -854,6 +921,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;configureIO(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="configureio">configureIO</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -879,6 +947,7 @@
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;doRunCommand(Symfony\Component\Console\Command\Command $command, Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)</p>
+<h5 id="doruncommand">doRunCommand</h5>
 <p><strong>$command</strong></p>
 <dl>
 <dt>type</dt>
@@ -907,13 +976,14 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;doRunCommand Description</strong></p>
+<h6 id="doruncommand-description">doRunCommand() Description:</h6>
 <p>Runs the current command.</p>
 <p>If an event dispatcher has been attached to the application, events are also dispatched during the life-cycle of the command.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;getCommandName(Symfony\Component\Console\Input\InputInterface $input)</p>
+<h5 id="getcommandname">getCommandName</h5>
 <p><strong>$input</strong></p>
 <dl>
 <dt>type</dt>
@@ -928,12 +998,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getCommandName Description</strong></p>
+<h6 id="getcommandname-description">getCommandName() Description:</h6>
 <p>Gets the name of the command based on input.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;getDefaultInputDefinition()</p>
+<h5 id="getdefaultinputdefinition">getDefaultInputDefinition</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -941,12 +1012,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getDefaultInputDefinition Description</strong></p>
+<h6 id="getdefaultinputdefinition-description">getDefaultInputDefinition() Description:</h6>
 <p>Gets the default input definition.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;getDefaultCommands()</p>
+<h5 id="getdefaultcommands">getDefaultCommands</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -954,12 +1026,13 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getDefaultCommands Description</strong></p>
+<h6 id="getdefaultcommands-description">getDefaultCommands() Description:</h6>
 <p>Gets the default commands that should always be available.</p>
 </div>
 <hr />
 <div class="admonition signature">
 <p class="admonition-title">protected Application-&gt;getDefaultHelperSet()</p>
+<h5 id="getdefaulthelperset">getDefaultHelperSet</h5>
 <p><strong>return</strong></p>
 <dl>
 <dt>type</dt>
@@ -967,7 +1040,7 @@
 <dt>description</dt>
 <dd><em>No description available</em></dd>
 </dl>
-<p><strong>Application-&gt;getDefaultHelperSet Description</strong></p>
+<h6 id="getdefaulthelperset-description">getDefaultHelperSet() Description:</h6>
 <p>Gets the default helper set with the helpers that should always be available.</p>
 </div>
 <hr />
