@@ -1,5 +1,10 @@
 # Roster | Docs From The Source
 
+!!! tip "Check It Out!"
+    **This documentation was built and deployed by running one command:**
+
+    `php vendor/bin/roster`
+
 Roster is a PHP command line program that allows you to build documentation from your code. It inspects the files in your codebase and looks at the PHPDoc comments associated with them, and then builds documentation in Markdown.
 
 But it doesn't have to.

@@ -1,4 +1,7 @@
 {
+  "prefer-source": false,
+  "with-version": "latest",
+  "templates": "doc-templates/roster-templates-mkdocs",
   "mkdocs": {
     "site-name": "Roster - Docs From The Source",
     "site-url": "https://jordanrl.github.io/Roster/",
@@ -13,10 +16,12 @@
     {
       "path": "./src",
       "visibility": "protected",
-      "aliases": [{
-        "namespace": "Samsara\\Roster\\",
-        "alias": "Roster\\"
-      }]
+      "aliases": [
+        {
+          "namespace": "Samsara\\Roster\\",
+          "alias": "Roster\\"
+        }
+      ]
     }
   ]
 }

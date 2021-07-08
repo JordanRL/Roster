@@ -23,15 +23,23 @@ class TemplateFactory
 
     /**
      * @param string $filePath
+     * @param string $extension
+     * @return bool
      */
-    public static function pushTemplate(string $filePath, string $extension = 'md')
+    public static function pushTemplate(string $filePath, string $extension = 'md'): bool
     {
 
         $template = basename($filePath, '.'.$extension);
 
         $contents = file_get_contents($filePath);
 
+        if (!$contents) {
+            return false;
+        }
+
         self::$templates[$template] = new TemplateProcessor($contents);
+
+        return true;
 
     }
 
@@ -67,6 +75,8 @@ class TemplateFactory
     public static function compileAll(SymfonyStyle $io)
     {
 
+        $ok = true;
+
         $io->progressStart(count(self::$compileQueue));
         foreach (self::$compileQueue as $path => $template) {
             self::$compileFinished[$path] = $template->compile();
@@ -82,8 +92,10 @@ class TemplateFactory
         return self::$writtenFiles;
     }
 
-    public static function writeToDocs(string $writePath, SymfonyStyle $io)
+    public static function writeToDocs(string $writePath, SymfonyStyle $io): bool
     {
+
+        $ok = true;
 
         $io->progressStart(count(self::$compileFinished));
         foreach (self::$compileFinished as $path => $content) {
@@ -93,7 +105,7 @@ class TemplateFactory
             foreach ($pathPart as $part) {
                 $pathSum .= '/'.$part;
                 if (!is_dir($writePath.$pathSum)) {
-                    mkdir($writePath.$pathSum);
+                    $ok = $ok && mkdir($writePath.$pathSum);
                 }
             }
 
@@ -104,11 +116,13 @@ class TemplateFactory
                 $content .= PHP_EOL.PHP_EOL.'---'.PHP_EOL.'!!! footer-link "This documentation was generated with [Roster](https://jordanrl.github.io/Roster/)."';
             }
 
-            file_put_contents($finalPath, $content);
+            $ok = $ok && file_put_contents($finalPath, $content);
             $io->progressAdvance();
         }
         self::$compileFinished = [];
         $io->progressFinish();
+
+        return $ok;
 
     }
 

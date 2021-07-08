@@ -312,7 +312,7 @@ Class Roster
     **return**
 
     type
-    :   void
+    :   bool
 
     description
     :   *No description available*
@@ -331,7 +331,7 @@ Class Roster
     **return**
 
     type
-    :   void
+    :   bool
 
     description
     :   *No description available*

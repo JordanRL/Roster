@@ -28,7 +28,7 @@
     **return**
 
     type
-    :   *mixed* (assumed)
+    :   bool
 
     description
     :   *No description available*
@@ -158,7 +158,7 @@
     **return**
 
     type
-    :   *mixed* (assumed)
+    :   bool
 
     description
     :   *No description available*

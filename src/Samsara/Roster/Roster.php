@@ -33,7 +33,6 @@ class Roster extends Command
 {
 
     private array $classes = [];
-    private array $classesProcessed = [];
 
     /** @var ReflectionClass[][] */
     private array $reflectors = [];
@@ -385,6 +384,8 @@ class Roster extends Command
         $baseExportPathParts = explode('/', $baseExportPath);
         $pathSum = '';
 
+        $this->io->section('Initialization');
+
         foreach ($baseExportPathParts as $exportPathPart) {
             $pathSum .= '/'.$exportPathPart;
             if (!is_dir($pathSum)) {
@@ -398,12 +399,14 @@ class Roster extends Command
             }
         }
 
+        $ok = $this->processTemplates(ConfigBag::getRosterConfig()->get('templates'));
 
-        if ($this->verbose) {
-            $this->io->section('Initialization');
+        if (!$ok) {
+            $this->io->error('Could not initialize Roster');
+            return self::FAILURE;
+        } else {
+            $this->io->success('Roster Initialized');
         }
-
-        $this->processTemplates(ConfigBag::getRosterConfig()->get('templates'));
 
         foreach ($sources as $source) {
             $aliasFrom = [];
@@ -437,13 +440,13 @@ class Roster extends Command
 
             $fileList = $this->traverseDirectories(realpath($this->rootDir.'/'.$sourcePath));
 
-            $this->classesProcessed = $this->classes;
             $this->classes = [];
             foreach ($fileList as $file) {
                 $this->extractFileData($file);
             }
 
-            $this->createReflectors();
+            $this->reflectors = [];
+            $ok = $this->createReflectors();
 
             if (!TemplateFactory::hasTemplate('class')) {
                 $this->io->error('Could not load templates');
@@ -490,11 +493,21 @@ class Roster extends Command
             $this->io->progressFinish();
         }
 
+        $this->io->warning('Some Classes Were Skipped');
+
         $this->io->section('Compiling');
         TemplateFactory::compileAll($this->io);
 
+        $this->io->success('Templates Compiled To Documents');
+
         $this->io->section('Writing Documentation to Output Directory');
-        TemplateFactory::writeToDocs($baseExportPath, $this->io);
+        $ok = TemplateFactory::writeToDocs($baseExportPath, $this->io);
+
+        if ($ok) {
+            $this->io->success('Documentation Written To Output Directory');
+        } else {
+            $this->io->warning('Some Files Could Not Be Written');
+        }
 
         if (ConfigBag::getRosterConfig()->has('mkdocs')) {
             $cssFileName = ConfigBag::getRosterConfig()->get('mkdocs.theme').'-theme';
@@ -548,11 +561,11 @@ class Roster extends Command
             } else {
                 if (isset($oldConfig) && !$choice) {
                     $oldMkdocs = file_get_contents($this->rootDir . '/mkdocs.yml');
-                    file_put_contents($this->rootDir . '/mkdocs.yml.old', $oldMkdocs);
+                    $ok = file_put_contents($this->rootDir . '/mkdocs.yml.old', $oldMkdocs);
                 }
 
                 $configBase = Config::load(
-                    TemplateFactory::getTemplate('mkdocs')->compile(),
+                    TemplateFactory::getTemplate('mkdocs-'.ConfigBag::getRosterConfig()->get('mkdocs.theme'))->compile(),
                     new YamlReader(),
                     true
                 );
@@ -569,19 +582,43 @@ class Roster extends Command
             }
 
             if (!is_dir($this->rootDir.'/docs/css')) {
-                mkdir($this->rootDir . '/docs/css');
+                $ok = $ok && mkdir($this->rootDir . '/docs/css');
+            }
+
+            if ($ok) {
+                $this->io->success('MkDocs Configured');
+            } else {
+                $this->io->error('MkDocs Configuration Failed');
+                $this->io->writeln('Aborting to preserve your existing configuration');
+                return self::FAILURE;
             }
 
             TemplateFactory::queueCompile('docs/css/'.$cssFileName, TemplateFactory::getTemplate($cssFileName), 'css');
             TemplateFactory::queueCompile('docs/requirements', TemplateFactory::getTemplate('requirements'), 'txt');
 
-            $this->io->section('Exporting Additional Files');
+            $this->io->newLine();
+            $this->io->writeln('<comment>Exporting Additional Files</>');
+            $this->io->newLine();
             TemplateFactory::compileAll($this->io);
 
-            TemplateFactory::writeToDocs($this->rootDir, $this->io);
+            $ok = TemplateFactory::writeToDocs($this->rootDir, $this->io);
 
-            $this->io->section('Writing MkDocs Config');
-            file_put_contents($this->rootDir.'/mkdocs.yml', $mkDocsConfig);
+            if ($ok) {
+                $this->io->success('Supporting Files Exported');
+            } else {
+                $this->io->warning('Supporting Files Could Not Be Exported');
+            }
+
+            $this->io->newLine();
+            $this->io->writeln('<comment>Writing MkDocs Config</>');
+            $this->io->newLine();
+            $ok = file_put_contents($this->rootDir.'/mkdocs.yml', $mkDocsConfig);
+
+            if ($ok) {
+                $this->io->success('MkDocs Config File Updated');
+            } else {
+                $this->io->warning('MkDocs Config File Could Not Be Updated');
+            }
         }
 
         $summary = [];
@@ -602,18 +639,25 @@ class Roster extends Command
             $summary[] = 'Documents MkDocs Ready: <fg=yellow>No</>';
         }
 
-        $this->io->success('Documentation Built');
         foreach ($summary as $message) {
             $this->io->writeln($message);
         }
 
-        if (ConfigBag::getRosterConfig()->has('auto-deploy')) {
-            if (ConfigBag::getRosterConfig()->get('auto-deploy')) {
+        $this->io->success('Documentation Built');
+
+        if (ConfigBag::getRosterConfig()->has('mkdocs.auto-deploy')) {
+            if (ConfigBag::getRosterConfig()->get('mkdocs.auto-deploy')) {
                 $this->io->section('Deploying To GH Pages Using MkDocs');
-                while ($output = exec('mkdocs gh-deploy')) {
-                    $this->io->writeln($output);
+
+                $output = exec('mkdocs gh-deploy', $null, $deployCode);
+
+                $this->io->writeln($output);
+
+                if ($deployCode === 0) {
+                    $this->io->success('Documentation Deployed');
+                } else {
+                    $this->io->error('Documentation Could Not Be Auto-Deployed');
                 }
-                $this->io->success('Documentation Deployed');
             }
         }
 
@@ -843,8 +887,11 @@ class Roster extends Command
 
     }
 
-    protected function createReflectors(): void
+    protected function createReflectors(): bool
     {
+
+        $ok = true;
+        $reflectorCount = 0;
 
         foreach ($this->classes as $namespace => $itemType) {
             foreach ($itemType as $type => $names) {
@@ -860,12 +907,25 @@ class Roster extends Command
                     if ($type == 'trait') {
                         $this->reflectors['traits'][] = new \ReflectionClass('\\'.$namespace.'\\'.$name);
                     }
+
+                    $reflectorCount++;
                 }
             }
         }
+
+        $classCount = 0;
+        $classCount += array_key_exists('classes', $this->classes) ? count($this->classes['classes']) : 0;
+        $classCount += array_key_exists('interfaces', $this->classes) ? count($this->classes['interfaces']) : 0;
+        $classCount += array_key_exists('traits', $this->classes) ? count($this->classes['traits']) : 0;
+
+        if ($classCount != $reflectorCount) {
+            $ok = false;
+        }
+
+        return $ok;
     }
 
-    protected function processTemplates(string $templatePath): void
+    protected function processTemplates(string $templatePath): bool
     {
 
         if (!is_dir($templatePath)) {
@@ -877,21 +937,26 @@ class Roster extends Command
                 $this->io->error('Cannot find Roster templates.');
                 $this->io->info('Please provide a path to the templates directory using the --templates option.');
 
-                return;
+                return false;
             }
         }
         $fileList = $this->traverseDirectories($templatePath);
 
         $this->io->section('Loading Templates');
         $this->io->progressStart(count($fileList));
+
+        $ok = true;
+
         foreach ($fileList as $file) {
             $pathInfo = pathinfo($file);
 
-            TemplateFactory::pushTemplate($file, $pathInfo['extension']);
+            $ok = $ok && TemplateFactory::pushTemplate($file, $pathInfo['extension']);
             $this->io->progressAdvance();
 
         }
         $this->io->progressFinish();
+
+        return $ok;
 
     }
 

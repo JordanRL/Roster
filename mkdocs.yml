@@ -12,6 +12,8 @@ nav:
                 Installation: getting-started/installation.md
             -
                 'Using the Command': getting-started/using-the-command.md
+            -
+                'Using the Config File': getting-started/using-the-config-file.md
     -
         'Source Reference':
             -
