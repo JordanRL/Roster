@@ -18,6 +18,11 @@ Or include it in your `composer.json` file:
 
 The project namespace is `Samsara\Roster\*`. You can view the project on [Packagist](https://packagist.org/packages/samsara/roster).
 
+## Examples of Documentation Built With Roster
+
+- [Roster](https://jordanrl.github.io/Roster/): This console program! Of *course* Roster builds its own documentation. :)
+- [Fermat](https://jordanrl.github.io/Fermat/): An arbitrary precision math library with trigonometry, statistics and more for PHP.
+
 ## Documentation
 
 After installing, from your project root on the command-line use:
