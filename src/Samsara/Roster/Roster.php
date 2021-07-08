@@ -493,7 +493,11 @@ class Roster extends Command
             $this->io->progressFinish();
         }
 
-        $this->io->warning('Some Classes Were Skipped');
+        if ($ok) {
+            $this->io->success('All Sources Processed');
+        } else {
+            $this->io->warning('Some Classes Were Skipped');
+        }
 
         $this->io->section('Compiling');
         TemplateFactory::compileAll($this->io);
