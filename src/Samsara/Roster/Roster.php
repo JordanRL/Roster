@@ -135,13 +135,22 @@ class Roster extends Command
         }
 
         foreach ($options as $name => $option) {
-            $this->addOption(
-                name: $name,
-                shortcut: $option['shortcut'],
-                mode: $option['mode'],
-                description: $option['description'],
-                default: $option['default']
-            );
+            if (array_key_exists('default', $option)) {
+                $this->addOption(
+                    name: $name,
+                    shortcut: $option['shortcut'],
+                    mode: $option['mode'],
+                    description: $option['description'],
+                    default: $option['default']
+                );
+            } else {
+                $this->addOption(
+                    name: $name,
+                    shortcut: $option['shortcut'],
+                    mode: $option['mode'],
+                    description: $option['description']
+                );
+            }
         }
     }
 
@@ -171,7 +180,6 @@ class Roster extends Command
         }
 
         $configPathRoot = $this->rootDir.'/'.$opts['config-file'];
-        $configPathVendor = $this->rootRosterDir.'/'.$opts['config-file'];
 
         if (!is_file($configPathRoot)) {
             ConfigBag::setRosterConfig(new Config("{}", new Json(), true));
@@ -234,11 +242,11 @@ class Roster extends Command
             ConfigBag::getRosterConfig()->set('templates', 'doc-templates/roster-templates');
         }
 
-        if (isset($opts['prefer-source']) || !ConfigBag::getRosterConfig()->has('prefer-source')) {
+        if ($opts['prefer-source'] || !ConfigBag::getRosterConfig()->has('prefer-source')) {
             ConfigBag::getRosterConfig()->set('prefer-source', $opts['prefer-source'] ?? false);
         }
 
-        if (isset($opts['mkdocs']) && !ConfigBag::getRosterConfig()->has('mkdocs')) {
+        if ($opts['mkdocs'] && !ConfigBag::getRosterConfig()->has('mkdocs')) {
             ConfigBag::getRosterConfig()->set('mkdocs', []);
         }
 
@@ -562,7 +570,7 @@ class Roster extends Command
 
                 $oldConfig->set('site_name', ConfigBag::getRosterConfig()->get('mkdocs.site-name', $oldConfig->get('site_name')));
                 $oldConfig->set('site_url', ConfigBag::getRosterConfig()->get('mkdocs.site-url', $oldConfig->get('site_url')));
-                $oldConfig->set('repo_url', ConfigBag::getRosterConfig()->get('mkdocs.site-repo', $oldConfig->get('repo_url')));
+                $oldConfig->set('repo_url', ConfigBag::getRosterConfig()->get('mkdocs.repo-url', $oldConfig->get('repo_url')));
                 $oldConfig->set('nav', $oldNav);
                 $oldConfig->set('extra_css', $extraCss);
                 $mkDocsConfig = (new YamlDumper(4))->dump($oldConfig->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
@@ -585,7 +593,7 @@ class Roster extends Command
 
                 $configBase->set('site_name', ConfigBag::getRosterConfig()->get('mkdocs.site-name'));
                 $configBase->set('site_url', ConfigBag::getRosterConfig()->get('mkdocs.site-url'));
-                $configBase->set('repo_url', ConfigBag::getRosterConfig()->get('mkdocs.site-repo'));
+                $configBase->set('repo_url', ConfigBag::getRosterConfig()->get('mkdocs.repo-url'));
                 $configBase->set('nav', $formattedNav);
                 $configBase->set('extra_css', $extraCss);
 
