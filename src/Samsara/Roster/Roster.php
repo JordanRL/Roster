@@ -103,7 +103,6 @@ class Roster extends Command
                 'description' => 'What visibility level to include in documentation. Higher levels of visibility include all lower levels also. Value inputs are \'all\', \'protected\', \'public\'.'
             ],
             'prefer-source' => [
-                'default' => false,
                 'shortcut' => null,
                 'mode' => InputOption::VALUE_NONE,
                 'description' => 'If used, the information from the source code will be preferred if it conflicts with the PHPDoc info. Default behavior is to prefer PHPDoc info.'
@@ -115,13 +114,11 @@ class Roster extends Command
                 'description' => 'Specify a version directory to export the documentation under. By default uses the version value in your project\'s composer.json file.'
             ],
             'with-debug' => [
-                'default' => false,
                 'shortcut' => null,
                 'mode' => InputOption::VALUE_NONE,
                 'description' => 'Output debug information to the console.'
             ],
             'mkdocs' => [
-                'default' => false,
                 'shortcut' => null,
                 'mode' => InputOption::VALUE_NONE,
                 'description' => 'If this option is used, Roster will compile with extra CSS and built-in templates to create a pre-made mkdocs ready output.'
@@ -237,13 +234,13 @@ class Roster extends Command
             ConfigBag::getRosterConfig()->set('templates', 'doc-templates/roster-templates');
         }
 
-        if ($opts['prefer-source'] || !ConfigBag::getRosterConfig()->has('prefer-source')) {
+        if (isset($opts['prefer-source']) || !ConfigBag::getRosterConfig()->has('prefer-source')) {
             ConfigBag::getRosterConfig()->set('prefer-source', $opts['prefer-source'] ?? false);
         }
 
-        if ($opts['mkdocs'] && !ConfigBag::getRosterConfig()->has('mkdocs')) {
+        if (isset($opts['mkdocs']) && !ConfigBag::getRosterConfig()->has('mkdocs')) {
             echo "Get's here".PHP_EOL;
-            ConfigBag::getRosterConfig()->set('mkdocs', (new \stdClass())->dummy);
+            ConfigBag::getRosterConfig()->set('mkdocs', []);
         }
 
         echo var_export($opts, true).PHP_EOL;
