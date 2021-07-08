@@ -1,4 +1,4 @@
-# Samsara\Roster\Processors > MethodProcessor
+# Samsara\Roster\Processors > MethodArgumentProcessor
 
 *No description available*
 
@@ -44,19 +44,19 @@
 
 ### Constructor
 
-!!! signature "public MethodProcessor->__construct(ReflectionMethod $method, string $templateName)"
-    **$method**
+!!! signature "public MethodArgumentProcessor->__construct(array $parameters, Samsara\Mason\DocBlockProcessor $docBlockProcessor)"
+    **$parameters**
 
     type
-    :   ReflectionMethod
+    :   array
 
     description
     :   *No description available*
 
-    **$templateName**
+    **$docBlockProcessor**
 
     type
-    :   string
+    :   Samsara\Mason\DocBlockProcessor
 
     description
     :   *No description available*
@@ -68,12 +68,14 @@
 
     description
     :   *No description available*
+
+---
 
 
 
 ### Instanced Methods
 
-!!! signature "public MethodProcessor->compile()"
+!!! signature "public MethodArgumentProcessor->compile()"
     **return**
 
     type
@@ -82,14 +84,7 @@
     description
     :   *No description available*
 
-!!! signature "protected MethodProcessor->buildMethodInfo()"
-    **return**
-
-    type
-    :   *mixed* (assumed)
-
-    description
-    :   *No description available*
+---
 
 
 
@@ -104,6 +99,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
     **$defaultValue**
 
@@ -117,6 +114,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
     **$option1**
@@ -142,6 +141,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
     **$templateName**
 
@@ -158,6 +159,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

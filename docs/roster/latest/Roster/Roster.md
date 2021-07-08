@@ -71,6 +71,8 @@ Class Roster
     description
     :   *No description available*
 
+---
+
 
 
 ### Instanced Methods
@@ -83,6 +85,8 @@ Class Roster
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected Roster->execute(InputInterface $input, OutputInterface $output)"
     **$input**
@@ -109,9 +113,13 @@ Class Roster
     description
     :   *No description available*
 
-execute() method
+    **Roster->execute Description**
 
- This function performs all of the application logic. All actions performed by the script are at least started from this function.
+    execute() method
+    
+     This function performs all of the application logic. All actions performed by the script are at least started from this function.
+
+---
 
 !!! signature "protected Roster->buildMkdocsNav(string $baseExportPath)"
     **$baseExportPath**
@@ -130,11 +138,13 @@ execute() method
     description
     :   *No description available*
 
-buildMkdocsNav
+    **Roster->buildMkdocsNav Description**
 
- This function takes in the base export path and outputs the namespace information about all the compiled and written document files as an array structured as a tree.
-
- This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.
+    buildMkdocsNav
+    
+     This function takes in the base export path and outputs the namespace information about all the compiled and written document files as an array structured as a tree.
+    
+     This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.
 
 !!! example "Example"
     ```php
@@ -153,6 +163,8 @@ buildMkdocsNav
     
     ```
 
+---
+
 !!! signature "protected Roster->formatNavArrayRecursive(array $nav)"
     **$nav**
 
@@ -170,9 +182,11 @@ buildMkdocsNav
     description
     :   *No description available*
 
-formatNavArrayRecursive() method
+    **Roster->formatNavArrayRecursive Description**
 
- This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.
+    formatNavArrayRecursive() method
+    
+     This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.
 
 !!! example "Example"
     ```php
@@ -194,6 +208,8 @@ formatNavArrayRecursive() method
     // ]
     
     ```
+
+---
 
 !!! signature "protected Roster->buildNavArrayRecursive(array $parts, int $depth, string $builtString)"
     **$parts**
@@ -228,9 +244,11 @@ formatNavArrayRecursive() method
     description
     :   *No description available*
 
-buildNavArrayRecursive() method
+    **Roster->buildNavArrayRecursive Description**
 
- This function takes a flat array and reorganizes it into a tree structure.
+    buildNavArrayRecursive() method
+    
+     This function takes a flat array and reorganizes it into a tree structure.
 
 !!! example "Example"
     ```php
@@ -250,6 +268,8 @@ buildNavArrayRecursive() method
     
     ```
 
+---
+
 !!! signature "protected Roster->traverseDirectories(string $dir)"
     **$dir**
 
@@ -266,6 +286,8 @@ buildNavArrayRecursive() method
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected Roster->extractFileData(string $realPath)"
     **$realPath**
@@ -284,6 +306,8 @@ buildNavArrayRecursive() method
     description
     :   *No description available*
 
+---
+
 !!! signature "protected Roster->createReflectors()"
     **return**
 
@@ -292,6 +316,8 @@ buildNavArrayRecursive() method
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected Roster->processTemplates(string $templatePath)"
     **$templatePath**
@@ -310,6 +336,8 @@ buildNavArrayRecursive() method
     description
     :   *No description available*
 
+---
+
 
 
 ### Inherited Static Methods
@@ -323,6 +351,8 @@ buildNavArrayRecursive() method
     description
     :   *No description available*
 
+---
+
 !!! signature "public Command::getDefaultDescription()"
     **return**
 
@@ -331,6 +361,8 @@ buildNavArrayRecursive() method
 
     description
     :   *No description available*
+
+---
 
 
 
@@ -344,6 +376,8 @@ buildNavArrayRecursive() method
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public Command->setApplication(?Symfony\Component\Console\Application $application)"
     **$application**
@@ -362,6 +396,8 @@ buildNavArrayRecursive() method
     description
     :   *No description available*
 
+---
+
 !!! signature "public Command->setHelperSet(Symfony\Component\Console\Helper\HelperSet $helperSet)"
     **$helperSet**
 
@@ -379,6 +415,8 @@ buildNavArrayRecursive() method
     description
     :   *No description available*
 
+---
+
 !!! signature "public Command->getHelperSet()"
     **return**
 
@@ -388,7 +426,11 @@ buildNavArrayRecursive() method
     description
     :   *No description available*
 
-Gets the helper set.
+    **Command->getHelperSet Description**
+
+    Gets the helper set.
+
+---
 
 !!! signature "public Command->getApplication()"
     **return**
@@ -399,7 +441,11 @@ Gets the helper set.
     description
     :   *No description available*
 
-Gets the application instance for this command.
+    **Command->getApplication Description**
+
+    Gets the application instance for this command.
+
+---
 
 !!! signature "public Command->isEnabled()"
     **return**
@@ -410,9 +456,13 @@ Gets the application instance for this command.
     description
     :   *No description available*
 
-Checks whether the command is enabled or not in the current environment.
+    **Command->isEnabled Description**
 
- Override this to check for x or y and return false if the command can not run properly under the current conditions.
+    Checks whether the command is enabled or not in the current environment.
+    
+     Override this to check for x or y and return false if the command can not run properly under the current conditions.
+
+---
 
 !!! signature "public Command->run(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
     **$input**
@@ -439,9 +489,13 @@ Checks whether the command is enabled or not in the current environment.
     description
     :   *No description available*
 
-Runs the command.
+    **Command->run Description**
 
- The code to execute is either defined directly with the setCode() method or by overriding the execute() method in a sub-class.
+    Runs the command.
+    
+     The code to execute is either defined directly with the setCode() method or by overriding the execute() method in a sub-class.
+
+---
 
 !!! signature "public Command->setCode(callable $code)"
     **$code**
@@ -451,8 +505,8 @@ Runs the command.
 
     description
     :   A callable(InputInterface $input, OutputInterface $output)
-
-
+    
+    
 
     **return**
 
@@ -462,9 +516,13 @@ Runs the command.
     description
     :   *No description available*
 
-Sets the code to execute when running this command.
+    **Command->setCode Description**
 
- If this method is used, it overrides the code defined in the execute() method.
+    Sets the code to execute when running this command.
+    
+     If this method is used, it overrides the code defined in the execute() method.
+
+---
 
 !!! signature "public Command->mergeApplicationDefinition(bool $mergeArgs)"
     **$mergeArgs**
@@ -474,8 +532,8 @@ Sets the code to execute when running this command.
 
     description
     :   Whether to merge or not the Application definition arguments to Command definition arguments
-
-
+    
+    
 
     **return**
 
@@ -485,9 +543,13 @@ Sets the code to execute when running this command.
     description
     :   *No description available*
 
-Merges the application definition with the command definition.
+    **Command->mergeApplicationDefinition Description**
 
- This method is not part of public API and should not be used directly.
+    Merges the application definition with the command definition.
+    
+     This method is not part of public API and should not be used directly.
+
+---
 
 !!! signature "public Command->setDefinition(array|InputDefinition $definition)"
     **$definition**
@@ -497,8 +559,8 @@ Merges the application definition with the command definition.
 
     description
     :   An array of argument and option instances or a definition instance
-
-
+    
+    
 
     **return**
 
@@ -508,7 +570,11 @@ Merges the application definition with the command definition.
     description
     :   *No description available*
 
-Sets an array of argument and option instances.
+    **Command->setDefinition Description**
+
+    Sets an array of argument and option instances.
+
+---
 
 !!! signature "public Command->getDefinition()"
     **return**
@@ -519,7 +585,11 @@ Sets an array of argument and option instances.
     description
     :   *No description available*
 
-Gets the InputDefinition attached to this Command.
+    **Command->getDefinition Description**
+
+    Gets the InputDefinition attached to this Command.
+
+---
 
 !!! signature "public Command->getNativeDefinition()"
     **return**
@@ -530,11 +600,15 @@ Gets the InputDefinition attached to this Command.
     description
     :   *No description available*
 
-Gets the InputDefinition to be used to create representations of this Command.
+    **Command->getNativeDefinition Description**
 
- Can be overridden to provide the original command representation when it would otherwise be changed by merging with the application InputDefinition.
+    Gets the InputDefinition to be used to create representations of this Command.
+    
+     Can be overridden to provide the original command representation when it would otherwise be changed by merging with the application InputDefinition.
+    
+     This method is not part of public API and should not be used directly.
 
- This method is not part of public API and should not be used directly.
+---
 
 !!! signature "public Command->addArgument(string $name, int|null $mode, string $description, string|string[]|null $default)"
     **$name**
@@ -568,8 +642,8 @@ Gets the InputDefinition to be used to create representations of this Command.
 
     description
     :   The default value (for InputArgument::OPTIONAL mode only)
-
-
+    
+    
 
     **return**
 
@@ -579,7 +653,11 @@ Gets the InputDefinition to be used to create representations of this Command.
     description
     :   *No description available*
 
-Adds an argument.
+    **Command->addArgument Description**
+
+    Adds an argument.
+
+---
 
 !!! signature "public Command->addOption(string $name, string|array|null $shortcut, int|null $mode, string $description, string|string[]|bool|null $default)"
     **$name**
@@ -621,8 +699,8 @@ Adds an argument.
 
     description
     :   The default value (must be null for InputOption::VALUE_NONE)
-
-
+    
+    
 
     **return**
 
@@ -632,7 +710,11 @@ Adds an argument.
     description
     :   *No description available*
 
-Adds an option.
+    **Command->addOption Description**
+
+    Adds an option.
+
+---
 
 !!! signature "public Command->setName(string $name)"
     **$name**
@@ -651,11 +733,15 @@ Adds an option.
     description
     :   *No description available*
 
-Sets the name of the command.
+    **Command->setName Description**
 
- This method can set both the namespace and the name if you separate them by a colon (:)
+    Sets the name of the command.
+    
+     This method can set both the namespace and the name if you separate them by a colon (:)
+    
+     command->setName('foo:bar');
 
- command->setName('foo:bar');
+---
 
 !!! signature "public Command->setProcessTitle(string $title)"
     **$title**
@@ -674,9 +760,13 @@ Sets the name of the command.
     description
     :   *No description available*
 
-Sets the process title of the command.
+    **Command->setProcessTitle Description**
 
- This feature should be used only when creating a long process command, like a daemon.
+    Sets the process title of the command.
+    
+     This feature should be used only when creating a long process command, like a daemon.
+
+---
 
 !!! signature "public Command->getName()"
     **return**
@@ -687,7 +777,11 @@ Sets the process title of the command.
     description
     :   *No description available*
 
-Returns the command name.
+    **Command->getName Description**
+
+    Returns the command name.
+
+---
 
 !!! signature "public Command->setHidden(bool $hidden)"
     **$hidden**
@@ -697,8 +791,8 @@ Returns the command name.
 
     description
     :   Whether or not the command should be hidden from the list of commands The default value will be true in Symfony 6.0
-
-
+    
+    
 
     **return**
 
@@ -708,6 +802,8 @@ Returns the command name.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Command->isHidden()"
     **return**
 
@@ -716,6 +812,8 @@ Returns the command name.
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public Command->setDescription(string $description)"
     **$description**
@@ -734,7 +832,11 @@ Returns the command name.
     description
     :   *No description available*
 
-Sets the description for the command.
+    **Command->setDescription Description**
+
+    Sets the description for the command.
+
+---
 
 !!! signature "public Command->getDescription()"
     **return**
@@ -745,7 +847,11 @@ Sets the description for the command.
     description
     :   *No description available*
 
-Returns the description for the command.
+    **Command->getDescription Description**
+
+    Returns the description for the command.
+
+---
 
 !!! signature "public Command->setHelp(string $help)"
     **$help**
@@ -764,7 +870,11 @@ Returns the description for the command.
     description
     :   *No description available*
 
-Sets the help for the command.
+    **Command->setHelp Description**
+
+    Sets the help for the command.
+
+---
 
 !!! signature "public Command->getHelp()"
     **return**
@@ -775,7 +885,11 @@ Sets the help for the command.
     description
     :   *No description available*
 
-Returns the help for the command.
+    **Command->getHelp Description**
+
+    Returns the help for the command.
+
+---
 
 !!! signature "public Command->getProcessedHelp()"
     **return**
@@ -786,7 +900,11 @@ Returns the help for the command.
     description
     :   *No description available*
 
-Returns the processed help for the command replacing the %command.name% and command.full_name% patterns with the real values dynamically.
+    **Command->getProcessedHelp Description**
+
+    Returns the processed help for the command replacing the %command.name% and command.full_name% patterns with the real values dynamically.
+
+---
 
 !!! signature "public Command->setAliases(string[] $aliases)"
     **$aliases**
@@ -796,8 +914,8 @@ Returns the processed help for the command replacing the %command.name% and comm
 
     description
     :   An array of aliases for the command
-
-
+    
+    
 
     **return**
 
@@ -807,7 +925,11 @@ Returns the processed help for the command replacing the %command.name% and comm
     description
     :   *No description available*
 
-Sets the aliases for the command.
+    **Command->setAliases Description**
+
+    Sets the aliases for the command.
+
+---
 
 !!! signature "public Command->getAliases()"
     **return**
@@ -818,7 +940,11 @@ Sets the aliases for the command.
     description
     :   *No description available*
 
-Returns the aliases for the command.
+    **Command->getAliases Description**
+
+    Returns the aliases for the command.
+
+---
 
 !!! signature "public Command->getSynopsis(bool $short)"
     **$short**
@@ -828,8 +954,8 @@ Returns the aliases for the command.
 
     description
     :   Whether to show the short version of the synopsis (with options folded) or not
-
-
+    
+    
 
     **return**
 
@@ -839,7 +965,11 @@ Returns the aliases for the command.
     description
     :   *No description available*
 
-Returns the synopsis for the command.
+    **Command->getSynopsis Description**
+
+    Returns the synopsis for the command.
+
+---
 
 !!! signature "public Command->addUsage(string $usage)"
     **$usage**
@@ -858,7 +988,11 @@ Returns the synopsis for the command.
     description
     :   *No description available*
 
-Add a command usage example, it'll be prefixed with the command name.
+    **Command->addUsage Description**
+
+    Add a command usage example, it'll be prefixed with the command name.
+
+---
 
 !!! signature "public Command->getUsages()"
     **return**
@@ -869,7 +1003,11 @@ Add a command usage example, it'll be prefixed with the command name.
     description
     :   *No description available*
 
-Returns alternative usages of the command.
+    **Command->getUsages Description**
+
+    Returns alternative usages of the command.
+
+---
 
 !!! signature "public Command->getHelper(string $name)"
     **$name**
@@ -888,7 +1026,11 @@ Returns alternative usages of the command.
     description
     :   *No description available*
 
-Gets a helper instance by name.
+    **Command->getHelper Description**
+
+    Gets a helper instance by name.
+
+---
 
 !!! signature "protected Command->interact(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
     **$input**
@@ -915,6 +1057,8 @@ Gets a helper instance by name.
     description
     :   *No description available*
 
+---
+
 !!! signature "protected Command->initialize(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
     **$input**
 
@@ -940,9 +1084,13 @@ Gets a helper instance by name.
     description
     :   *No description available*
 
-Initializes the command after the input has been bound and before the input is validated.
+    **Command->initialize Description**
 
- This is mainly useful when a lot of commands extends one main command where some things need to be initialized based on the input arguments and options.
+    Initializes the command after the input has been bound and before the input is validated.
+    
+     This is mainly useful when a lot of commands extends one main command where some things need to be initialized based on the input arguments and options.
+
+---
 
 
 

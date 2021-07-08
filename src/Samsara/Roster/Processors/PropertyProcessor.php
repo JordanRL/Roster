@@ -5,6 +5,7 @@ namespace Samsara\Roster\Processors;
 
 use Samsara\Mason\DocBlockProcessor;
 use ReflectionProperty;
+use Samsara\Roster\ConfigBag;
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 use Samsara\Roster\TemplateFactory;
 
@@ -52,7 +53,7 @@ class PropertyProcessor extends BaseCodeProcessor
             $propTypeCode = (string)$this->property->getType();
         }
 
-        if (TemplateFactory::getPreferSource()) {
+        if (ConfigBag::getRosterConfig()->get('prefer-source')) {
             $propType = $this->fixOutput($propTypeCode, $propTypeDoc, '*mixed* (assumed)');
         } else {
             $propType = $this->fixOutput($propTypeDoc, $propTypeCode, '*mixed* (assumed)');

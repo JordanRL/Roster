@@ -1,0 +1,22 @@
+{
+  "mkdocs": {
+    "site-name": "Roster - Docs From The Source",
+    "site-url": "https://jordanrl.github.io/Roster/",
+    "repo-url": "https://github.com/JordanRL/Roster/",
+    "theme": "sphinx-rtd",
+    "auto-deploy": true,
+    "merge-nav": true,
+    "merge-nav-mode": "replace-nav-key",
+    "nav-key": "Source Reference"
+  },
+  "sources": [
+    {
+      "path": "./src",
+      "visibility": "protected",
+      "aliases": [{
+        "namespace": "Samsara\\Roster\\",
+        "alias": "Roster\\"
+      }]
+    }
+  ]
+}

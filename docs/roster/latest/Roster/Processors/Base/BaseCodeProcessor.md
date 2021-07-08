@@ -1,20 +1,12 @@
-# Samsara\Roster\Processors > PropertyProcessor
+# Samsara\Roster\Processors\Base > BaseCodeProcessor
 
 *No description available*
-
-
-## Inheritance
-
-
-### Extends
-
-- Samsara\Roster\Processors\Base\BaseCodeProcessor
 
 
 ## Variables & Data
 
 
-### Inherited Properties
+### Properties
 
 !!! signature property "protected BaseCodeProcessor->declaringClass"
     type
@@ -42,49 +34,7 @@
 ## Methods
 
 
-### Constructor
-
-!!! signature "public PropertyProcessor->__construct(ReflectionProperty $property, string $templateName)"
-    **$property**
-
-    type
-    :   ReflectionProperty
-
-    description
-    :   *No description available*
-
-    **$templateName**
-
-    type
-    :   string
-
-    description
-    :   *No description available*
-
-    **return**
-
-    type
-    :   *mixed* (assumed)
-
-    description
-    :   *No description available*
-
-
-
 ### Instanced Methods
-
-!!! signature "public PropertyProcessor->compile()"
-    **return**
-
-    type
-    :   string
-
-    description
-    :   *No description available*
-
-
-
-### Inherited Methods
 
 !!! signature "public BaseCodeProcessor->getDeclaringClass()"
     **return**
@@ -94,6 +44,19 @@
 
     description
     :   *No description available*
+
+---
+
+!!! signature "public BaseCodeProcessor->compile()"
+    **return**
+
+    type
+    :   *mixed* (assumed)
+
+    description
+    :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
     **$defaultValue**
@@ -108,6 +71,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
     **$option1**
@@ -133,6 +98,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
     **$templateName**
 
@@ -149,6 +116,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

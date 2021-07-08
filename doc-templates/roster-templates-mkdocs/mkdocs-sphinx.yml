@@ -1,6 +1,6 @@
 site_name: ''
 extra_css:
-  - css/roster-style.css
+  - css/sphinx-theme.css
 repo_url: ''
 site_url: ''
 nav: []

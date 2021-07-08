@@ -69,6 +69,8 @@
     description
     :   *No description available*
 
+---
+
 
 
 ### Instanced Methods
@@ -81,6 +83,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 
@@ -95,6 +99,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
     **$defaultValue**
 
@@ -108,6 +114,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
     **$option1**
@@ -133,6 +141,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
     **$templateName**
 
@@ -149,6 +159,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

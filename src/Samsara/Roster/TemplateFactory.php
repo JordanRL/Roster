@@ -2,6 +2,7 @@
 
 namespace Samsara\Roster;
 
+use Samsara\Exceptions\SystemError\LogicalError\IncompatibleObjectState;
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 use Samsara\Roster\Processors\TemplateProcessor;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -19,50 +20,6 @@ class TemplateFactory
     private static array $compileFinished = [];
     /** @var array<int, string> */
     private static array $writtenFiles = [];
-    private static bool $preferSource = true;
-    private static int $visibilityLevel = 1;
-    private static bool $mkdocs = false;
-    private static string $theme = 'sphinx';
-
-    public static function setPreferSource(bool $preferSource)
-    {
-        self::$preferSource = $preferSource;
-    }
-
-    public static function getPreferSource(): bool
-    {
-        return self::$preferSource;
-    }
-
-    public static function setMkDocs(bool $mkdocs)
-    {
-        self::$mkdocs = $mkdocs;
-    }
-
-    public static function getMkDocs(): bool
-    {
-        return self::$mkdocs;
-    }
-
-    public static function setTheme(bool $theme)
-    {
-        self::$theme = $theme;
-    }
-
-    public static function getTheme(): string
-    {
-        return self::$theme;
-    }
-
-    public static function setVisibilityLevel(int $visibilityLevel)
-    {
-        self::$visibilityLevel = $visibilityLevel;
-    }
-
-    public static function getVisibilityLevel(): int
-    {
-        return self::$visibilityLevel;
-    }
 
     /**
      * @param string $filePath
@@ -81,10 +38,19 @@ class TemplateFactory
     /**
      * @param string $name
      * @return TemplateProcessor|false
+     * @throws IncompatibleObjectState
      */
     public static function getTemplate(string $name): TemplateProcessor|false
     {
-        return (self::hasTemplate($name) ? clone self::$templates[$name] : false);
+        if (!self::hasTemplate($name)) {
+            throw new IncompatibleObjectState(
+                'A required template is missing',
+                'Provide files for all templates',
+                'An attempt was made to get the template '.$name.'.md which could not be found'
+            );
+        }
+
+        return clone self::$templates[$name];
     }
 
     public static function queueCompile(string $path, TemplateProcessor|BaseCodeProcessor $template, string $extension = 'md')

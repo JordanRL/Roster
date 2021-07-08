@@ -6,6 +6,7 @@ namespace Samsara\Roster\Processors;
 
 use Samsara\Mason\DocBlockProcessor;
 use ReflectionClass;
+use Samsara\Roster\ConfigBag;
 use Samsara\Roster\TemplateFactory;
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 
@@ -25,7 +26,7 @@ class InterfaceInlineProcessor extends BaseCodeProcessor
 
         $description = (empty($this->docBlock->description) ? '*No description available*' : $this->docBlock->description);
 
-        if (TemplateFactory::getMkDocs()) {
+        if (ConfigBag::getRosterConfig()->has('mkdocs')) {
             $description = str_replace(PHP_EOL, PHP_EOL.'    ', $description);
         }
 

@@ -1,0 +1,178 @@
+{
+  "$id": "https://github.com/JordanRL/Roster/master/roster-config-schema.config.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Roster Config Schema",
+  "description": "The config schema for the Roster PHP Documentation Library config file",
+  "type": "object",
+  "properties": {
+    "prefer-source": {
+      "type": "boolean",
+      "description": "Whether to trust the source code over the comments"
+    },
+    "with-version": {
+      "type": "string",
+      "description": "The version to export the documentation as; omit for auto-detection behavior"
+    },
+    "templates": {
+      "type": "string",
+      "description": "The path to the template files"
+    },
+    "mkdocs": {
+      "type": "object",
+      "description": "The config options for using MkDocs formatting and exporting",
+      "properties": {
+        "site-name": {
+          "type": "string",
+          "description": "The printed name of the documentation site"
+        },
+        "site-url": {
+          "type": "string",
+          "description": "The URL to the documentation site"
+        },
+        "repo-url": {
+          "type": "string",
+          "description": "The URL to the repository that contains the source code"
+        },
+        "theme": {
+          "type": "string",
+          "enum": ["md", "sphinx-rtd"],
+          "description": "The MkDocs theme to use"
+        },
+        "auto-deploy": {
+          "type": "boolean",
+          "description": "Whether or not to automatically run MkDocs once the files are built"
+        },
+        "merge-nav": {
+          "type": "boolean",
+          "description": "Whether or not to merge with the existing MkDocs config if one exists"
+        },
+        "merge-nav-mode": {
+          "type": "string",
+          "enum": ["append", "replace-nav-key"],
+          "description": "If merge-config is true, this determines whether the generated files are merged with the nav by replacing everything below a specific root key, or by appending at the end of the nav array"
+        },
+        "nav-key": {
+          "type": "string",
+          "description": "The key in the existing MkDocs config nav that generated documentation will be put under"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "The objects describing the sources you want to generate documentation for",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The path to the sources that you want to build documentation for"
+          },
+          "autoloader": {
+            "type": "string",
+            "description": "The autoloader for the sources in path, if those sources have a different autoloader than the project which Roster is in"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": ["private", "protected", "public"],
+            "description": "The maximum level of visibility that will be included in the generated documentation"
+          },
+          "aliases": {
+            "type": "array",
+            "description": "An array of objects describing name spaces you would like to alias into a different structure for the generated nav. Applies only to classes that are also found at the given path in the same sources object.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string",
+                  "description": "The namespace that you want to alias for navigation"
+                },
+                "alias": {
+                  "type": "string",
+                  "description": "The namespace you'd like to alias to for navigation"
+                }
+              },
+              "required": ["namespace", "alias"]
+            }
+          }
+        },
+        "required": ["path", "visibility"]
+      }
+    }
+  },
+  "allOf": [
+    {
+      "anyOf": [
+        {
+          "properties": {
+            "mkdocs": {
+              "properties": {
+                "merge-nav": {"const": true}
+              },
+              "required": ["merge-nav-mode"]
+            }
+          },
+          "required": ["sources"]
+        },
+        {
+          "properties": {
+            "mkdocs": {
+              "properties": {
+                "merge-nav": {"const": false}
+              }
+            }
+          },
+          "required": ["sources"]
+        },
+        {
+          "properties": {
+            "mkdocs": {
+              "properties": {
+                "merge-nav": {"const": true},
+                "merge-nav-mode": {"const": "append"}
+              }
+            }
+          },
+          "required": ["sources"]
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "properties": {
+            "mkdocs": {
+              "properties": {
+                "merge-nav": {"const": false}
+              }
+            }
+          },
+          "required": ["sources"]
+        },
+        {
+          "properties": {
+            "mkdocs": {
+              "properties": {
+                "merge-nav": {"const": true},
+                "merge-nav-mode": {"const": "replace-nav-key"}
+              },
+              "required": ["nav-key"]
+            }
+          },
+          "required": ["sources"]
+        },
+        {
+          "properties": {
+            "mkdocs": {
+              "properties": {
+                "merge-nav": {"const": true},
+                "merge-nav-mode": {"const": "append"}
+              }
+            }
+          },
+          "required": ["sources"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+site_name: 'Fermat - PHP Math Library'
+extra_css:
+  - css/md-theme.css
+repo_url: 'https://github.com/JordanRL/Fermat/'
+site_url: 'https://jordanrl.github.io/Fermat/'
+nav: []
+theme:
+  palette:
+    -
+      media: '(prefers-color-scheme: light)'
+      scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: 'Switch to dark mode'
+    -
+      media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: 'Switch to light mode'
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.tabs
+  highlightjs: true
+  hljs_languages:
+    - php
+markdown_extensions:
+  -
+    toc:
+      toc_depth: 3
+  - admonition
+  -
+    markdown_katex:
+      no_inline_svg: true
+      insert_fonts_css: true
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  -
+    pymdownx.highlight:
+      linenums: true
+      linenums_style: inline
+  -
+    pymdownx.snippets:
+      base_path: ./docs/snippets
+      check_paths: true
+  - pymdownx.extra

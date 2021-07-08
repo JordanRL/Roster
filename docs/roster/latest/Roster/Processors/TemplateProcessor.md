@@ -25,6 +25,8 @@
     description
     :   *No description available*
 
+---
+
 
 
 ### Instanced Methods
@@ -43,6 +45,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "public TemplateProcessor->markHas($key)"
     **$key**
 
@@ -56,6 +60,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public TemplateProcessor->supplyReplacement(string $key, Samsara\Roster\Processors\TemplateProcessor|array|string $replacement)"
     **$key**
@@ -82,6 +88,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "public TemplateProcessor->compile()"
     **return**
 
@@ -90,6 +98,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected TemplateProcessor->buildHasBlocks($template, $depth)"
     **$template**
@@ -109,6 +119,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

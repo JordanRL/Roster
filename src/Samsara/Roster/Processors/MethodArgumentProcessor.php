@@ -7,6 +7,7 @@ namespace Samsara\Roster\Processors;
 use ReflectionParameter;
 use Samsara\Mason\DocBlockProcessor;
 use Samsara\Mason\Tags\Base\DocBlockTag;
+use Samsara\Roster\ConfigBag;
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 use Samsara\Roster\TemplateFactory;
 
@@ -53,7 +54,7 @@ class MethodArgumentProcessor extends BaseCodeProcessor
                 $argTypeCode = (string)$parameter->getType();
             }
 
-            if (TemplateFactory::getPreferSource()) {
+            if (ConfigBag::getRosterConfig()->get('prefer-source')) {
                 $argType = $this->fixOutput($argTypeCode, $argTypeDoc, '');
             } else {
                 $argType = $this->fixOutput($argTypeDoc, $argTypeCode, '');

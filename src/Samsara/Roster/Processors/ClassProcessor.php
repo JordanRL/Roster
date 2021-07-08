@@ -5,6 +5,7 @@ namespace Samsara\Roster\Processors;
 
 
 use Samsara\Mason\DocBlockProcessor;
+use Samsara\Roster\ConfigBag;
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 use Samsara\Roster\TemplateFactory;
 use ReflectionClass;
@@ -62,7 +63,7 @@ class ClassProcessor extends BaseCodeProcessor
             $visibility = ($method->isPublic() ? 'public' : ($method->isProtected() ? 'protected' : 'private'));
             $visibilityLevel = ($method->isPublic() ? 1 : ($method->isProtected() ? 2 : 3));
 
-            if ($visibilityLevel > TemplateFactory::getVisibilityLevel()) {
+            if ($visibilityLevel > ConfigBag::getRosterConfig()->get('visibility-level')) {
                 continue;
             }
 
@@ -92,7 +93,7 @@ class ClassProcessor extends BaseCodeProcessor
             $visibility = ($property->isPublic() ? 'public' : ($property->isProtected() ? 'protected' : 'private'));
             $visibilityLevel = ($property->isPublic() ? 1 : ($property->isProtected() ? 2 : 3));
 
-            if ($visibilityLevel > TemplateFactory::getVisibilityLevel()) {
+            if ($visibilityLevel > ConfigBag::getRosterConfig()->get('visibility-level')) {
                 continue;
             }
 
@@ -222,7 +223,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $propertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->nonStaticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') > 1 && array_key_exists('protected', $this->nonStaticProperties)) {
             foreach ($this->nonStaticProperties['protected'] as $property) {
                 if ($property->getDeclaringClass() != $this->class->getName()) {
                     continue;
@@ -234,7 +235,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $propertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->nonStaticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') == 3 && array_key_exists('private', $this->nonStaticProperties)) {
             foreach ($this->nonStaticProperties['private'] as $property) {
                 if ($property->getDeclaringClass() != $this->class->getName()) {
                     continue;
@@ -258,7 +259,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $propertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->staticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') > 1 && array_key_exists('protected', $this->staticProperties)) {
             foreach ($this->staticProperties['protected'] as $property) {
                 if ($property->getDeclaringClass() != $this->class->getName()) {
                     continue;
@@ -270,7 +271,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $propertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->staticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') == 3 && array_key_exists('private', $this->staticProperties)) {
             foreach ($this->staticProperties['private'] as $property) {
                 if ($property->getDeclaringClass() != $this->class->getName()) {
                     continue;
@@ -301,7 +302,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $inheritedPropertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->nonStaticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') > 1 && array_key_exists('protected', $this->nonStaticProperties)) {
             foreach ($this->nonStaticProperties['protected'] as $property) {
                 if ($property->getDeclaringClass() == $this->class->getName()) {
                     continue;
@@ -313,7 +314,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $inheritedPropertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->nonStaticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') == 3 && array_key_exists('private', $this->nonStaticProperties)) {
             foreach ($this->nonStaticProperties['private'] as $property) {
                 if ($property->getDeclaringClass() == $this->class->getName()) {
                     continue;
@@ -337,7 +338,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $inheritedPropertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->staticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') > 1 && array_key_exists('protected', $this->staticProperties)) {
             foreach ($this->staticProperties['protected'] as $property) {
                 if ($property->getDeclaringClass() == $this->class->getName()) {
                     continue;
@@ -349,7 +350,7 @@ class ClassProcessor extends BaseCodeProcessor
                 $inheritedPropertiesInfo .= $property->compile();
             }
         }
-        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->staticProperties)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') == 3 && array_key_exists('private', $this->staticProperties)) {
             foreach ($this->staticProperties['private'] as $property) {
                 if ($property->getDeclaringClass() == $this->class->getName()) {
                     continue;
@@ -404,7 +405,7 @@ class ClassProcessor extends BaseCodeProcessor
                 }
             }
         }
-        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->staticMethods)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') > 1 && array_key_exists('protected', $this->staticMethods)) {
             foreach ($this->staticMethods['protected'] as $method) {
                 if ($method->getDeclaringClass() != $this->class->getName()) {
                     if (!empty($inheritedStaticMethodsContent)) {
@@ -421,7 +422,7 @@ class ClassProcessor extends BaseCodeProcessor
                 }
             }
         }
-        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->staticMethods)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') == 3 && array_key_exists('private', $this->staticMethods)) {
             foreach ($this->staticMethods['private'] as $method) {
                 if ($method->getDeclaringClass() != $this->class->getName()) {
                     if (!empty($inheritedStaticMethodsContent)) {
@@ -457,7 +458,7 @@ class ClassProcessor extends BaseCodeProcessor
                 }
             }
         }
-        if (TemplateFactory::getVisibilityLevel() > 1 && array_key_exists('protected', $this->nonStaticMethods)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') > 1 && array_key_exists('protected', $this->nonStaticMethods)) {
             foreach ($this->nonStaticMethods['protected'] as $method) {
                 if ($method->getDeclaringClass() != $this->class->getName()) {
                     if (!empty($inheritedMethodsContent)) {
@@ -474,7 +475,7 @@ class ClassProcessor extends BaseCodeProcessor
                 }
             }
         }
-        if (TemplateFactory::getVisibilityLevel() == 3 && array_key_exists('private', $this->nonStaticMethods)) {
+        if (ConfigBag::getRosterConfig()->get('visibility-level') == 3 && array_key_exists('private', $this->nonStaticMethods)) {
             foreach ($this->nonStaticMethods['private'] as $method) {
                 if ($method->getDeclaringClass() != $this->class->getName()) {
                     if (!empty($inheritedMethodsContent)) {

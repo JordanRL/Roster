@@ -15,7 +15,7 @@ Class App
 
 ### Implements
 
-!!! signature trait "ResetInterface"
+!!! signature interface "ResetInterface"
     namespace
     :   Symfony\Contracts\Service
 
@@ -53,6 +53,8 @@ Class App
     description
     :   *No description available*
 
+---
+
 
 
 ### Instanced Methods
@@ -82,6 +84,8 @@ Class App
     description
     :   *No description available*
 
+---
+
 
 
 ### Inherited Static Methods
@@ -103,7 +107,11 @@ Class App
     description
     :   *No description available*
 
-Returns an array of possible abbreviations given a set of names.
+    **Application::getAbbreviations Description**
+
+    Returns an array of possible abbreviations given a set of names.
+
+---
 
 
 
@@ -126,6 +134,8 @@ Returns an array of possible abbreviations given a set of names.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->setCommandLoader(Symfony\Component\Console\CommandLoader\CommandLoaderInterface $commandLoader)"
     **$commandLoader**
 
@@ -143,6 +153,8 @@ Returns an array of possible abbreviations given a set of names.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->getSignalRegistry()"
     **return**
 
@@ -151,6 +163,8 @@ Returns an array of possible abbreviations given a set of names.
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public Application->setSignalsToDispatchEvent(int $signalsToDispatchEvent)"
     **$signalsToDispatchEvent**
@@ -168,6 +182,8 @@ Returns an array of possible abbreviations given a set of names.
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public Application->doRun(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
     **$input**
@@ -194,7 +210,11 @@ Returns an array of possible abbreviations given a set of names.
     description
     :   *No description available*
 
-Runs the current application.
+    **Application->doRun Description**
+
+    Runs the current application.
+
+---
 
 !!! signature "public Application->reset()"
     **return**
@@ -204,6 +224,8 @@ Runs the current application.
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public Application->setHelperSet(Symfony\Component\Console\Helper\HelperSet $helperSet)"
     **$helperSet**
@@ -222,6 +244,8 @@ Runs the current application.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->getHelperSet()"
     **return**
 
@@ -231,7 +255,11 @@ Runs the current application.
     description
     :   *No description available*
 
-Get the helper set associated with the command.
+    **Application->getHelperSet Description**
+
+    Get the helper set associated with the command.
+
+---
 
 !!! signature "public Application->setDefinition(Symfony\Component\Console\Input\InputDefinition $definition)"
     **$definition**
@@ -250,6 +278,8 @@ Get the helper set associated with the command.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->getDefinition()"
     **return**
 
@@ -259,7 +289,11 @@ Get the helper set associated with the command.
     description
     :   *No description available*
 
-Gets the InputDefinition related to this Application.
+    **Application->getDefinition Description**
+
+    Gets the InputDefinition related to this Application.
+
+---
 
 !!! signature "public Application->getHelp()"
     **return**
@@ -270,7 +304,11 @@ Gets the InputDefinition related to this Application.
     description
     :   *No description available*
 
-Gets the help message.
+    **Application->getHelp Description**
+
+    Gets the help message.
+
+---
 
 !!! signature "public Application->areExceptionsCaught()"
     **return**
@@ -281,7 +319,11 @@ Gets the help message.
     description
     :   *No description available*
 
-Gets whether to catch exceptions or not during commands execution.
+    **Application->areExceptionsCaught Description**
+
+    Gets whether to catch exceptions or not during commands execution.
+
+---
 
 !!! signature "public Application->setCatchExceptions(bool $boolean)"
     **$boolean**
@@ -300,6 +342,8 @@ Gets whether to catch exceptions or not during commands execution.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->isAutoExitEnabled()"
     **return**
 
@@ -309,7 +353,11 @@ Gets whether to catch exceptions or not during commands execution.
     description
     :   *No description available*
 
-Gets whether to automatically exit after a command execution or not.
+    **Application->isAutoExitEnabled Description**
+
+    Gets whether to automatically exit after a command execution or not.
+
+---
 
 !!! signature "public Application->setAutoExit(bool $boolean)"
     **$boolean**
@@ -328,6 +376,8 @@ Gets whether to automatically exit after a command execution or not.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->getName()"
     **return**
 
@@ -337,7 +387,11 @@ Gets whether to automatically exit after a command execution or not.
     description
     :   *No description available*
 
-Gets the name of the application.
+    **Application->getName Description**
+
+    Gets the name of the application.
+
+---
 
 !!! signature "public Application->setName(string $name)"
     **$name**
@@ -356,6 +410,8 @@ Gets the name of the application.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->getVersion()"
     **return**
 
@@ -365,7 +421,11 @@ Gets the name of the application.
     description
     :   *No description available*
 
-Gets the application version.
+    **Application->getVersion Description**
+
+    Gets the application version.
+
+---
 
 !!! signature "public Application->setVersion(string $version)"
     **$version**
@@ -384,6 +444,8 @@ Gets the application version.
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->getLongVersion()"
     **return**
 
@@ -393,7 +455,11 @@ Gets the application version.
     description
     :   *No description available*
 
-Returns the long version of the application.
+    **Application->getLongVersion Description**
+
+    Returns the long version of the application.
+
+---
 
 !!! signature "public Application->register(string $name)"
     **$name**
@@ -412,7 +478,11 @@ Returns the long version of the application.
     description
     :   *No description available*
 
-Registers a new command.
+    **Application->register Description**
+
+    Registers a new command.
+
+---
 
 !!! signature "public Application->addCommands(Command[] $commands)"
     **$commands**
@@ -431,9 +501,13 @@ Registers a new command.
     description
     :   *No description available*
 
-Adds an array of command objects.
+    **Application->addCommands Description**
 
- If a Command is not enabled it will not be added.
+    Adds an array of command objects.
+    
+     If a Command is not enabled it will not be added.
+
+---
 
 !!! signature "public Application->add(Symfony\Component\Console\Command\Command $command)"
     **$command**
@@ -452,9 +526,13 @@ Adds an array of command objects.
     description
     :   *No description available*
 
-Adds a command object.
+    **Application->add Description**
 
- If a command with the same name already exists, it will be overridden. If the command is not enabled it will not be added.
+    Adds a command object.
+    
+     If a command with the same name already exists, it will be overridden. If the command is not enabled it will not be added.
+
+---
 
 !!! signature "public Application->get(string $name)"
     **$name**
@@ -473,7 +551,11 @@ Adds a command object.
     description
     :   *No description available*
 
-Returns a registered command by name or alias.
+    **Application->get Description**
+
+    Returns a registered command by name or alias.
+
+---
 
 !!! signature "public Application->has(string $name)"
     **$name**
@@ -492,7 +574,11 @@ Returns a registered command by name or alias.
     description
     :   *No description available*
 
-Returns true if the command exists, false otherwise.
+    **Application->has Description**
+
+    Returns true if the command exists, false otherwise.
+
+---
 
 !!! signature "public Application->getNamespaces()"
     **return**
@@ -503,9 +589,13 @@ Returns true if the command exists, false otherwise.
     description
     :   *No description available*
 
-Returns an array of all unique namespaces used by currently registered commands.
+    **Application->getNamespaces Description**
 
- It does not return the global namespace which always exists.
+    Returns an array of all unique namespaces used by currently registered commands.
+    
+     It does not return the global namespace which always exists.
+
+---
 
 !!! signature "public Application->findNamespace(string $namespace)"
     **$namespace**
@@ -524,7 +614,11 @@ Returns an array of all unique namespaces used by currently registered commands.
     description
     :   *No description available*
 
-Finds a registered namespace by a name or an abbreviation.
+    **Application->findNamespace Description**
+
+    Finds a registered namespace by a name or an abbreviation.
+
+---
 
 !!! signature "public Application->find(string $name)"
     **$name**
@@ -543,9 +637,13 @@ Finds a registered namespace by a name or an abbreviation.
     description
     :   *No description available*
 
-Finds a command by name or alias.
+    **Application->find Description**
 
- Contrary to get, this command tries to find the best match if you give it an abbreviation of a name or alias.
+    Finds a command by name or alias.
+    
+     Contrary to get, this command tries to find the best match if you give it an abbreviation of a name or alias.
+
+---
 
 !!! signature "public Application->all(?string $namespace)"
     **$namespace**
@@ -564,9 +662,13 @@ Finds a command by name or alias.
     description
     :   *No description available*
 
-Gets the commands (registered in the given namespace if provided).
+    **Application->all Description**
 
- The array keys are the full names and the values the command instances.
+    Gets the commands (registered in the given namespace if provided).
+    
+     The array keys are the full names and the values the command instances.
+
+---
 
 !!! signature "public Application->renderThrowable(Throwable $e, Symfony\Component\Console\Output\OutputInterface $output)"
     **$e**
@@ -593,6 +695,8 @@ Gets the commands (registered in the given namespace if provided).
     description
     :   *No description available*
 
+---
+
 !!! signature "public Application->extractNamespace(string $name, ?int $limit)"
     **$name**
 
@@ -618,9 +722,13 @@ Gets the commands (registered in the given namespace if provided).
     description
     :   *No description available*
 
-Returns the namespace part of the command name.
+    **Application->extractNamespace Description**
 
- This method is not part of public API and should not be used directly.
+    Returns the namespace part of the command name.
+    
+     This method is not part of public API and should not be used directly.
+
+---
 
 !!! signature "public Application->setDefaultCommand(string $commandName, bool $isSingleCommand)"
     **$commandName**
@@ -647,7 +755,11 @@ Returns the namespace part of the command name.
     description
     :   *No description available*
 
-Sets the default Command name.
+    **Application->setDefaultCommand Description**
+
+    Sets the default Command name.
+
+---
 
 !!! signature "public Application->isSingleCommand()"
     **return**
@@ -657,6 +769,8 @@ Sets the default Command name.
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected Application->doRenderThrowable(Throwable $e, Symfony\Component\Console\Output\OutputInterface $output)"
     **$e**
@@ -683,6 +797,8 @@ Sets the default Command name.
     description
     :   *No description available*
 
+---
+
 !!! signature "protected Application->configureIO(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
     **$input**
 
@@ -707,6 +823,8 @@ Sets the default Command name.
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected Application->doRunCommand(Symfony\Component\Console\Command\Command $command, Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
     **$command**
@@ -741,9 +859,13 @@ Sets the default Command name.
     description
     :   *No description available*
 
-Runs the current command.
+    **Application->doRunCommand Description**
 
- If an event dispatcher has been attached to the application, events are also dispatched during the life-cycle of the command.
+    Runs the current command.
+    
+     If an event dispatcher has been attached to the application, events are also dispatched during the life-cycle of the command.
+
+---
 
 !!! signature "protected Application->getCommandName(Symfony\Component\Console\Input\InputInterface $input)"
     **$input**
@@ -762,7 +884,11 @@ Runs the current command.
     description
     :   *No description available*
 
-Gets the name of the command based on input.
+    **Application->getCommandName Description**
+
+    Gets the name of the command based on input.
+
+---
 
 !!! signature "protected Application->getDefaultInputDefinition()"
     **return**
@@ -773,7 +899,11 @@ Gets the name of the command based on input.
     description
     :   *No description available*
 
-Gets the default input definition.
+    **Application->getDefaultInputDefinition Description**
+
+    Gets the default input definition.
+
+---
 
 !!! signature "protected Application->getDefaultCommands()"
     **return**
@@ -784,7 +914,11 @@ Gets the default input definition.
     description
     :   *No description available*
 
-Gets the default commands that should always be available.
+    **Application->getDefaultCommands Description**
+
+    Gets the default commands that should always be available.
+
+---
 
 !!! signature "protected Application->getDefaultHelperSet()"
     **return**
@@ -795,7 +929,11 @@ Gets the default commands that should always be available.
     description
     :   *No description available*
 
-Gets the default helper set with the helpers that should always be available.
+    **Application->getDefaultHelperSet Description**
+
+    Gets the default helper set with the helpers that should always be available.
+
+---
 
 
 

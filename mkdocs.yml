@@ -1,6 +1,6 @@
 site_name: 'Roster - Docs From The Source'
 extra_css:
-    - css/roster-style.css
+    - css/sphinx-rtd-theme.css
 repo_url: 'https://github.com/JordanRL/Roster/'
 site_url: 'https://jordanrl.github.io/Roster/'
 nav:
@@ -13,37 +13,39 @@ nav:
             -
                 'Using the Command': getting-started/using-the-command.md
     -
-        'Code Reference':
+        'Source Reference':
             -
                 Roster:
                     -
-                        TemplateFactory: roster/latest/Samsara/Roster/TemplateFactory.md
+                        TemplateFactory: roster/latest/Roster/TemplateFactory.md
                     -
-                        Roster: roster/latest/Samsara/Roster/Roster.md
+                        Roster: roster/latest/Roster/Roster.md
                     -
-                        App: roster/latest/Samsara/Roster/App.md
+                        ConfigBag: roster/latest/Roster/ConfigBag.md
+                    -
+                        App: roster/latest/Roster/App.md
                     -
                         Processors:
                             -
-                                InterfaceInlineProcessor: roster/latest/Samsara/Roster/Processors/InterfaceInlineProcessor.md
+                                InterfaceInlineProcessor: roster/latest/Roster/Processors/InterfaceInlineProcessor.md
                             -
-                                TraitInlineProcessor: roster/latest/Samsara/Roster/Processors/TraitInlineProcessor.md
+                                TraitInlineProcessor: roster/latest/Roster/Processors/TraitInlineProcessor.md
                             -
-                                MethodArgumentDetailProcessor: roster/latest/Samsara/Roster/Processors/MethodArgumentDetailProcessor.md
+                                MethodArgumentDetailProcessor: roster/latest/Roster/Processors/MethodArgumentDetailProcessor.md
                             -
-                                ClassProcessor: roster/latest/Samsara/Roster/Processors/ClassProcessor.md
+                                ClassProcessor: roster/latest/Roster/Processors/ClassProcessor.md
                             -
-                                TemplateProcessor: roster/latest/Samsara/Roster/Processors/TemplateProcessor.md
+                                TemplateProcessor: roster/latest/Roster/Processors/TemplateProcessor.md
                             -
-                                PropertyProcessor: roster/latest/Samsara/Roster/Processors/PropertyProcessor.md
+                                PropertyProcessor: roster/latest/Roster/Processors/PropertyProcessor.md
                             -
-                                MethodArgumentProcessor: roster/latest/Samsara/Roster/Processors/MethodArgumentProcessor.md
+                                MethodArgumentProcessor: roster/latest/Roster/Processors/MethodArgumentProcessor.md
                             -
-                                MethodProcessor: roster/latest/Samsara/Roster/Processors/MethodProcessor.md
+                                MethodProcessor: roster/latest/Roster/Processors/MethodProcessor.md
                             -
                                 Base:
                                     -
-                                        BaseCodeProcessor: roster/latest/Samsara/Roster/Processors/Base/BaseCodeProcessor.md
+                                        BaseCodeProcessor: roster/latest/Roster/Processors/Base/BaseCodeProcessor.md
 theme:
     name: readthedocs
     highlightjs: true

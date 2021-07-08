@@ -5,6 +5,8 @@ namespace Samsara\Roster;
 use Noodlehaus\Config;
 use Noodlehaus\Parser\Json;
 use Noodlehaus\Parser\Yaml as YamlReader;
+use Opis\JsonSchema\Errors\ErrorFormatter;
+use Opis\JsonSchema\Validator;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper as YamlDumper;
 use ReflectionClass;
@@ -31,14 +33,14 @@ class Roster extends Command
 {
 
     private array $classes = [];
+    private array $classesProcessed = [];
 
     /** @var ReflectionClass[][] */
     private array $reflectors = [];
 
     private string $rootDir;
+    private string $rootRosterDir;
     private string $baseExportPath;
-
-    private Config $appComposerConfig;
 
     private SymfonyStyle $io;
 
@@ -48,7 +50,15 @@ class Roster extends Command
     {
         $this->rootDir = $rootDir;
 
-        $this->appComposerConfig = Config::load($rootDir.'/composer.json', new Json());
+        if (is_file($this->rootDir.'/roster-config-schema.config.json')) {
+            $this->rootRosterDir = $this->rootDir;
+        } elseif (is_file($this->rootDir.'/vendor/samsara/roster/roster-config-schema.config.json')) {
+            $this->rootRosterDir = $this->rootDir.'/vendor/samsara/roster';
+        } else {
+            $this->rootRosterDir = '';
+        }
+
+        ConfigBag::setApplicationConfig(Config::load($rootDir.'/composer.json', new Json()));
 
         parent::__construct();
     }
@@ -70,19 +80,25 @@ class Roster extends Command
             'source' => [
                 'mode' => InputArgument::OPTIONAL,
                 'description' => 'The source to generate documentation from. Either a directory or a file.',
-                'default' => 'src'
+                'default' => null
             ]
         ];
 
         $options = [
+            'config-file' => [
+                'default' => 'roster.json',
+                'shortcut' => 'c',
+                'mode' => InputOption::VALUE_OPTIONAL,
+                'description' => "What roster.json config file to use (if any)"
+            ],
             'templates' => [
-                'default' => 'doc-templates/roster-templates',
+                'default' => null,
                 'shortcut' => 't',
                 'mode' => InputOption::VALUE_OPTIONAL,
                 'description' => 'Where to look for the roster templates'
             ],
             'visibility' => [
-                'default' => 'all',
+                'default' => null,
                 'shortcut' => null,
                 'mode' => InputOption::VALUE_OPTIONAL,
                 'description' => 'What visibility level to include in documentation. Higher levels of visibility include all lower levels also. Value inputs are \'all\', \'protected\', \'public\'.'
@@ -90,7 +106,7 @@ class Roster extends Command
             'prefer-source' => [
                 'default' => false,
                 'shortcut' => null,
-                'mode' => InputOption::VALUE_NEGATABLE,
+                'mode' => InputOption::VALUE_OPTIONAL,
                 'description' => 'If used, the information from the source code will be preferred if it conflicts with the PHPDoc info. Default behavior is to prefer PHPDoc info.'
             ],
             'with-version' => [
@@ -102,13 +118,13 @@ class Roster extends Command
             'with-debug' => [
                 'default' => false,
                 'shortcut' => null,
-                'mode' => InputOption::VALUE_NEGATABLE,
+                'mode' => InputOption::VALUE_OPTIONAL,
                 'description' => 'Output debug information to the console.'
             ],
             'mkdocs' => [
                 'default' => false,
                 'shortcut' => null,
-                'mode' => InputOption::VALUE_NEGATABLE,
+                'mode' => InputOption::VALUE_OPTIONAL,
                 'description' => 'If this option is used, Roster will compile with extra CSS and built-in templates to create a pre-made mkdocs ready output.'
             ]
         ];
@@ -145,27 +161,198 @@ class Roster extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $args = $input->getArguments();
+        $opts = $input->getOptions();
         $this->io = new SymfonyStyle($input, $output);;
         $this->io->title(App::NAME);
 
-        $args = $input->getArguments();
-        $opts = $input->getOptions();
+        /*
+         * All the setup and config values and options values setting
+         */
+        if (empty($this->rootRosterDir)) {
+            $this->io->error('Cannot find Roster root directory');
+            return self::FAILURE;
+        }
 
-        $visibilityLevel =
-            ($opts['visibility'] == 'all' || $opts['visibility'] == 'private' ? 3 :
-                ($opts['visibility'] == 'protected' ? 2 : 1));
+        $configPathRoot = $this->rootDir.'/'.$opts['config-file'];
+        $configPathVendor = $this->rootRosterDir.'/'.$opts['config-file'];
 
-        TemplateFactory::setVisibilityLevel($visibilityLevel);
-        TemplateFactory::setPreferSource($opts['prefer-source']);
+        if (!is_file($configPathRoot)) {
+            if (!is_file($configPathVendor)) {
+                $this->io->error('Cannot find config file');
+                return self::FAILURE;
+            } else {
+                ConfigBag::setRosterConfig(Config::load($configPathVendor, new Json()));
+                $configPathResolved = $configPathVendor;
+            }
+        } else {
+            ConfigBag::setRosterConfig(Config::load($configPathRoot, new Json()));
+            $configPathResolved = $configPathRoot;
+        }
 
-        $version = $opts['with-version'] ?? $this->appComposerConfig->get('version', 'latest');
+        $validator = new Validator();
+        $validator->resolver()->registerFile(
+            'https://github.com/JordanRL/Roster/master/roster-config-schema.config.json',
+            $this->rootRosterDir.'/roster-config-schema.config.json'
+        );
+
+        $rosterConfigRaw = json_decode(file_get_contents($configPathResolved));
+
+        $validatorResult = $validator->validate(
+            $rosterConfigRaw,
+            'https://github.com/JordanRL/Roster/master/roster-config-schema.config.json'
+        );
+
+        if (!$validatorResult->isValid()) {
+            $this->io->error('Roster config file failed validation');
+            $this->io->block((new ErrorFormatter())->format($validatorResult->error()));
+            return self::FAILURE;
+        }
+
+        if ($args['source']) {
+            $sources = [$args['source']];
+        } elseif (ConfigBag::getRosterConfig()->has('sources')) {
+            $sources = $rosterConfigRaw->sources;
+        } else {
+            $this->io->error('No sources directory provided');
+            return self::FAILURE;
+        }
+
+        if ($opts['visibility']) {
+            if ($opts['visibility'] != 'all' && $opts['visibility'] != 'private' && $opts['visibility'] != 'protected' && $opts['visibility'] != 'public') {
+                $this->io->error('Unknown visibility level');
+                $this->io->writeln('Visibility must be one of: private, protected, public');
+                return self::FAILURE;
+            }
+
+            $opts['visibility'] = ($opts['visibility'] == 'all' ? 'public' : $opts['visibility']);
+
+            ConfigBag::getRosterConfig()->set('global-visibility', $opts['visibility']);
+        }
+
+        $version = $opts['with-version'] ?? ConfigBag::getApplicationConfig()->get('version', 'latest');
+
+        if ($opts['with-version'] || !ConfigBag::getRosterConfig()->has('with-version')) {
+            ConfigBag::getRosterConfig()->set('with-version', $version);
+        }
+
+        if ($opts['templates']) {
+            ConfigBag::getRosterConfig()->set('templates', $opts['templates']);
+        } elseif (!ConfigBag::getRosterConfig()->has('templates')) {
+            ConfigBag::getRosterConfig()->set('templates', 'doc-templates/roster-templates');
+        }
+
+        if ($opts['prefer-source'] || !ConfigBag::getRosterConfig()->has('prefer-source')) {
+            ConfigBag::getRosterConfig()->set('prefer-source', $opts['prefer-source'] ?? false);
+        }
+
+        if ($opts['mkdocs'] && !ConfigBag::getRosterConfig()->has('mkdocs')) {
+            ConfigBag::getRosterConfig()->set('mkdocs', []);
+        }
 
         $this->verbose = $opts['with-debug'];
 
-        if ($opts['mkdocs']) {
+        if (ConfigBag::getRosterConfig()->has('mkdocs')) {
+            $this->io->section('Gathering MkDocs Config Info');
+
+            $existingMkDocsYml = is_file($this->rootDir.'/mkdocs.yml');
+
+            if ($existingMkDocsYml) {
+                $oldConfig = Config::load(
+                    file_get_contents($this->rootDir . '/mkdocs.yml'),
+                    new YamlReader(),
+                    true
+                );
+            }
+
+            if (
+                $existingMkDocsYml &&
+                !ConfigBag::getRosterConfig()->has('mkdocs.merge-nav')
+            ) {
+                $choice = $this->io->choice(
+                    'An existing \'mkdocs.yml\' file was detected. How would you like to proceed?',
+                    [
+                        'Save old as .old',
+                        'Attempt to merge the nav'
+                    ],
+                    0
+                );
+
+                $choice = ($choice == 'Attempt to merge the nav');
+
+                ConfigBag::getRosterConfig()->set('mkdocs.merge-nav', $choice);
+            }
+
+            if (!$existingMkDocsYml && !ConfigBag::getRosterConfig()->has('mkdocs.site-name')) {
+                $siteName = $this->io->ask('Documentation Site Name') ?? '';
+            } elseif ($existingMkDocsYml) {
+                $siteName = ConfigBag::getRosterConfig()->get('mkdocs.site-name', $oldConfig->get('site_name'));
+            } else {
+                $siteName = $oldConfig->get('site_name');
+            }
+            ConfigBag::getRosterConfig()->set('mkdocs.site-name', $siteName);
+
+            if (!$existingMkDocsYml && !ConfigBag::getRosterConfig()->has('mkdocs.site-url')) {
+                $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
+            } elseif ($existingMkDocsYml) {
+                $siteUrl = ConfigBag::getRosterConfig()->get('mkdocs.site-url', $oldConfig->get('site_url'));
+            } else {
+                $siteUrl = $oldConfig->get('site_url');
+            }
+            ConfigBag::getRosterConfig()->set('mkdocs.site-url', $siteUrl);
+
+            if (!$existingMkDocsYml && !ConfigBag::getRosterConfig()->has('mkdocs.repo-url')) {
+                $repoUrl = $this->io->ask('Repository URL') ?? '';
+            } elseif ($existingMkDocsYml) {
+                $repoUrl = ConfigBag::getRosterConfig()->get('mkdocs.repo-url', $oldConfig->get('repo_url'));
+            } else {
+                $repoUrl = $oldConfig->get('repo_url');
+            }
+            ConfigBag::getRosterConfig()->set('mkdocs.repo-url', $repoUrl);
+
+            if (!ConfigBag::getRosterConfig()->has('mkdocs.theme')) {
+                ConfigBag::getRosterConfig()->set('mkdocs.theme', 'md');
+            }
+
+            if (!ConfigBag::getRosterConfig()->has('mkdocs.auto-deploy')) {
+                ConfigBag::getRosterConfig()->set('mkdocs.auto-deploy', false);
+            }
+
+            if (
+                $existingMkDocsYml &&
+                ConfigBag::getRosterConfig()->get('mkdocs.merge-nav') &&
+                !ConfigBag::getRosterConfig()->has('mkdocs.merge-nav-mode')
+            ) {
+                $appendOrMerge = $this->io->choice(
+                    'Would you like to merge with a root nav key, or append as a new root nav key',
+                    [
+                        'Merge',
+                        'Append'
+                    ],
+                    0
+                );
+
+                if ($appendOrMerge == 'Merge') {
+                    $mergeMode = 'replace-nav-key';
+                } else {
+                    $mergeMode = 'append';
+                }
+
+                ConfigBag::getRosterConfig()->set('mkdocs.merge-nav-mode', $mergeMode);
+            }
+
+            if (
+                $existingMkDocsYml &&
+                ConfigBag::getRosterConfig()->get('mkdocs.merge-nav-mode') == 'replace-nav-key' &&
+                !ConfigBag::getRosterConfig()->has('mkdocs.nav-key')
+            ) {
+                $baseKey = $this->io->ask('What top level key do you want to merge the generated nav into');
+                ConfigBag::getRosterConfig()->set('mkdocs.nav-key', $baseKey);
+            }
+
             $baseExportPath = $this->rootDir.
                 '/docs/roster/'.
-                $version;
+                ConfigBag::getRosterConfig()->get('with-version', 'latest');
 
             $python = exec('which pip');
             $python3 = exec('which pip3');
@@ -184,8 +371,8 @@ class Roster extends Command
                 }
             }
 
-            if ($opts['templates'] == 'doc-templates/roster-templates') {
-                $opts['templates'] = 'doc-templates/roster-templates-mkdocs';
+            if (ConfigBag::getRosterConfig()->get('templates') == 'doc-templates/roster-templates') {
+                ConfigBag::getRosterConfig()->set('templates', 'doc-templates/roster-templates-mkdocs');
             }
         } else {
             $baseExportPath = $this->rootDir.
@@ -216,60 +403,89 @@ class Roster extends Command
             $this->io->section('Initialization');
         }
 
-        $fileList = $this->traverseDirectories($args['source']);
+        $this->processTemplates(ConfigBag::getRosterConfig()->get('templates'));
 
-        foreach ($fileList as $file) {
-            $this->extractFileData($file);
-        }
-
-        $this->createReflectors();
-
-        $this->processTemplates($opts['templates']);
-
-        if (!TemplateFactory::hasTemplate('class')) {
-            $this->io->error('Could not load templates');
-            $this->io->block(['Ensure that all the required templates are present at your template folder: ', $opts['templates']]);
-            return self::FAILURE;
-        }
-
-        if (array_key_exists('classes', $this->reflectors)) {
-            $this->io->section('Processing Classes');
-
-            $this->io->progressStart(count($this->reflectors['classes']));
-            foreach ($this->reflectors['classes'] as $reflector) {
-                $classProcessor = new ClassProcessor($reflector);
-
-                TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
-
-                $this->io->progressAdvance();
+        foreach ($sources as $source) {
+            $aliasFrom = [];
+            $aliasTo = [];
+            if (is_string($source)) {
+                $visibility = ConfigBag::getRosterConfig()->get('global-visibility', 'public');
+                $sourcePath = $source;
+                $autoloader = '';
+            } else {
+                $visibility = $source->visibility;
+                $sourcePath = $source->path;
+                $autoloader = $source->autoloader ?? '';
+                foreach ($source->aliases as $alias) {
+                    $aliasFrom[] = $alias->namespace;
+                    $aliasTo[] = $alias->alias;
+                }
             }
-            $this->io->progressFinish();
-        }
 
-        if (array_key_exists('interfaces', $this->reflectors)) {
-            $this->io->section('Processing Interfaces');
-
-            $this->io->progressStart(count($this->reflectors['interfaces']));
-            foreach ($this->reflectors['interfaces'] as $reflector) {
-                $classProcessor = new ClassProcessor($reflector, 'interface');
-
-                TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
-
-                $this->io->progressAdvance();
+            if (!empty($autoloader)) {
+                $autoloader = realpath($this->rootDir.'/'.$autoloader);
+                require_once $autoloader;
             }
-            $this->io->progressFinish();
-        }
 
-        if (array_key_exists('traits', $this->reflectors)) {
-            $this->io->section('Processing Traits');
+            $this->io->section('Processing Source Files: <fg=green>'.$sourcePath.'</>');
 
-            $this->io->progressStart(count($this->reflectors['traits']));
-            foreach ($this->reflectors['traits'] as $reflector) {
-                $classProcessor = new ClassProcessor($reflector, 'trait');
+            $visibilityLevel =
+                ($visibility == 'private' ? 3 :
+                    ($visibility == 'protected' ? 2 : 1));
 
-                TemplateFactory::queueCompile($reflector->getName(), $classProcessor);
+            ConfigBag::getRosterConfig()->set('visibility-level', $visibilityLevel);
 
-                $this->io->progressAdvance();
+            $fileList = $this->traverseDirectories(realpath($this->rootDir.'/'.$sourcePath));
+
+            $this->classesProcessed = $this->classes;
+            $this->classes = [];
+            foreach ($fileList as $file) {
+                $this->extractFileData($file);
+            }
+
+            $this->createReflectors();
+
+            if (!TemplateFactory::hasTemplate('class')) {
+                $this->io->error('Could not load templates');
+                $this->io->block(['Ensure that all the required templates are present at your template folder: ', $opts['templates']]);
+                return self::FAILURE;
+            }
+
+            $reflectorCount = 0;
+            $reflectorCount += array_key_exists('classes', $this->reflectors) ? count($this->reflectors['classes']) : 0;
+            $reflectorCount += array_key_exists('interfaces', $this->reflectors) ? count($this->reflectors['interfaces']) : 0;
+            $reflectorCount += array_key_exists('traits', $this->reflectors) ? count($this->reflectors['traits']) : 0;
+
+            $this->io->progressStart($reflectorCount);
+
+            if (array_key_exists('classes', $this->reflectors)) {
+                foreach ($this->reflectors['classes'] as $reflector) {
+                    $classProcessor = new ClassProcessor($reflector);
+
+                    TemplateFactory::queueCompile(str_replace($aliasFrom, $aliasTo, $reflector->getName()), $classProcessor);
+
+                    $this->io->progressAdvance();
+                }
+            }
+
+            if (array_key_exists('interfaces', $this->reflectors)) {
+                foreach ($this->reflectors['interfaces'] as $reflector) {
+                    $classProcessor = new ClassProcessor($reflector, 'interface');
+
+                    TemplateFactory::queueCompile(str_replace($aliasFrom, $aliasTo, $reflector->getName()), $classProcessor);
+
+                    $this->io->progressAdvance();
+                }
+            }
+
+            if (array_key_exists('traits', $this->reflectors)) {
+                foreach ($this->reflectors['traits'] as $reflector) {
+                    $classProcessor = new ClassProcessor($reflector, 'trait');
+
+                    TemplateFactory::queueCompile(str_replace($aliasFrom, $aliasTo, $reflector->getName()), $classProcessor);
+
+                    $this->io->progressAdvance();
+                }
             }
             $this->io->progressFinish();
         }
@@ -280,62 +496,19 @@ class Roster extends Command
         $this->io->section('Writing Documentation to Output Directory');
         TemplateFactory::writeToDocs($baseExportPath, $this->io);
 
-        if ($opts['mkdocs']) {
-            $this->io->section('Gathering MkDocs Config Info');
-            $ymlChoice = false;
-            $choice = '';
-
-            if (is_file($this->rootDir.'/mkdocs.yml')) {
-                $ymlChoice = true;
-                $choice = $this->io->choice(
-                    'An existing \'mkdocs.yml\' file was detected. How would you like to proceed?',
-                    [
-                        'Attempt to merge the nav',
-                        'Save old as .old',
-                        'Overwrite'
-                    ],
-                    1
-                );
-            }
-
+        if (ConfigBag::getRosterConfig()->has('mkdocs')) {
+            $cssFileName = ConfigBag::getRosterConfig()->get('mkdocs.theme').'-theme';
+            $this->io->section('Configuring MkDocs With New Files');
+            $choice = ConfigBag::getRosterConfig()->get('mkdocs.merge-nav');
             $nav = $this->buildMkdocsNav($baseExportPath);
             $formattedNav = $this->formatNavArrayRecursive($nav);
 
-            if ($ymlChoice && $choice == 'Attempt to merge the nav') {
-                $appendOrMerge = $this->io->choice(
-                    'Would you like to merge with a root nav key, or append as a new root nav key',
-                    [
-                        'Merge',
-                        'Append'
-                    ],
-                    0
-                );
+            if ($choice && isset($oldConfig)) {
+                $extraCss = array_unique(array_merge(['css/'.$cssFileName.'.css'], $oldConfig->get('extra_css')));
+                $appendOrMerge = ConfigBag::getRosterConfig()->get('mkdocs.merge-nav-mode');
 
-                $oldConfig = Config::load(
-                    file_get_contents($this->rootDir . '/mkdocs.yml'),
-                    new YamlReader(),
-                    true
-                );
-
-                $reduceNamespace = $this->io->choice(
-                    'Do you want to reduce the nav namespace? This only affects the nav keys (i.e. the namespace Samsara\\Roster\\Processors becomes Roster\\Processors)',
-                    [
-                        'Yes',
-                        'No'
-                    ],
-                    1
-                );
-
-                if ($reduceNamespace == 'Yes') {
-                    $formattedNav = [];
-
-                    foreach ($nav as $value) {
-                        $formattedNav = array_merge($formattedNav, $this->formatNavArrayRecursive($value));
-                    }
-                }
-
-                if ($appendOrMerge == 'Merge') {
-                    $baseKey = $this->io->ask('What top level key do you want to merge the generated nav into');
+                if ($appendOrMerge == 'replace-nav-key') {
+                    $baseKey = ConfigBag::getRosterConfig()->get('mkdocs.nav-key');
 
                     $oldNav = $oldConfig->get('nav');
                     $keyFound = false;
@@ -366,16 +539,17 @@ class Roster extends Command
                     }
                 }
 
+                $oldConfig->set('site_name', ConfigBag::getRosterConfig()->get('mkdocs.site-name', $oldConfig->get('site_name')));
+                $oldConfig->set('site_url', ConfigBag::getRosterConfig()->get('mkdocs.site-url', $oldConfig->get('site_url')));
+                $oldConfig->set('repo_url', ConfigBag::getRosterConfig()->get('mkdocs.site-repo', $oldConfig->get('repo_url')));
                 $oldConfig->set('nav', $oldNav);
+                $oldConfig->set('extra_css', $extraCss);
                 $mkDocsConfig = (new YamlDumper(4))->dump($oldConfig->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
             } else {
-                if ($ymlChoice && $choice == 'Save old as .old') {
+                if (isset($oldConfig) && !$choice) {
                     $oldMkdocs = file_get_contents($this->rootDir . '/mkdocs.yml');
                     file_put_contents($this->rootDir . '/mkdocs.yml.old', $oldMkdocs);
                 }
-                $siteName = $this->io->ask('Documentation Site Name') ?? '';
-                $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
-                $repoUrl = $this->io->ask('Repository URL') ?? '';
 
                 $configBase = Config::load(
                     TemplateFactory::getTemplate('mkdocs')->compile(),
@@ -383,10 +557,13 @@ class Roster extends Command
                     true
                 );
 
-                $configBase->set('siteName', $siteName);
-                $configBase->set('siteUrl', $siteUrl);
-                $configBase->set('repoUrl', $repoUrl);
+                $extraCss = ['css/'.$cssFileName.'.css'];
+
+                $configBase->set('siteName', ConfigBag::getRosterConfig()->get('mkdocs.site-name'));
+                $configBase->set('siteUrl', ConfigBag::getRosterConfig()->get('mkdocs.site-url'));
+                $configBase->set('repoUrl', ConfigBag::getRosterConfig()->get('mkdocs.site-repo'));
                 $configBase->set('nav', $formattedNav);
+                $configBase->set('extra_css', $extraCss);
 
                 $mkDocsConfig = (new YamlDumper(4))->dump($configBase->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
             }
@@ -395,7 +572,7 @@ class Roster extends Command
                 mkdir($this->rootDir . '/docs/css');
             }
 
-            TemplateFactory::queueCompile('docs/css/roster-style', TemplateFactory::getTemplate('roster-style'), 'css');
+            TemplateFactory::queueCompile('docs/css/'.$cssFileName, TemplateFactory::getTemplate($cssFileName), 'css');
             TemplateFactory::queueCompile('docs/requirements', TemplateFactory::getTemplate('requirements'), 'txt');
 
             $this->io->section('Exporting Additional Files');
@@ -411,20 +588,15 @@ class Roster extends Command
 
         $summary[] = 'Compiled Documentation Path: <fg=green>'.$baseExportPath.'</>';
 
-        if ($opts['templates']) {
-            $summary[] = 'Templates Used: <fg=green>'.$opts['templates'].'</>';
+        if (ConfigBag::getRosterConfig()->has('templates')) {
+            $summary[] = 'Templates Used: <fg=green>'.ConfigBag::getRosterConfig()->get('templates').'</>';
         }
 
-        if ($opts['visibility']) {
-            $color = ($visibilityLevel == 3 ? 'red' : ($visibilityLevel == 2 ? 'yellow' : 'green'));
-            $summary[] = 'Maximum Visibility Documented: <fg='.$color.'>'.ucfirst($opts['visibility']).'</>';
+        if (ConfigBag::getRosterConfig()->has('with-version')) {
+            $summary[] = 'Exported As Version: <fg=green>'.ConfigBag::getRosterConfig()->get('with-version').'</>';
         }
 
-        if ($version) {
-            $summary[] = 'Exported As Version: <fg=green>'.$version.'</>';
-        }
-
-        if ($opts['mkdocs']) {
+        if (ConfigBag::getRosterConfig()->has('mkdocs')) {
             $summary[] = 'Documents MkDocs Ready: <fg=green>Yes</>';
         } else {
             $summary[] = 'Documents MkDocs Ready: <fg=yellow>No</>';
@@ -433,6 +605,16 @@ class Roster extends Command
         $this->io->success('Documentation Built');
         foreach ($summary as $message) {
             $this->io->writeln($message);
+        }
+
+        if (ConfigBag::getRosterConfig()->has('auto-deploy')) {
+            if (ConfigBag::getRosterConfig()->get('auto-deploy')) {
+                $this->io->section('Deploying To GH Pages Using MkDocs');
+                while ($output = exec('mkdocs gh-deploy')) {
+                    $this->io->writeln($output);
+                }
+                $this->io->success('Documentation Deployed');
+            }
         }
 
         return 0;
@@ -471,6 +653,7 @@ class Roster extends Command
 
         foreach ($list as $path) {
             $path = str_replace($baseExportPath.'/', '', $path);
+            // Get the alias stuff
             $pathParts[] = explode('/', $path);
         }
 

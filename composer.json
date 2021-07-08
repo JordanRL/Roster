@@ -27,6 +27,7 @@
     "samsara/mason": "^0.2",
     "hassankhan/config": "^2.2",
     "symfony/yaml": "^5.3",
+    "opis/json-schema": "^2.0",
     "php": ">=8.0"
   },
   "require-dev": {

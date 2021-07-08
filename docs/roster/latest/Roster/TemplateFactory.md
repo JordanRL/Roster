@@ -8,58 +8,6 @@
 
 ### Static Methods
 
-!!! signature "public TemplateFactory::setPreferSource(bool $preferSource)"
-    **$preferSource**
-
-    type
-    :   bool
-
-    description
-    :   *No description available*
-
-    **return**
-
-    type
-    :   *mixed* (assumed)
-
-    description
-    :   *No description available*
-
-!!! signature "public TemplateFactory::getPreferSource()"
-    **return**
-
-    type
-    :   bool
-
-    description
-    :   *No description available*
-
-!!! signature "public TemplateFactory::setVisibilityLevel(int $visibilityLevel)"
-    **$visibilityLevel**
-
-    type
-    :   int
-
-    description
-    :   *No description available*
-
-    **return**
-
-    type
-    :   *mixed* (assumed)
-
-    description
-    :   *No description available*
-
-!!! signature "public TemplateFactory::getVisibilityLevel()"
-    **return**
-
-    type
-    :   int
-
-    description
-    :   *No description available*
-
 !!! signature "public TemplateFactory::pushTemplate(string $filePath, string $extension)"
     **$filePath**
 
@@ -85,6 +33,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "public TemplateFactory::getTemplate(string $name)"
     **$name**
 
@@ -101,6 +51,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public TemplateFactory::queueCompile(string $path, Samsara\Roster\Processors\TemplateProcessor|Samsara\Roster\Processors\Base\BaseCodeProcessor $template, string $extension)"
     **$path**
@@ -135,6 +87,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "public TemplateFactory::hasTemplate(string $name)"
     **$name**
 
@@ -151,6 +105,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public TemplateFactory::compileAll(Symfony\Component\Console\Style\SymfonyStyle $io)"
     **$io**
@@ -169,6 +125,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "public TemplateFactory::getWrittenFiles()"
     **return**
 
@@ -177,6 +135,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "public TemplateFactory::writeToDocs(string $writePath, Symfony\Component\Console\Style\SymfonyStyle $io)"
     **$writePath**
@@ -202,6 +162,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

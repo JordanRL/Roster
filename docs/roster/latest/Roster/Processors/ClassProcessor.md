@@ -1,6 +1,6 @@
-# Samsara\Roster\Processors > MethodArgumentDetailProcessor
+# Samsara\Roster\Processors > ClassProcessor
 
-*No description available*
+This class takes in a class reflector and builds out the entire doc for that class, including all subdocs.
 
 
 ## Inheritance
@@ -44,19 +44,19 @@
 
 ### Constructor
 
-!!! signature "public MethodArgumentDetailProcessor->__construct(array $parameters, Samsara\Mason\DocBlockProcessor $docBlockProcessor)"
-    **$parameters**
+!!! signature "public ClassProcessor->__construct(ReflectionClass $class, string $templateName)"
+    **$class**
 
     type
-    :   array
+    :   ReflectionClass
 
     description
-    :   *No description available*
+    :   This is the reflection class of the class that you want to build a doc from.
 
-    **$docBlockProcessor**
+    **$templateName**
 
     type
-    :   Samsara\Mason\DocBlockProcessor
+    :   string
 
     description
     :   *No description available*
@@ -69,11 +69,17 @@
     description
     :   *No description available*
 
+    **ClassProcessor->__construct Description**
+
+    ClassProcessor constructor
+
+---
+
 
 
 ### Instanced Methods
 
-!!! signature "public MethodArgumentDetailProcessor->compile()"
+!!! signature "public ClassProcessor->compile()"
     **return**
 
     type
@@ -81,6 +87,19 @@
 
     description
     :   *No description available*
+
+---
+
+!!! signature "protected ClassProcessor->buildClassInfo()"
+    **return**
+
+    type
+    :   *mixed* (assumed)
+
+    description
+    :   *No description available*
+
+---
 
 
 
@@ -95,6 +114,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
     **$defaultValue**
 
@@ -108,6 +129,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
     **$option1**
@@ -133,6 +156,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
     **$templateName**
 
@@ -149,6 +174,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

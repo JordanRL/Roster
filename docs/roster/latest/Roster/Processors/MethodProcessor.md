@@ -1,4 +1,4 @@
-# Samsara\Roster\Processors > InterfaceInlineProcessor
+# Samsara\Roster\Processors > MethodProcessor
 
 *No description available*
 
@@ -44,11 +44,19 @@
 
 ### Constructor
 
-!!! signature "public InterfaceInlineProcessor->__construct(ReflectionClass $interface)"
-    **$interface**
+!!! signature "public MethodProcessor->__construct(ReflectionMethod $method, string $templateName)"
+    **$method**
 
     type
-    :   ReflectionClass
+    :   ReflectionMethod
+
+    description
+    :   *No description available*
+
+    **$templateName**
+
+    type
+    :   string
 
     description
     :   *No description available*
@@ -61,11 +69,13 @@
     description
     :   *No description available*
 
+---
+
 
 
 ### Instanced Methods
 
-!!! signature "public InterfaceInlineProcessor->compile()"
+!!! signature "public MethodProcessor->compile()"
     **return**
 
     type
@@ -73,6 +83,19 @@
 
     description
     :   *No description available*
+
+---
+
+!!! signature "protected MethodProcessor->buildMethodInfo()"
+    **return**
+
+    type
+    :   *mixed* (assumed)
+
+    description
+    :   *No description available*
+
+---
 
 
 
@@ -87,6 +110,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
     **$defaultValue**
 
@@ -100,6 +125,8 @@
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
     **$option1**
@@ -125,6 +152,8 @@
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
     **$templateName**
 
@@ -141,6 +170,8 @@
 
     description
     :   *No description available*
+
+---
 
 
 

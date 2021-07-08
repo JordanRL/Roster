@@ -5,6 +5,7 @@ namespace Samsara\Roster\Processors;
 
 use ReflectionClass;
 use Samsara\Mason\DocBlockProcessor;
+use Samsara\Roster\ConfigBag;
 use Samsara\Roster\TemplateFactory;
 
 class TraitInlineProcessor extends Base\BaseCodeProcessor
@@ -26,7 +27,7 @@ class TraitInlineProcessor extends Base\BaseCodeProcessor
 
         $description = (empty($this->docBlock->description) ? '*No description available*' : $this->docBlock->description);
 
-        if (TemplateFactory::getMkDocs()) {
+        if (ConfigBag::getRosterConfig()->has('mkdocs')) {
             $description = str_replace(PHP_EOL, PHP_EOL.'    ', $description);
         }
 
@@ -58,7 +59,7 @@ class TraitInlineProcessor extends Base\BaseCodeProcessor
             $methodDoc = new DocBlockProcessor($method->getDocComment());
             $originalMethodDesc = (empty($methodDoc->description) ? '*No description available*' : $methodDoc->description);
 
-            if (TemplateFactory::getMkDocs()) {
+            if (ConfigBag::getRosterConfig()->has('mkdocs')) {
                 $originalMethodDesc = str_replace(PHP_EOL, PHP_EOL.'    ', $originalMethodDesc);
             }
 

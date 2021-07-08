@@ -5,6 +5,7 @@ namespace Samsara\Roster\Processors;
 
 
 use Samsara\Mason\DocBlockProcessor;
+use Samsara\Roster\ConfigBag;
 use Samsara\Roster\Processors\Base\BaseCodeProcessor;
 use Samsara\Roster\TemplateFactory;
 
@@ -57,7 +58,7 @@ class MethodProcessor extends BaseCodeProcessor
         }
 
         if (!empty($this->docBlock->description)) {
-            if (TemplateFactory::getMkDocs()) {
+            if (ConfigBag::getRosterConfig()->has('mkdocs')) {
                 $methodDesc = str_replace(PHP_EOL, PHP_EOL.'    ', $this->docBlock->description);
             } else {
                 $methodDesc = $this->docBlock->description;

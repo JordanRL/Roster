@@ -1,6 +1,6 @@
-# Samsara\Roster\Processors > ClassProcessor
+# Samsara\Roster\Processors > PropertyProcessor
 
-This class takes in a class reflector and builds out the entire doc for that class, including all subdocs.
+*No description available*
 
 
 ## Inheritance
@@ -44,14 +44,14 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
 ### Constructor
 
-!!! signature "public ClassProcessor->__construct(ReflectionClass $class, string $templateName)"
-    **$class**
+!!! signature "public PropertyProcessor->__construct(ReflectionProperty $property, string $templateName)"
+    **$property**
 
     type
-    :   ReflectionClass
+    :   ReflectionProperty
 
     description
-    :   This is the reflection class of the class that you want to build a doc from.
+    :   *No description available*
 
     **$templateName**
 
@@ -69,13 +69,13 @@ This class takes in a class reflector and builds out the entire doc for that cla
     description
     :   *No description available*
 
-ClassProcessor constructor
+---
 
 
 
 ### Instanced Methods
 
-!!! signature "public ClassProcessor->compile()"
+!!! signature "public PropertyProcessor->compile()"
     **return**
 
     type
@@ -84,14 +84,7 @@ ClassProcessor constructor
     description
     :   *No description available*
 
-!!! signature "protected ClassProcessor->buildClassInfo()"
-    **return**
-
-    type
-    :   *mixed* (assumed)
-
-    description
-    :   *No description available*
+---
 
 
 
@@ -106,6 +99,8 @@ ClassProcessor constructor
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
     **$defaultValue**
 
@@ -119,6 +114,8 @@ ClassProcessor constructor
 
     description
     :   *No description available*
+
+---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
     **$option1**
@@ -144,6 +141,8 @@ ClassProcessor constructor
     description
     :   *No description available*
 
+---
+
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
     **$templateName**
 
@@ -160,6 +159,8 @@ ClassProcessor constructor
 
     description
     :   *No description available*
+
+---
 
 
 
