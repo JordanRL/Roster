@@ -9,6 +9,7 @@
 ### Static Methods
 
 !!! signature "public ConfigBag::getApplicationConfig()"
+    ##### getApplicationConfig
     **return**
 
     type
@@ -20,6 +21,7 @@
 ---
 
 !!! signature "public ConfigBag::getMkdocsConfig()"
+    ##### getMkdocsConfig
     **return**
 
     type
@@ -31,6 +33,7 @@
 ---
 
 !!! signature "public ConfigBag::getRosterConfig()"
+    ##### getRosterConfig
     **return**
 
     type
@@ -42,6 +45,7 @@
 ---
 
 !!! signature "public ConfigBag::setApplicationConfig(Config $applicationConfig)"
+    ##### setApplicationConfig
     **$applicationConfig**
 
     type
@@ -61,6 +65,7 @@
 ---
 
 !!! signature "public ConfigBag::setMkdocsConfig(Config $mkdocsConfig)"
+    ##### setMkdocsConfig
     **$mkdocsConfig**
 
     type
@@ -80,6 +85,7 @@
 ---
 
 !!! signature "public ConfigBag::setRosterConfig(Config $rosterConfig)"
+    ##### setRosterConfig
     **$rosterConfig**
 
     type

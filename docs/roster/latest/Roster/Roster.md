@@ -21,14 +21,17 @@ Class Roster
 ### Class Constants
 
 !!! signature constant "Roster::SUCCESS"
+    ##### SUCCESS
     value
     :   0
 
 !!! signature constant "Roster::FAILURE"
+    ##### FAILURE
     value
     :   1
 
 !!! signature constant "Roster::INVALID"
+    ##### INVALID
     value
     :   2
 
@@ -37,6 +40,7 @@ Class Roster
 ### Inherited Properties
 
 !!! signature property "protected Command::defaultName"
+    ##### defaultName
     type
     :   *mixed* (assumed)
 
@@ -44,6 +48,7 @@ Class Roster
     :   *uninitialized*
 
 !!! signature property "protected Command::defaultDescription"
+    ##### defaultDescription
     type
     :   *mixed* (assumed)
 
@@ -58,6 +63,7 @@ Class Roster
 ### Constructor
 
 !!! signature "public Roster->__construct($rootDir)"
+    ##### __construct
     **$rootDir**
 
     description
@@ -70,7 +76,7 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 
@@ -78,6 +84,7 @@ Class Roster
 ### Instanced Methods
 
 !!! signature "protected Roster->configure()"
+    ##### configure
     **return**
 
     type
@@ -85,10 +92,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected Roster->execute(InputInterface $input, OutputInterface $output)"
+    ##### execute
     **$input**
 
     type
@@ -113,15 +121,16 @@ Class Roster
     description
     :   *No description available*
 
-    **Roster->execute Description**
+    ###### execute() Description:
 
     execute() method
     
      This function performs all of the application logic. All actions performed by the script are at least started from this function.
-
+    
 ---
 
 !!! signature "protected Roster->buildMkdocsNav(string $baseExportPath)"
+    ##### buildMkdocsNav
     **$baseExportPath**
 
     type
@@ -138,7 +147,7 @@ Class Roster
     description
     :   *No description available*
 
-    **Roster->buildMkdocsNav Description**
+    ###### buildMkdocsNav() Description:
 
     buildMkdocsNav
     
@@ -146,26 +155,27 @@ Class Roster
     
      This array structure is close, but not quite completely, the format that YAML requires to build the nav option within the mkdocs.yml file.
 
-!!! example "Example"
-    ```php
-    $tree = $this->buildMkDocsNav('/path/to/project/docs')
-    echo var_export($tree, true);
-    // Possible Output:
-    // [
-    //   'Samsara' => [
-    //     'Roster' => [
-    //       'TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md',
-    //       'Roster' => 'roster/latest/Samsara/Roster/Roster.md',
-    //       'App' => 'roster/latest/Samsara/Roster/App.md'
-    //     ]
-    //   ]
-    // ]
+    !!! example "Example"
+        ```php
+        $tree = $this->buildMkDocsNav('/path/to/project/docs')
+        echo var_export($tree, true);
+        // Possible Output:
+        // [
+        //   'Samsara' => [
+        //     'Roster' => [
+        //       'TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md',
+        //       'Roster' => 'roster/latest/Samsara/Roster/Roster.md',
+        //       'App' => 'roster/latest/Samsara/Roster/App.md'
+        //     ]
+        //   ]
+        // ]
+        
+        ```
     
-    ```
-
 ---
 
 !!! signature "protected Roster->formatNavArrayRecursive(array $nav)"
+    ##### formatNavArrayRecursive
     **$nav**
 
     type
@@ -182,36 +192,37 @@ Class Roster
     description
     :   *No description available*
 
-    **Roster->formatNavArrayRecursive Description**
+    ###### formatNavArrayRecursive() Description:
 
     formatNavArrayRecursive() method
     
      This function takes a tree array from buildMkdocsNav() are returns an array that has been reformatted for the expected YAML structure in a mkdocs.yml file nav setting.
 
-!!! example "Example"
-    ```php
-    $nav = $this->formatNavArrayRecursive($tree)
-    echo var_export($nav, true);
-    // Possible Output:
-    // [
-    //   0 => [
-    //     'Samsara' => [
-    //       0 => [
-    //         'Roster' => [
-    //           0 => ['TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md'],
-    //           1 => ['Roster' => 'roster/latest/Samsara/Roster/Roster.md'],
-    //           2 => ['App' => 'roster/latest/Samsara/Roster/App.md']
-    //         ]
-    //       ]
-    //     ]
-    //   ]
-    // ]
+    !!! example "Example"
+        ```php
+        $nav = $this->formatNavArrayRecursive($tree)
+        echo var_export($nav, true);
+        // Possible Output:
+        // [
+        //   0 => [
+        //     'Samsara' => [
+        //       0 => [
+        //         'Roster' => [
+        //           0 => ['TemplateFactory' => 'roster/latest/Samsara/Roster/TemplateFactory.md'],
+        //           1 => ['Roster' => 'roster/latest/Samsara/Roster/Roster.md'],
+        //           2 => ['App' => 'roster/latest/Samsara/Roster/App.md']
+        //         ]
+        //       ]
+        //     ]
+        //   ]
+        // ]
+        
+        ```
     
-    ```
-
 ---
 
 !!! signature "protected Roster->buildNavArrayRecursive(array $parts, int $depth, string $builtString)"
+    ##### buildNavArrayRecursive
     **$parts**
 
     type
@@ -244,33 +255,34 @@ Class Roster
     description
     :   *No description available*
 
-    **Roster->buildNavArrayRecursive Description**
+    ###### buildNavArrayRecursive() Description:
 
     buildNavArrayRecursive() method
     
      This function takes a flat array and reorganizes it into a tree structure.
 
-!!! example "Example"
-    ```php
-    $flat = ['Samsara', 'Roster', 'Processors', 'TemplateProcessor'];
-    $leaf = $this->buildNavArrayRecursive($flat);
-    echo var_export($leaf);
-    // Output:
-    // [
-    //   'Samsara' => [
-    //       'Roster' => [
-    //           'Processors' => [
-    //               'TemplateProcessor' => 'roster/latest/Samsara/Roster/Processors/TemplateProcessor.md'
-    //           ]
-    //       ]
-    //   ]
-    // ]
+    !!! example "Example"
+        ```php
+        $flat = ['Samsara', 'Roster', 'Processors', 'TemplateProcessor'];
+        $leaf = $this->buildNavArrayRecursive($flat);
+        echo var_export($leaf);
+        // Output:
+        // [
+        //   'Samsara' => [
+        //       'Roster' => [
+        //           'Processors' => [
+        //               'TemplateProcessor' => 'roster/latest/Samsara/Roster/Processors/TemplateProcessor.md'
+        //           ]
+        //       ]
+        //   ]
+        // ]
+        
+        ```
     
-    ```
-
 ---
 
 !!! signature "protected Roster->traverseDirectories(string $dir)"
+    ##### traverseDirectories
     **$dir**
 
     type
@@ -286,10 +298,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected Roster->extractFileData(string $realPath)"
+    ##### extractFileData
     **$realPath**
 
     type
@@ -305,10 +318,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected Roster->createReflectors()"
+    ##### createReflectors
     **return**
 
     type
@@ -316,10 +330,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected Roster->processTemplates(string $templatePath)"
+    ##### processTemplates
     **$templatePath**
 
     type
@@ -335,7 +350,7 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 
@@ -343,6 +358,7 @@ Class Roster
 ### Inherited Static Methods
 
 !!! signature "public Command::getDefaultName()"
+    ##### getDefaultName
     **return**
 
     type
@@ -354,6 +370,7 @@ Class Roster
 ---
 
 !!! signature "public Command::getDefaultDescription()"
+    ##### getDefaultDescription
     **return**
 
     type
@@ -369,6 +386,7 @@ Class Roster
 ### Inherited Methods
 
 !!! signature "public Command->ignoreValidationErrors()"
+    ##### ignoreValidationErrors
     **return**
 
     type
@@ -376,10 +394,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public Command->setApplication(?Symfony\Component\Console\Application $application)"
+    ##### setApplication
     **$application**
 
     type
@@ -395,10 +414,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public Command->setHelperSet(Symfony\Component\Console\Helper\HelperSet $helperSet)"
+    ##### setHelperSet
     **$helperSet**
 
     type
@@ -414,10 +434,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public Command->getHelperSet()"
+    ##### getHelperSet
     **return**
 
     type
@@ -426,13 +447,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getHelperSet Description**
+    ###### getHelperSet() Description:
 
     Gets the helper set.
-
+    
 ---
 
 !!! signature "public Command->getApplication()"
+    ##### getApplication
     **return**
 
     type
@@ -441,13 +463,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getApplication Description**
+    ###### getApplication() Description:
 
     Gets the application instance for this command.
-
+    
 ---
 
 !!! signature "public Command->isEnabled()"
+    ##### isEnabled
     **return**
 
     type
@@ -456,15 +479,16 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->isEnabled Description**
+    ###### isEnabled() Description:
 
     Checks whether the command is enabled or not in the current environment.
     
      Override this to check for x or y and return false if the command can not run properly under the current conditions.
-
+    
 ---
 
 !!! signature "public Command->run(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
+    ##### run
     **$input**
 
     type
@@ -489,15 +513,16 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->run Description**
+    ###### run() Description:
 
     Runs the command.
     
      The code to execute is either defined directly with the setCode() method or by overriding the execute() method in a sub-class.
-
+    
 ---
 
 !!! signature "public Command->setCode(callable $code)"
+    ##### setCode
     **$code**
 
     type
@@ -516,15 +541,16 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setCode Description**
+    ###### setCode() Description:
 
     Sets the code to execute when running this command.
     
      If this method is used, it overrides the code defined in the execute() method.
-
+    
 ---
 
 !!! signature "public Command->mergeApplicationDefinition(bool $mergeArgs)"
+    ##### mergeApplicationDefinition
     **$mergeArgs**
 
     type
@@ -543,15 +569,16 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->mergeApplicationDefinition Description**
+    ###### mergeApplicationDefinition() Description:
 
     Merges the application definition with the command definition.
     
      This method is not part of public API and should not be used directly.
-
+    
 ---
 
 !!! signature "public Command->setDefinition(array|InputDefinition $definition)"
+    ##### setDefinition
     **$definition**
 
     type
@@ -570,13 +597,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setDefinition Description**
+    ###### setDefinition() Description:
 
     Sets an array of argument and option instances.
-
+    
 ---
 
 !!! signature "public Command->getDefinition()"
+    ##### getDefinition
     **return**
 
     type
@@ -585,13 +613,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getDefinition Description**
+    ###### getDefinition() Description:
 
     Gets the InputDefinition attached to this Command.
-
+    
 ---
 
 !!! signature "public Command->getNativeDefinition()"
+    ##### getNativeDefinition
     **return**
 
     type
@@ -600,17 +629,18 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getNativeDefinition Description**
+    ###### getNativeDefinition() Description:
 
     Gets the InputDefinition to be used to create representations of this Command.
     
      Can be overridden to provide the original command representation when it would otherwise be changed by merging with the application InputDefinition.
     
      This method is not part of public API and should not be used directly.
-
+    
 ---
 
 !!! signature "public Command->addArgument(string $name, int|null $mode, string $description, string|string[]|null $default)"
+    ##### addArgument
     **$name**
 
     type
@@ -653,13 +683,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->addArgument Description**
+    ###### addArgument() Description:
 
     Adds an argument.
-
+    
 ---
 
 !!! signature "public Command->addOption(string $name, string|array|null $shortcut, int|null $mode, string $description, string|string[]|bool|null $default)"
+    ##### addOption
     **$name**
 
     type
@@ -710,13 +741,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->addOption Description**
+    ###### addOption() Description:
 
     Adds an option.
-
+    
 ---
 
 !!! signature "public Command->setName(string $name)"
+    ##### setName
     **$name**
 
     type
@@ -733,17 +765,18 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setName Description**
+    ###### setName() Description:
 
     Sets the name of the command.
     
      This method can set both the namespace and the name if you separate them by a colon (:)
     
      command->setName('foo:bar');
-
+    
 ---
 
 !!! signature "public Command->setProcessTitle(string $title)"
+    ##### setProcessTitle
     **$title**
 
     type
@@ -760,15 +793,16 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setProcessTitle Description**
+    ###### setProcessTitle() Description:
 
     Sets the process title of the command.
     
      This feature should be used only when creating a long process command, like a daemon.
-
+    
 ---
 
 !!! signature "public Command->getName()"
+    ##### getName
     **return**
 
     type
@@ -777,13 +811,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getName Description**
+    ###### getName() Description:
 
     Returns the command name.
-
+    
 ---
 
 !!! signature "public Command->setHidden(bool $hidden)"
+    ##### setHidden
     **$hidden**
 
     type
@@ -801,10 +836,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public Command->isHidden()"
+    ##### isHidden
     **return**
 
     type
@@ -812,10 +848,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public Command->setDescription(string $description)"
+    ##### setDescription
     **$description**
 
     type
@@ -832,13 +869,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setDescription Description**
+    ###### setDescription() Description:
 
     Sets the description for the command.
-
+    
 ---
 
 !!! signature "public Command->getDescription()"
+    ##### getDescription
     **return**
 
     type
@@ -847,13 +885,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getDescription Description**
+    ###### getDescription() Description:
 
     Returns the description for the command.
-
+    
 ---
 
 !!! signature "public Command->setHelp(string $help)"
+    ##### setHelp
     **$help**
 
     type
@@ -870,13 +909,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setHelp Description**
+    ###### setHelp() Description:
 
     Sets the help for the command.
-
+    
 ---
 
 !!! signature "public Command->getHelp()"
+    ##### getHelp
     **return**
 
     type
@@ -885,13 +925,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getHelp Description**
+    ###### getHelp() Description:
 
     Returns the help for the command.
-
+    
 ---
 
 !!! signature "public Command->getProcessedHelp()"
+    ##### getProcessedHelp
     **return**
 
     type
@@ -900,13 +941,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getProcessedHelp Description**
+    ###### getProcessedHelp() Description:
 
     Returns the processed help for the command replacing the %command.name% and command.full_name% patterns with the real values dynamically.
-
+    
 ---
 
 !!! signature "public Command->setAliases(string[] $aliases)"
+    ##### setAliases
     **$aliases**
 
     type
@@ -925,13 +967,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->setAliases Description**
+    ###### setAliases() Description:
 
     Sets the aliases for the command.
-
+    
 ---
 
 !!! signature "public Command->getAliases()"
+    ##### getAliases
     **return**
 
     type
@@ -940,13 +983,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getAliases Description**
+    ###### getAliases() Description:
 
     Returns the aliases for the command.
-
+    
 ---
 
 !!! signature "public Command->getSynopsis(bool $short)"
+    ##### getSynopsis
     **$short**
 
     type
@@ -965,13 +1009,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getSynopsis Description**
+    ###### getSynopsis() Description:
 
     Returns the synopsis for the command.
-
+    
 ---
 
 !!! signature "public Command->addUsage(string $usage)"
+    ##### addUsage
     **$usage**
 
     type
@@ -988,13 +1033,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->addUsage Description**
+    ###### addUsage() Description:
 
     Add a command usage example, it'll be prefixed with the command name.
-
+    
 ---
 
 !!! signature "public Command->getUsages()"
+    ##### getUsages
     **return**
 
     type
@@ -1003,13 +1049,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getUsages Description**
+    ###### getUsages() Description:
 
     Returns alternative usages of the command.
-
+    
 ---
 
 !!! signature "public Command->getHelper(string $name)"
+    ##### getHelper
     **$name**
 
     type
@@ -1026,13 +1073,14 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->getHelper Description**
+    ###### getHelper() Description:
 
     Gets a helper instance by name.
-
+    
 ---
 
 !!! signature "protected Command->interact(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
+    ##### interact
     **$input**
 
     type
@@ -1056,10 +1104,11 @@ Class Roster
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected Command->initialize(Symfony\Component\Console\Input\InputInterface $input, Symfony\Component\Console\Output\OutputInterface $output)"
+    ##### initialize
     **$input**
 
     type
@@ -1084,12 +1133,12 @@ Class Roster
     description
     :   *No description available*
 
-    **Command->initialize Description**
+    ###### initialize() Description:
 
     Initializes the command after the input has been bound and before the input is validated.
     
      This is mainly useful when a lot of commands extends one main command where some things need to be initialized based on the input arguments and options.
-
+    
 ---
 
 

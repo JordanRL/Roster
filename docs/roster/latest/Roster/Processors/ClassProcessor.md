@@ -17,6 +17,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
 ### Inherited Properties
 
 !!! signature property "protected BaseCodeProcessor->declaringClass"
+    ##### declaringClass
     type
     :   string
 
@@ -24,6 +25,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
     :   ''
 
 !!! signature property "protected BaseCodeProcessor->docBlock"
+    ##### docBlock
     type
     :   Samsara\Mason\DocBlockProcessor
 
@@ -31,6 +33,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
     :   *uninitialized*
 
 !!! signature property "protected BaseCodeProcessor->templateProcessor"
+    ##### templateProcessor
     type
     :   Samsara\Roster\Processors\TemplateProcessor
 
@@ -45,6 +48,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
 ### Constructor
 
 !!! signature "public ClassProcessor->__construct(ReflectionClass $class, string $templateName)"
+    ##### __construct
     **$class**
 
     type
@@ -69,10 +73,10 @@ This class takes in a class reflector and builds out the entire doc for that cla
     description
     :   *No description available*
 
-    **ClassProcessor->__construct Description**
+    ###### __construct() Description:
 
     ClassProcessor constructor
-
+    
 ---
 
 
@@ -80,6 +84,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
 ### Instanced Methods
 
 !!! signature "public ClassProcessor->compile()"
+    ##### compile
     **return**
 
     type
@@ -87,10 +92,11 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected ClassProcessor->buildClassInfo()"
+    ##### buildClassInfo
     **return**
 
     type
@@ -98,7 +104,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
     description
     :   *No description available*
-
+    
 ---
 
 
@@ -106,6 +112,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
 ### Inherited Methods
 
 !!! signature "public BaseCodeProcessor->getDeclaringClass()"
+    ##### getDeclaringClass
     **return**
 
     type
@@ -113,10 +120,11 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
+    ##### fixDefaultValue
     **$defaultValue**
 
     description
@@ -129,10 +137,11 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
+    ##### fixOutput
     **$option1**
 
     description
@@ -155,10 +164,11 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
+    ##### templateLoader
     **$templateName**
 
     type
@@ -174,7 +184,7 @@ This class takes in a class reflector and builds out the entire doc for that cla
 
     description
     :   *No description available*
-
+    
 ---
 
 

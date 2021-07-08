@@ -9,6 +9,7 @@
 ### Constructor
 
 !!! signature "public TemplateProcessor->__construct(string $template)"
+    ##### __construct
     **$template**
 
     type
@@ -24,7 +25,7 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 
@@ -32,6 +33,7 @@
 ### Instanced Methods
 
 !!! signature "public TemplateProcessor->has($key)"
+    ##### has
     **$key**
 
     description
@@ -44,10 +46,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public TemplateProcessor->markHas($key)"
+    ##### markHas
     **$key**
 
     description
@@ -60,10 +63,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public TemplateProcessor->supplyReplacement(string $key, Samsara\Roster\Processors\TemplateProcessor|array|string $replacement)"
+    ##### supplyReplacement
     **$key**
 
     type
@@ -87,10 +91,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "public TemplateProcessor->compile()"
+    ##### compile
     **return**
 
     type
@@ -98,10 +103,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected TemplateProcessor->buildHasBlocks($template, $depth)"
+    ##### buildHasBlocks
     **$template**
 
     description
@@ -119,7 +125,7 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 

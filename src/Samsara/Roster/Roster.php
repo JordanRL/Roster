@@ -254,7 +254,7 @@ class Roster extends Command
         if (ConfigBag::getRosterConfig()->has('mkdocs')) {
             $this->io->section('Gathering MkDocs Config Info');
 
-            $existingMkDocsYml = is_file($this->rootDir.'/mkdocs.yml');
+            $existingMkDocsYml = is_file($this->rootDir . '/mkdocs.yml');
 
             if ($existingMkDocsYml) {
                 $oldConfig = Config::load(
@@ -286,28 +286,40 @@ class Roster extends Command
                 $siteName = $this->io->ask('Documentation Site Name') ?? '';
             } elseif ($existingMkDocsYml) {
                 $siteName = ConfigBag::getRosterConfig()->get('mkdocs.site-name', $oldConfig->get('site_name'));
+            } elseif (!ConfigBag::getRosterConfig()->has('mkdocs.site-name')) {
+                $siteName = $this->io->ask('Documentation Site Name') ?? '';
             } else {
-                $siteName = $oldConfig->get('site_name');
+                $siteName = '';
             }
-            ConfigBag::getRosterConfig()->set('mkdocs.site-name', $siteName);
+            if (!ConfigBag::getRosterConfig()->has('mkdocs.site-name')) {
+                ConfigBag::getRosterConfig()->set('mkdocs.site-name', $siteName);
+            }
 
             if (!$existingMkDocsYml && !ConfigBag::getRosterConfig()->has('mkdocs.site-url')) {
                 $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
             } elseif ($existingMkDocsYml) {
                 $siteUrl = ConfigBag::getRosterConfig()->get('mkdocs.site-url', $oldConfig->get('site_url'));
+            } elseif (!ConfigBag::getRosterConfig()->has('mkdocs.site-url')) {
+                $siteUrl = $this->io->ask('Documentation Site URL') ?? '';
             } else {
-                $siteUrl = $oldConfig->get('site_url');
+                $siteUrl = '';
             }
-            ConfigBag::getRosterConfig()->set('mkdocs.site-url', $siteUrl);
+            if (!ConfigBag::getRosterConfig()->has('mkdocs.site-url')) {
+                ConfigBag::getRosterConfig()->set('mkdocs.site-url', $siteUrl);
+            }
 
             if (!$existingMkDocsYml && !ConfigBag::getRosterConfig()->has('mkdocs.repo-url')) {
                 $repoUrl = $this->io->ask('Repository URL') ?? '';
             } elseif ($existingMkDocsYml) {
                 $repoUrl = ConfigBag::getRosterConfig()->get('mkdocs.repo-url', $oldConfig->get('repo_url'));
+            } elseif (!ConfigBag::getRosterConfig()->has('mkdocs.repo-url')) {
+                $repoUrl = $this->io->ask('Repository URL') ?? '';
             } else {
-                $repoUrl = $oldConfig->get('repo_url');
+                $repoUrl = '';
             }
-            ConfigBag::getRosterConfig()->set('mkdocs.repo-url', $repoUrl);
+            if (!ConfigBag::getRosterConfig()->has('mkdocs.repo-url')) {
+                ConfigBag::getRosterConfig()->set('mkdocs.repo-url', $repoUrl);
+            }
 
             if (!ConfigBag::getRosterConfig()->has('mkdocs.theme')) {
                 ConfigBag::getRosterConfig()->set('mkdocs.theme', 'md');

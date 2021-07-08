@@ -9,6 +9,7 @@
 ### Static Methods
 
 !!! signature "public TemplateFactory::pushTemplate(string $filePath, string $extension)"
+    ##### pushTemplate
     **$filePath**
 
     type
@@ -36,6 +37,7 @@
 ---
 
 !!! signature "public TemplateFactory::getTemplate(string $name)"
+    ##### getTemplate
     **$name**
 
     type
@@ -55,6 +57,7 @@
 ---
 
 !!! signature "public TemplateFactory::queueCompile(string $path, Samsara\Roster\Processors\TemplateProcessor|Samsara\Roster\Processors\Base\BaseCodeProcessor $template, string $extension)"
+    ##### queueCompile
     **$path**
 
     type
@@ -90,6 +93,7 @@
 ---
 
 !!! signature "public TemplateFactory::hasTemplate(string $name)"
+    ##### hasTemplate
     **$name**
 
     type
@@ -109,6 +113,7 @@
 ---
 
 !!! signature "public TemplateFactory::compileAll(Symfony\Component\Console\Style\SymfonyStyle $io)"
+    ##### compileAll
     **$io**
 
     type
@@ -128,6 +133,7 @@
 ---
 
 !!! signature "public TemplateFactory::getWrittenFiles()"
+    ##### getWrittenFiles
     **return**
 
     type
@@ -139,6 +145,7 @@
 ---
 
 !!! signature "public TemplateFactory::writeToDocs(string $writePath, Symfony\Component\Console\Style\SymfonyStyle $io)"
+    ##### writeToDocs
     **$writePath**
 
     type

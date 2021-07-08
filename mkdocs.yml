@@ -49,25 +49,10 @@ nav:
                                     -
                                         BaseCodeProcessor: roster/latest/Roster/Processors/Base/BaseCodeProcessor.md
 theme:
-    palette:
-        - media: '(prefers-color-scheme: light)'
-          scheme: default
-          toggle:
-              icon: material/toggle-switch-off-outline
-              name: 'Switch to dark mode'
-        - media: '(prefers-color-scheme: dark)'
-          scheme: slate
-          toggle:
-              icon: material/toggle-switch
-              name: 'Switch to light mode'
-    name: material
-        features:
-            - navigation.sections
-            - navigation.top
-            - navigation.tabs
-        highlightjs: true
-        hljs_languages:
-            - php
+    name: readthedocs
+    highlightjs: true
+    hljs_languages:
+        - php
 markdown_extensions:
     -
         toc:

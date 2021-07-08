@@ -17,6 +17,7 @@
 ### Inherited Properties
 
 !!! signature property "protected BaseCodeProcessor->declaringClass"
+    ##### declaringClass
     type
     :   string
 
@@ -24,6 +25,7 @@
     :   ''
 
 !!! signature property "protected BaseCodeProcessor->docBlock"
+    ##### docBlock
     type
     :   Samsara\Mason\DocBlockProcessor
 
@@ -31,6 +33,7 @@
     :   *uninitialized*
 
 !!! signature property "protected BaseCodeProcessor->templateProcessor"
+    ##### templateProcessor
     type
     :   Samsara\Roster\Processors\TemplateProcessor
 
@@ -45,6 +48,7 @@
 ### Constructor
 
 !!! signature "public MethodProcessor->__construct(ReflectionMethod $method, string $templateName)"
+    ##### __construct
     **$method**
 
     type
@@ -68,7 +72,7 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 
@@ -76,6 +80,7 @@
 ### Instanced Methods
 
 !!! signature "public MethodProcessor->compile()"
+    ##### compile
     **return**
 
     type
@@ -83,10 +88,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected MethodProcessor->buildMethodInfo()"
+    ##### buildMethodInfo
     **return**
 
     type
@@ -94,7 +100,7 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 
@@ -102,6 +108,7 @@
 ### Inherited Methods
 
 !!! signature "public BaseCodeProcessor->getDeclaringClass()"
+    ##### getDeclaringClass
     **return**
 
     type
@@ -109,10 +116,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected BaseCodeProcessor->fixDefaultValue($defaultValue)"
+    ##### fixDefaultValue
     **$defaultValue**
 
     description
@@ -125,10 +133,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected BaseCodeProcessor->fixOutput($option1, $option2, $option3)"
+    ##### fixOutput
     **$option1**
 
     description
@@ -151,10 +160,11 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 !!! signature "protected BaseCodeProcessor->templateLoader(string $templateName)"
+    ##### templateLoader
     **$templateName**
 
     type
@@ -170,7 +180,7 @@
 
     description
     :   *No description available*
-
+    
 ---
 
 
