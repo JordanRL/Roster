@@ -221,6 +221,8 @@ class Roster extends Command
             $opts['visibility'] = ($opts['visibility'] == 'all' ? 'public' : $opts['visibility']);
 
             ConfigBag::getRosterConfig()->set('global-visibility', $opts['visibility']);
+        } else {
+            ConfigBag::getRosterConfig()->set('global-visibility', 'public');
         }
 
         $version = $opts['with-version'] ?? ConfigBag::getApplicationConfig()->get('version', 'latest');
@@ -240,7 +242,8 @@ class Roster extends Command
         }
 
         if ($opts['mkdocs'] && !ConfigBag::getRosterConfig()->has('mkdocs')) {
-            ConfigBag::getRosterConfig()->set('mkdocs', []);
+            echo "Get's here".PHP_EOL;
+            ConfigBag::getRosterConfig()->set('mkdocs', new \stdClass());
         }
 
         echo var_export($opts, true).PHP_EOL;
