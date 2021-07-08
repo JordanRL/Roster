@@ -52,7 +52,7 @@ class MethodProcessor extends BaseCodeProcessor
                 $this->templateProcessor->markHas('Example');
                 $this->templateProcessor->supplyReplacement(
                     'methodExample',
-                    $this->docBlock->getTagIndex('example')->getExampleCodeMDEscaped()
+                    str_replace(PHP_EOL, PHP_EOL.'    ', $this->docBlock->getTagIndex('example')->getExampleCodeMDEscaped())
                 );
             }
         }

@@ -3,4 +3,6 @@
     :   {$interfaceNamespace}
 
     description
-    :   {$interfaceDesc}
+    :   
+
+{$interfaceDesc}
