@@ -243,6 +243,9 @@ class Roster extends Command
             ConfigBag::getRosterConfig()->set('mkdocs', []);
         }
 
+        echo var_export($opts, true).PHP_EOL;
+        echo var_export(ConfigBag::getRosterConfig(), true).PHP_EOL;
+
         $this->verbose = $opts['with-debug'];
 
         if (ConfigBag::getRosterConfig()->has('mkdocs')) {
