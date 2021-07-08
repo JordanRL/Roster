@@ -239,12 +239,8 @@ class Roster extends Command
         }
 
         if (isset($opts['mkdocs']) && !ConfigBag::getRosterConfig()->has('mkdocs')) {
-            echo "Get's here".PHP_EOL;
             ConfigBag::getRosterConfig()->set('mkdocs', []);
         }
-
-        echo var_export($opts, true).PHP_EOL;
-        echo var_export(ConfigBag::getRosterConfig(), true).PHP_EOL;
 
         $this->verbose = $opts['with-debug'];
 
@@ -587,9 +583,9 @@ class Roster extends Command
                     $extraCss[] = 'css/'.$cssFileName.'.css';
                 }
 
-                $configBase->set('siteName', ConfigBag::getRosterConfig()->get('mkdocs.site-name'));
-                $configBase->set('siteUrl', ConfigBag::getRosterConfig()->get('mkdocs.site-url'));
-                $configBase->set('repoUrl', ConfigBag::getRosterConfig()->get('mkdocs.site-repo'));
+                $configBase->set('site_name', ConfigBag::getRosterConfig()->get('mkdocs.site-name'));
+                $configBase->set('site_url', ConfigBag::getRosterConfig()->get('mkdocs.site-url'));
+                $configBase->set('repo_url', ConfigBag::getRosterConfig()->get('mkdocs.site-repo'));
                 $configBase->set('nav', $formattedNav);
                 $configBase->set('extra_css', $extraCss);
 
@@ -866,7 +862,6 @@ class Roster extends Command
                 }
             } elseif (preg_match('/^interface ([a-zA-Z0-9]*)/ism', $line, $interfaceName)) {
                 if (count($interfaceName) < 2) {
-                    echo $line.PHP_EOL;
                     continue;
                 }
                 if (str_contains($interfaceName[1], " ")) {
@@ -877,7 +872,6 @@ class Roster extends Command
                 $this->classes[$ns]['interface'][] = $name;
             } elseif (preg_match('/^(?:abstract|final|abstract final|final abstract)?[\s]?class ([a-zA-Z0-9]*)/ism', $line, $className)) {
                 if (count($className) < 2) {
-                    echo $line.PHP_EOL;
                     continue;
                 }
                 if (str_contains($className[1], " ")) {
@@ -888,7 +882,6 @@ class Roster extends Command
                 $this->classes[$ns]['class'][] = $name;
             } elseif (preg_match('/^trait ([a-zA-Z0-9]*)/ism', $line, $traitName)) {
                 if (count($traitName) < 2) {
-                    echo $line.PHP_EOL;
                     continue;
                 }
                 if (str_contains($traitName[1], " ")) {
