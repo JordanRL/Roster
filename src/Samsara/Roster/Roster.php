@@ -105,7 +105,7 @@ class Roster extends Command
             'prefer-source' => [
                 'default' => false,
                 'shortcut' => null,
-                'mode' => InputOption::VALUE_NEGATABLE,
+                'mode' => InputOption::VALUE_NONE,
                 'description' => 'If used, the information from the source code will be preferred if it conflicts with the PHPDoc info. Default behavior is to prefer PHPDoc info.'
             ],
             'with-version' => [
@@ -117,13 +117,13 @@ class Roster extends Command
             'with-debug' => [
                 'default' => false,
                 'shortcut' => null,
-                'mode' => InputOption::VALUE_NEGATABLE,
+                'mode' => InputOption::VALUE_NONE,
                 'description' => 'Output debug information to the console.'
             ],
             'mkdocs' => [
                 'default' => false,
                 'shortcut' => null,
-                'mode' => InputOption::VALUE_NEGATABLE,
+                'mode' => InputOption::VALUE_NONE,
                 'description' => 'If this option is used, Roster will compile with extra CSS and built-in templates to create a pre-made mkdocs ready output.'
             ]
         ];
