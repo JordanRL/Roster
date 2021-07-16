@@ -123,9 +123,9 @@ Class Roster
 
     ###### execute() Description:
 
-    execute() method
+    This function performs all of the application logic. All actions performed by the script are at least started from this function.
     
-     This function performs all of the application logic. All actions performed by the script are at least started from this function.
+     This method is an implementation of an inherited method.
     
 ---
 

@@ -2,6 +2,7 @@
 
 namespace Samsara\Roster;
 
+use Brick\Math\BigInteger;
 use Noodlehaus\Config;
 use Noodlehaus\Parser\Json;
 use Noodlehaus\Parser\Yaml as YamlReader;
@@ -155,12 +156,12 @@ class Roster extends Command
     }
 
     /**
-     * execute() method
-     *
      * This function performs all of the application logic. All actions performed by the script are
      * at least started from this function.
      *
-     * @param InputInterface $input
+     * This method is an implementation of an inherited method.
+     *
+     * @param InputInterface $input The input is injected by symfony/console
      * @param OutputInterface $output
      * @return int
      */

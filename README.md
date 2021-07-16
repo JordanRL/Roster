@@ -4,7 +4,7 @@
 
 To install, simply require the package using composer:
 
-    composer require "samsara/roster:^0.1"
+    composer --dev require "samsara/roster:^0.1"
 
 Or include it in your `composer.json` file:
 

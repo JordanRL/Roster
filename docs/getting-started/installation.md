@@ -2,7 +2,8 @@
 
 Roster is available through composer. To install, you can use the following command from the command-line:
 
-`composer require-dev "samsara/roster:^0.1"`
+    composer --dev require "samsara/roster:^0.1"
+
 
 Or you can add the following entry to your project's composer.json file:
 
