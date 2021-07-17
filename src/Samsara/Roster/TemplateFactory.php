@@ -103,13 +103,13 @@ class TemplateFactory
             $pathSum = '';
             $filename = array_pop($pathPart);
             foreach ($pathPart as $part) {
-                $pathSum .= '/'.$part;
+                $pathSum .= DIRECTORY_SEPARATOR.$part;
                 if (!is_dir($writePath.$pathSum)) {
                     $ok = $ok && mkdir($writePath.$pathSum);
                 }
             }
 
-            $finalPath = $writePath.$pathSum.'/'.$filename.'.'.self::$compileExtensions[$path];
+            $finalPath = $writePath.$pathSum.DIRECTORY_SEPARATOR.$filename.'.'.self::$compileExtensions[$path];
             self::$writtenFiles[] = $finalPath;
 
             if (self::$compileExtensions[$path] == 'md') {
