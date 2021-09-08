@@ -44,6 +44,7 @@ class Roster extends Command
     private SymfonyStyle $io;
 
     private bool $verbose = false;
+    private string $docsExportPath;
 
     public function __construct($rootDir)
     {
@@ -89,6 +90,12 @@ class Roster extends Command
                 'shortcut' => 'c',
                 'mode' => InputOption::VALUE_OPTIONAL,
                 'description' => "What roster.json config file to use (if any)"
+            ],
+            'export-path' => [
+                'default' => 'docs'.DIRECTORY_SEPARATOR.'roster',
+                'shortcut' => null,
+                'mode' => InputOption::VALUE_OPTIONAL,
+                'description' => "The export path to write the finished documentation files to."
             ],
             'templates' => [
                 'default' => null,
@@ -174,12 +181,12 @@ class Roster extends Command
         /*
          * All the setup and config values and options values setting
          */
-        if (empty($this->rootRosterDir)) {
+        if (empty($this->rootRosterDir) || !is_dir($this->rootRosterDir)) {
             $this->io->error('Cannot find Roster root directory');
             return self::FAILURE;
         }
 
-        $configPathRoot = $this->rootDir.'/'.$opts['config-file'];
+        $configPathRoot = $this->rootDir.DIRECTORY_SEPARATOR.$opts['config-file'];
 
         if (!is_file($configPathRoot)) {
             ConfigBag::setRosterConfig(new Config("{}", new Json(), true));
@@ -239,7 +246,7 @@ class Roster extends Command
         if ($opts['templates']) {
             ConfigBag::getRosterConfig()->set('templates', $opts['templates']);
         } elseif (!ConfigBag::getRosterConfig()->has('templates')) {
-            ConfigBag::getRosterConfig()->set('templates', 'doc-templates/roster-templates');
+            ConfigBag::getRosterConfig()->set('templates', 'doc-templates'.DIRECTORY_SEPARATOR.'roster-templates');
         }
 
         if ($opts['prefer-source'] || !ConfigBag::getRosterConfig()->has('prefer-source')) {
@@ -255,11 +262,11 @@ class Roster extends Command
         if (ConfigBag::getRosterConfig()->has('mkdocs')) {
             $this->io->section('Gathering MkDocs Config Info');
 
-            $existingMkDocsYml = is_file($this->rootDir . '/mkdocs.yml');
+            $existingMkDocsYml = is_file($this->rootDir . DIRECTORY_SEPARATOR.'mkdocs.yml');
 
             if ($existingMkDocsYml) {
                 $oldConfig = Config::load(
-                    file_get_contents($this->rootDir . '/mkdocs.yml'),
+                    file_get_contents($this->rootDir . DIRECTORY_SEPARATOR. 'mkdocs.yml'),
                     new YamlReader(),
                     true
                 );
@@ -362,10 +369,6 @@ class Roster extends Command
                 ConfigBag::getRosterConfig()->set('mkdocs.nav-key', $baseKey);
             }
 
-            $baseExportPath = $this->rootDir.
-                '/docs/roster/'.
-                ConfigBag::getRosterConfig()->get('with-version', 'latest');
-
             $python = exec('which pip');
             $python3 = exec('which pip3');
 
@@ -383,24 +386,43 @@ class Roster extends Command
                 }
             }
 
-            if (ConfigBag::getRosterConfig()->get('templates') == 'doc-templates/roster-templates') {
-                ConfigBag::getRosterConfig()->set('templates', 'doc-templates/roster-templates-mkdocs');
+            if (ConfigBag::getRosterConfig()->get('templates') == 'doc-templates'.DIRECTORY_SEPARATOR.'roster-templates') {
+                ConfigBag::getRosterConfig()->set('templates', 'doc-templates'.DIRECTORY_SEPARATOR.'roster-templates-mkdocs');
+            }
+        }
+
+
+        if (ConfigBag::getRosterConfig()->has('export-path')) {
+            if ($opts['export-path'] == 'docs'.DIRECTORY_SEPARATOR.'roster') {
+                $baseExportPath = ConfigBag::getRosterConfig()->get('export-path');
+            } else {
+                $baseExportPath = $opts['export-path'];
             }
         } else {
-            $baseExportPath = $this->rootDir.
-                '/docs/roster-export/'.
-                $version;
+            $baseExportPath = $opts['export-path'];
+        }
+
+        if (!str_starts_with(DIRECTORY_SEPARATOR, $baseExportPath) && !preg_match('/^[A-Z]?:\\\\/ism', $baseExportPath)) {
+            $baseExportPath = realpath($this->rootDir.DIRECTORY_SEPARATOR.$baseExportPath.DIRECTORY_SEPARATOR.$version);
+        }
+
+        if (!is_string($baseExportPath)) {
+            $baseExportPath = $this->rootDir.DIRECTORY_SEPARATOR.'docs';
         }
 
         $this->baseExportPath = $baseExportPath;
+        $this->docsExportPath = 'roster'.DIRECTORY_SEPARATOR.$version;
 
-        $baseExportPathParts = explode('/', $baseExportPath);
+        $baseExportPathParts = explode(DIRECTORY_SEPARATOR, $baseExportPath);
         $pathSum = '';
 
         $this->io->section('Initialization');
 
         foreach ($baseExportPathParts as $exportPathPart) {
-            $pathSum .= '/'.$exportPathPart;
+            if (str_contains(':', $exportPathPart)) {
+                continue;
+            }
+            $pathSum .= DIRECTORY_SEPARATOR.$exportPathPart;
             if (!is_dir($pathSum)) {
                 $createDir = mkdir($pathSum);
 
@@ -439,7 +461,7 @@ class Roster extends Command
             }
 
             if (!empty($autoloader)) {
-                $autoloader = realpath($this->rootDir.'/'.$autoloader);
+                $autoloader = realpath($this->rootDir.DIRECTORY_SEPARATOR.$autoloader);
                 require_once $autoloader;
             }
 
@@ -451,7 +473,7 @@ class Roster extends Command
 
             ConfigBag::getRosterConfig()->set('visibility-level', $visibilityLevel);
 
-            $fileList = $this->traverseDirectories(realpath($this->rootDir.'/'.$sourcePath));
+            $fileList = $this->traverseDirectories(realpath($this->rootDir.DIRECTORY_SEPARATOR.$sourcePath));
 
             $this->classes = [];
             foreach ($fileList as $file) {
@@ -514,7 +536,7 @@ class Roster extends Command
         $this->io->success('Templates Compiled To Documents');
 
         $this->io->section('Writing Documentation to Output Directory');
-        $ok = TemplateFactory::writeToDocs($baseExportPath, $this->io);
+        $ok = TemplateFactory::writeToDocs($this->baseExportPath.DIRECTORY_SEPARATOR.$this->docsExportPath, $this->io);
 
         if ($ok) {
             $this->io->success('Documentation Written To Output Directory');
@@ -531,8 +553,8 @@ class Roster extends Command
 
             if ($choice && isset($oldConfig)) {
                 $extraCss = $oldConfig->get('extra_css');
-                if (!in_array('css/'.$cssFileName.'.css', $extraCss)) {
-                    $extraCss[] = 'css/'.$cssFileName.'.css';
+                if (!in_array('css'.DIRECTORY_SEPARATOR.$cssFileName.'.css', $extraCss)) {
+                    $extraCss[] = 'css'.DIRECTORY_SEPARATOR.$cssFileName.'.css';
                 }
                 $appendOrMerge = ConfigBag::getRosterConfig()->get('mkdocs.merge-nav-mode');
 
@@ -576,8 +598,8 @@ class Roster extends Command
                 $mkDocsConfig = (new YamlDumper(4))->dump($oldConfig->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
             } else {
                 if (isset($oldConfig) && !$choice) {
-                    $oldMkdocs = file_get_contents($this->rootDir . '/mkdocs.yml');
-                    $ok = file_put_contents($this->rootDir . '/mkdocs.yml.old', $oldMkdocs);
+                    $oldMkdocs = file_get_contents($this->rootDir . DIRECTORY_SEPARATOR. 'mkdocs.yml');
+                    $ok = file_put_contents($this->rootDir . DIRECTORY_SEPARATOR. 'mkdocs.yml.old', $oldMkdocs);
                 }
 
                 $configBase = Config::load(
@@ -587,8 +609,8 @@ class Roster extends Command
                 );
 
                 $extraCss = $configBase->get('extra_css');
-                if (!in_array('css/'.$cssFileName.'.css', $extraCss)) {
-                    $extraCss[] = 'css/'.$cssFileName.'.css';
+                if (!in_array('css'.DIRECTORY_SEPARATOR.$cssFileName.'.css', $extraCss)) {
+                    $extraCss[] = 'css'.DIRECTORY_SEPARATOR.$cssFileName.'.css';
                 }
 
                 $configBase->set('site_name', ConfigBag::getRosterConfig()->get('mkdocs.site-name'));
@@ -600,8 +622,8 @@ class Roster extends Command
                 $mkDocsConfig = (new YamlDumper(4))->dump($configBase->all(), 50, 0, Yaml::DUMP_OBJECT_AS_MAP);
             }
 
-            if (!is_dir($this->rootDir.'/docs/css')) {
-                $ok = $ok && mkdir($this->rootDir . '/docs/css');
+            if (!is_dir($this->baseExportPath.DIRECTORY_SEPARATOR.'css')) {
+                $ok = $ok && mkdir($this->baseExportPath.DIRECTORY_SEPARATOR.'css');
             }
 
             if ($ok) {
@@ -612,15 +634,15 @@ class Roster extends Command
                 return self::FAILURE;
             }
 
-            TemplateFactory::queueCompile('docs/css/'.$cssFileName, TemplateFactory::getTemplate($cssFileName), 'css');
-            TemplateFactory::queueCompile('docs/requirements', TemplateFactory::getTemplate('requirements'), 'txt');
+            TemplateFactory::queueCompile('css'.DIRECTORY_SEPARATOR.$cssFileName, TemplateFactory::getTemplate($cssFileName), 'css');
+            TemplateFactory::queueCompile('requirements', TemplateFactory::getTemplate('requirements'), 'txt');
 
             $this->io->newLine();
             $this->io->writeln('<comment>Exporting Additional Files</>');
             $this->io->newLine();
             TemplateFactory::compileAll($this->io);
 
-            $ok = TemplateFactory::writeToDocs($this->rootDir, $this->io);
+            $ok = TemplateFactory::writeToDocs($this->baseExportPath, $this->io);
 
             if ($ok) {
                 $this->io->success('Supporting Files Exported');
@@ -631,7 +653,7 @@ class Roster extends Command
             $this->io->newLine();
             $this->io->writeln('<comment>Writing MkDocs Config</>');
             $this->io->newLine();
-            $ok = file_put_contents($this->rootDir.'/mkdocs.yml', $mkDocsConfig);
+            $ok = file_put_contents($this->rootDir.DIRECTORY_SEPARATOR.'mkdocs.yml', $mkDocsConfig);
 
             if ($ok) {
                 $this->io->success('MkDocs Config File Updated');
@@ -715,9 +737,9 @@ class Roster extends Command
         $pathParts = [];
 
         foreach ($list as $path) {
-            $path = str_replace($baseExportPath.'/', '', $path);
+            $path = str_replace($baseExportPath.DIRECTORY_SEPARATOR, '', $path);
             // Get the alias stuff
-            $pathParts[] = explode('/', $path);
+            $pathParts[] = explode(DIRECTORY_SEPARATOR, $path);
         }
 
         $navArray = [];
@@ -765,7 +787,7 @@ class Roster extends Command
             if (is_string($value)) {
                 $formattedNav[$i] = [$key => $value];
             } else {
-                $formattedNav[$i] = [$key => $this->formatNavArrayRecursive($value, $i)];
+                $formattedNav[$i] = [$key => $this->formatNavArrayRecursive($value)];
             }
             $i++;
         }
@@ -801,16 +823,16 @@ class Roster extends Command
     protected function buildNavArrayRecursive(array $parts, int $depth = 0, string $builtString = ''): array
     {
         $navArray = [];
-        $diffedPath = str_replace($this->rootDir.'/docs/', '', $this->baseExportPath);
+        $diffedPath = str_replace($this->rootDir.DIRECTORY_SEPARATOR.'docs'.DIRECTORY_SEPARATOR, '', $this->baseExportPath);
 
         if (isset($parts[$depth+1])) {
-            $navArray[$parts[$depth]] = $this->buildNavArrayRecursive($parts, $depth+1, $builtString.$parts[$depth].'/');
+            $navArray[$parts[$depth]] = $this->buildNavArrayRecursive($parts, $depth+1, $builtString.$parts[$depth].DIRECTORY_SEPARATOR);
             return $navArray;
         }
 
         $name = str_replace('.md', '', $parts[$depth]);
 
-        return [$name => $diffedPath.'/'.$builtString.$parts[$depth]];
+        return [$name => $diffedPath.DIRECTORY_SEPARATOR.$builtString.$parts[$depth]];
     }
 
     protected function traverseDirectories(string $dir): array
@@ -945,10 +967,10 @@ class Roster extends Command
     {
 
         if (!is_dir($templatePath)) {
-            if (is_dir($this->rootDir.'/'.$templatePath)) {
-                $templatePath = $this->rootDir . '/' . $templatePath;
-            } elseif (is_dir($this->rootDir.'/vendor/samsara/roster/'.$templatePath)) {
-                $templatePath = $this->rootDir.'/vendor/samsara/roster/'.$templatePath;
+            if (is_dir($this->rootDir.DIRECTORY_SEPARATOR.$templatePath)) {
+                $templatePath = $this->rootDir .DIRECTORY_SEPARATOR. $templatePath;
+            } elseif (is_dir($this->rootDir.str_replace('/', DIRECTORY_SEPARATOR, '/vendor/samsara/roster/').$templatePath)) {
+                $templatePath = $this->rootDir.str_replace('/', DIRECTORY_SEPARATOR, '/vendor/samsara/roster/').$templatePath;
             } else {
                 $this->io->error('Cannot find Roster templates.');
                 $this->io->info('Please provide a path to the templates directory using the --templates option.');
