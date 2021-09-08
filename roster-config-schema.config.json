@@ -13,6 +13,10 @@
       "type": "string",
       "description": "The version to export the documentation as; omit for auto-detection behavior"
     },
+    "export-path": {
+      "type": "string",
+      "description": "The export path to write the finished documentation files to"
+    },
     "templates": {
       "type": "string",
       "description": "The path to the template files"
