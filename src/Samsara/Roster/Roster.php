@@ -2,7 +2,6 @@
 
 namespace Samsara\Roster;
 
-use Brick\Math\BigInteger;
 use Noodlehaus\Config;
 use Noodlehaus\Parser\Json;
 use Noodlehaus\Parser\Yaml as YamlReader;
@@ -849,7 +848,7 @@ class Roster extends Command
 
         $pathInfo = pathinfo($realPath);
 
-        if ($pathInfo['extension'] == 'css' || $pathInfo == 'js' || $pathInfo == 'txt') {
+        if (!isset($pathInfo['extension']) || $pathInfo['extension'] == 'css' || $pathInfo['extension'] == 'js' || $pathInfo['extension'] == 'txt') {
             return;
         }
 
