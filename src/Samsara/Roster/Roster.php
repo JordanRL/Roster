@@ -935,7 +935,7 @@ class Roster extends Command
             foreach ($itemType as $type => $names) {
                 foreach ($names as $name) {
                     if ($type == 'interface') {
-                        if (!empty($namespace)) {
+                        if (!empty($namespace) && $namespace) {
                             $this->reflectors['interfaces'][] = new \ReflectionClass('\\' . $namespace . '\\' . $name);
                         } else {
                             $this->reflectors['interfaces'][] = new \ReflectionClass($name);
@@ -943,7 +943,7 @@ class Roster extends Command
                     }
 
                     if ($type == 'class') {
-                        if (!empty($namespace)) {
+                        if (!empty($namespace) && $namespace) {
                             $this->reflectors['classes'][] = new \ReflectionClass('\\' . $namespace . '\\' . $name);
                         } else {
                             $this->reflectors['classes'][] = new \ReflectionClass($name);
@@ -951,7 +951,7 @@ class Roster extends Command
                     }
 
                     if ($type == 'trait') {
-                        if (!empty($namespace)) {
+                        if (!empty($namespace) && $namespace) {
                             $this->reflectors['traits'][] = new \ReflectionClass('\\' . $namespace . '\\' . $name);
                         } else {
                             $this->reflectors['traits'][] = new \ReflectionClass($name);
