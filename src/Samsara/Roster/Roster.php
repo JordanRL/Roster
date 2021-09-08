@@ -935,15 +935,27 @@ class Roster extends Command
             foreach ($itemType as $type => $names) {
                 foreach ($names as $name) {
                     if ($type == 'interface') {
-                        $this->reflectors['interfaces'][] = new \ReflectionClass('\\'.$namespace.'\\'.$name);
+                        if (!empty($namespace)) {
+                            $this->reflectors['interfaces'][] = new \ReflectionClass('\\' . $namespace . '\\' . $name);
+                        } else {
+                            $this->reflectors['interfaces'][] = new \ReflectionClass($name);
+                        }
                     }
 
                     if ($type == 'class') {
-                        $this->reflectors['classes'][] = new \ReflectionClass('\\'.$namespace.'\\'.$name);
+                        if (!empty($namespace)) {
+                            $this->reflectors['classes'][] = new \ReflectionClass('\\' . $namespace . '\\' . $name);
+                        } else {
+                            $this->reflectors['classes'][] = new \ReflectionClass($name);
+                        }
                     }
 
                     if ($type == 'trait') {
-                        $this->reflectors['traits'][] = new \ReflectionClass('\\'.$namespace.'\\'.$name);
+                        if (!empty($namespace)) {
+                            $this->reflectors['traits'][] = new \ReflectionClass('\\' . $namespace . '\\' . $name);
+                        } else {
+                            $this->reflectors['traits'][] = new \ReflectionClass($name);
+                        }
                     }
 
                     $reflectorCount++;
